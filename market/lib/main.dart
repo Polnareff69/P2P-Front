@@ -31,13 +31,13 @@ class MyApp extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: const [
               Text(
-                'U-Marlet - The Complete Commerce',
+                'U-Market - The Complete Commerce',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 16),
               Text(
-                'Compra-vende-subasta y oferta.',
+                'Compra-vende-subasta y ofeeeertaaaaa.',
                 textAlign: TextAlign.center,
               ),
             ],
