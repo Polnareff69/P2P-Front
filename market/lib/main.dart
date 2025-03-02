@@ -1,49 +1,40 @@
+import 'package:market/views/authentication_screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-// With Flutter, you create user interfaces by combining "widgets"
-// You'll learn all about them (and much more) throughout this course!
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // Every custom widget must have a build() method
-  // It tells Flutter, which widgets make up your custom widget
-  // Again: You'll learn all about that throughout the course!
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // Below, a bunch of built-in widgets are used (provided by Flutter)
-    // They will be explained in the next sections
-    // In this course, you will, of course, not just use them a lot but
-    // also learn about many other widgets!
     return MaterialApp(
-      title: 'Flutter First App',
-      theme: ThemeData(useMaterial3: true),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Welcome to U-Market')),
-        body: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [
-              Text(
-                'U-Market - The Complete Commerce',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Compra-vende-subasta y ofeeeertaaaaa.',
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
         ),
       ),
+      home: WelcomeScreen(),
     );
   }
 }
