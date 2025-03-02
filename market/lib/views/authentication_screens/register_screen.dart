@@ -1,4 +1,3 @@
-//import 'package:market/views/authentication_screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'login_screen.dart';
@@ -241,9 +240,9 @@ class RegisterScreen extends StatelessWidget {
                               width: 12,
                               color: const Color.fromARGB(
                                 255,
-                                47,
-                                51,
-                                53,
+                                38,
+                                43,
+                                46,
                               ),
                             ),
                             borderRadius:
