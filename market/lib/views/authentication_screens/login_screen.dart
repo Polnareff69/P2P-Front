@@ -1,7 +1,8 @@
-//import 'package:market/views/authentication_screens/register_screen.dart';
+import 'package:market/views/authentication_screens/forgot_password_screen.dart';
+import 'package:market/views/authentication_screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'register_screen.dart';
+import 'package:market/views/widgets/remember_me_checkbox.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -159,6 +160,42 @@ class LoginScreen extends StatelessWidget {
                   ),
                   suffixIcon: Icon(Icons.visibility),
                 ),
+              ),
+
+              //Remember password and Forgot Password
+              const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween,
+                children: [
+                  RememberMeCheckbox(
+                    onChanged: (value) {
+                      print("Recordarme: $value");
+                    },
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) =>
+                                  ForgotPasswordScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "¿Olvidaste tu contraseña?",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                        decoration:
+                            TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
               ),
 
               //Login Bottom
