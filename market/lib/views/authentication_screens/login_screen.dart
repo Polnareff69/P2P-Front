@@ -163,7 +163,7 @@ class LoginScreen extends StatelessWidget {
               ),
 
               //Remember password and Forgot Password
-              const SizedBox(height: 5),
+              const SizedBox(height: 11),
               Row(
                 mainAxisAlignment:
                     MainAxisAlignment.spaceBetween,
@@ -199,7 +199,7 @@ class LoginScreen extends StatelessWidget {
               ),
 
               //Login Bottom
-              const SizedBox(height: 26),
+              const SizedBox(height: 30),
               Container(
                 width: 319,
                 height: 57,

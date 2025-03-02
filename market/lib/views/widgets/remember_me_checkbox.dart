@@ -44,7 +44,7 @@ class RememberMeCheckboxState
                       ? Colors.black
                       : Colors
                           .white, // Estrella negra o blanca
-              size: 15,
+              size: 16,
             ),
           ),
         ),
