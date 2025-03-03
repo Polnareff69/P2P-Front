@@ -7,6 +7,11 @@ class RegisterScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>();
 
+  //user inputs
+  late String name;
+  late String email;
+  late String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,9 +75,15 @@ class RegisterScreen extends StatelessWidget {
 
                   //Input from the user_name
                   TextFormField(
+                    //grab name
+                    onChanged: (value) {
+                      name = value;
+                    },
+
+                    //validate info is not empty
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Ingresa un nombre porfavor.';
+                        return 'Ingresa un nombre.';
                       } else {
                         return null;
                       }
@@ -139,9 +150,14 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   //Input of the user email
                   TextFormField(
+                    //grab the user email
+                    onChanged: (value) {
+                      email = value;
+                    },
+                    //validate the user inputs an email
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Ingresa un correo porfavor.';
+                        return 'Ingresa un correo.';
                       } else {
                         return null;
                       }
@@ -207,9 +223,14 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   //Input of the user password
                   TextFormField(
+                    //grab the user's password
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    //validate user's password
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Ingresa una contraseña porfavor.';
+                        return 'Ingresa una contraseña.';
                       } else {
                         return null;
                       }
@@ -266,7 +287,9 @@ class RegisterScreen extends StatelessWidget {
                     onTap: () {
                       if (_formKey.currentState!
                           .validate()) {
-                        print("Correcto/Valido");
+                        print("Username = $name");
+                        print("Email = $email");
+                        print("Password = $password");
                       } else {
                         print("Ha fallado");
                       }

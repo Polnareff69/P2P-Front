@@ -9,6 +9,9 @@ class LoginScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>();
 
+  late String userName;
+  late String password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +75,11 @@ class LoginScreen extends StatelessWidget {
                   ),
                   //Input from the user_name
                   TextFormField(
+                    //grab the info of the user
+                    onChanged: (value) {
+                      userName = value;
+                    },
+                    //validation of the user input
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Nombre Inexistente.';
@@ -141,6 +149,11 @@ class LoginScreen extends StatelessWidget {
                   ),
                   //Input of the user password
                   TextFormField(
+                    //grab the info of the user
+                    onChanged: (value) {
+                      password = value;
+                    },
+                    //validate input from users
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Contraseña Incorrecta.';
@@ -236,7 +249,8 @@ class LoginScreen extends StatelessWidget {
                     onTap: () {
                       if (_formKey.currentState!
                           .validate()) {
-                        print("Exitoso login");
+                        print('userName = $userName');
+                        print('password = $password');
                       } else {
                         print('Login fallido');
                       }
