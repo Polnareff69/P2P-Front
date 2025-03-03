@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:market/views/business_screens/business_or_main_screen.dart';
 import 'login_screen.dart';
+
 
 class RegisterScreen extends StatelessWidget {
   //const RegisterScreen({super.key});
@@ -290,6 +292,16 @@ class RegisterScreen extends StatelessWidget {
                         print("Username = $name");
                         print("Email = $email");
                         print("Password = $password");
+
+                        // Ask the user if they want to create a Business
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) =>
+                                    BusinessOrMainScreen(),
+                          ),
+                        );
                       } else {
                         print("Ha fallado");
                       }
