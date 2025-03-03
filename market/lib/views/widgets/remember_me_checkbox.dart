@@ -33,9 +33,7 @@ class RememberMeCheckboxState
             height: 20,
             decoration: BoxDecoration(
               color: Colors.purpleAccent, // Fondo rosa
-              borderRadius: BorderRadius.circular(
-                6,
-              ), // Bordes redondeados
+              borderRadius: BorderRadius.circular(6),
             ),
             child: Icon(
               Icons.star,
