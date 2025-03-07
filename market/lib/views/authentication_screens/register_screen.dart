@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:market/views/business_screens/business_or_main_screen.dart';
 import 'login_screen.dart';
 
-
 class RegisterScreen extends StatelessWidget {
   //const RegisterScreen({super.key});
   final GlobalKey<FormState> _formKey =
@@ -13,6 +12,8 @@ class RegisterScreen extends StatelessWidget {
   late String name;
   late String email;
   late String password;
+
+  RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -313,7 +314,12 @@ class RegisterScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(
                           10,
                         ),
-                        color: Colors.blue,
+                        color: const Color.fromARGB(
+                          255,
+                          47,
+                          135,
+                          207,
+                        ),
                       ),
                       child: Stack(
                         children: [
