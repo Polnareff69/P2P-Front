@@ -1,19 +1,72 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:market/views/business_screens/business_or_main_screen.dart';
-import 'login_screen.dart';
+import 'package:market/views/authentication_screens/login_screen.dart';
 
-class RegisterScreen extends StatelessWidget {
-  //const RegisterScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
+  @override
+  _RegisterScreenState createState() =>
+      _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>();
 
-  //user inputs
-  late String name;
-  late String email;
-  late String password;
+  String name = '';
+  String email = '';
+  String password = '';
+  String role = 'user';
+  bool isLoading = false;
 
-  RegisterScreen({super.key});
+  Future<void> registerUser() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    const String apiUrl =
+        'http://10.0.2.2:8000/register'; // URL backend FastAPI
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'name': name,
+        'email': email,
+        'password': password,
+        'role': password,
+      }),
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (response.statusCode == 200) {
+      print("Registro exitoso: ${response.body}");
+
+      // 🔹 Navegar a la pantalla principal después de un registro exitoso
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BusinessOrMainScreen(),
+        ),
+      );
+    } else {
+      print("Error en el registro: ${response.body}");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Error al registrarse: ${jsonDecode(response.body)['detail']}",
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +138,7 @@ class RegisterScreen extends StatelessWidget {
 
                     //validate info is not empty
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if (value == null || value.isEmpty) {
                         return 'Ingresa un nombre.';
                       } else {
                         return null;
@@ -159,7 +212,7 @@ class RegisterScreen extends StatelessWidget {
                     },
                     //validate the user inputs an email
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if (value == null || value.isEmpty) {
                         return 'Ingresa un correo.';
                       } else {
                         return null;
@@ -226,13 +279,14 @@ class RegisterScreen extends StatelessWidget {
                   ),
                   //Input of the user password
                   TextFormField(
+                    obscureText: true,
                     //grab the user's password
                     onChanged: (value) {
                       password = value;
                     },
                     //validate user's password
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if (value == null || value.isEmpty) {
                         return 'Ingresa una contraseña.';
                       } else {
                         return null;
@@ -286,153 +340,151 @@ class RegisterScreen extends StatelessWidget {
 
                   //Register Bottom
                   const SizedBox(height: 30),
-                  InkWell(
-                    onTap: () {
-                      if (_formKey.currentState!
-                          .validate()) {
-                        print("Username = $name");
-                        print("Email = $email");
-                        print("Password = $password");
-
-                        // Ask the user if they want to create a Business
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) =>
-                                    BusinessOrMainScreen(),
+                  isLoading
+                      ? CircularProgressIndicator()
+                      : InkWell(
+                        onTap: () {
+                          if (_formKey.currentState!
+                              .validate()) {
+                            print("Username = $name");
+                            print("Email = $email");
+                            print("Password = $password");
+                            registerUser();
+                            // Ask the user if they want to create a Business
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) =>
+                                        BusinessOrMainScreen(),
+                              ),
+                            );
+                          } else {
+                            print("Ha fallado");
+                          }
+                        },
+                        child: Container(
+                          width: 319,
+                          height: 57,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(10),
+                            color: Colors.blue,
                           ),
-                        );
-                      } else {
-                        print("Ha fallado");
-                      }
-                    },
-                    child: Container(
-                      width: 319,
-                      height: 57,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
-                        color: const Color.fromARGB(
-                          255,
-                          47,
-                          135,
-                          207,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 278,
+                                top: 19,
+                                child: Opacity(
+                                  opacity: 0.5,
+                                  child: Container(
+                                    width: 60,
+                                    height: 60,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 12,
+                                        color:
+                                            const Color.fromARGB(
+                                              255,
+                                              38,
+                                              43,
+                                              46,
+                                            ),
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            30,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              Positioned(
+                                left: 260,
+                                top: 29,
+                                child: Opacity(
+                                  opacity: 0.3,
+                                  child: Container(
+                                    width: 10,
+                                    height: 10,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 3,
+                                      ),
+                                      color: Colors.black,
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            5,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              Positioned(
+                                left: 308,
+                                top: 38,
+                                child: Opacity(
+                                  opacity: 0.3,
+                                  child: Container(
+                                    width: 5.5,
+                                    height: 5.5,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            3,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 281,
+                                top: -10,
+                                child: Opacity(
+                                  opacity: 0.3,
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            10,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              //Iniciar Sesion Text
+                              Center(
+                                child: Text(
+                                  'Registrarse',
+                                  style:
+                                      GoogleFonts.getFont(
+                                        'Nunito Sans',
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight:
+                                            FontWeight.w700,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 278,
-                            top: 19,
-                            child: Opacity(
-                              opacity: 0.5,
-                              child: Container(
-                                width: 60,
-                                height: 60,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 12,
-                                    color:
-                                        const Color.fromARGB(
-                                          255,
-                                          38,
-                                          43,
-                                          46,
-                                        ),
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        30,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          Positioned(
-                            left: 260,
-                            top: 29,
-                            child: Opacity(
-                              opacity: 0.3,
-                              child: Container(
-                                width: 10,
-                                height: 10,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 3,
-                                  ),
-                                  color: Colors.black,
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        5,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          Positioned(
-                            left: 308,
-                            top: 38,
-                            child: Opacity(
-                              opacity: 0.3,
-                              child: Container(
-                                width: 5.5,
-                                height: 5.5,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        3,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 281,
-                            top: -10,
-                            child: Opacity(
-                              opacity: 0.3,
-                              child: Container(
-                                width: 20,
-                                height: 20,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        10,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          //Iniciar Sesion Text
-                          Center(
-                            child: Text(
-                              'Registrarse',
-                              style: GoogleFonts.getFont(
-                                'Nunito Sans',
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
 
                   //already have an account
                   const SizedBox(height: 5),
