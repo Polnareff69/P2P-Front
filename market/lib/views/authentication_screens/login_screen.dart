@@ -151,6 +151,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   //Input of the user password
                   TextFormField(
+                    obscureText: true,
                     //grab the info of the user
                     onChanged: (value) {
                       password = value;

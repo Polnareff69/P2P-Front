@@ -8,7 +8,18 @@ class BusinessOrMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "   U-MARKET",
+          style: GoogleFonts.lilitaOne(
+            fontSize: 45,
+            fontWeight: FontWeight.bold,
+            color: Colors.purple,
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
