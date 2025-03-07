@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:market/views/business_screens/create_business_screen.dart';
 
 class BusinessOrMainScreen extends StatelessWidget {
   const BusinessOrMainScreen({super.key});
@@ -89,9 +90,13 @@ class BusinessOrMainScreen extends StatelessWidget {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(
+                          Navigator.push(
                             context,
-                            '/create_business',
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return CreateBusinessScreen();
+                              },
+                            ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
