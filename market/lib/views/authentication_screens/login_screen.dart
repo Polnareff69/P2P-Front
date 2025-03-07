@@ -3,16 +3,74 @@ import 'package:market/views/authentication_screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/views/widgets/remember_me_checkbox.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class LoginScreen extends StatelessWidget {
-  //const LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>();
+  String _token = "No recibido aún";
 
-  late String userName;
-  late String password;
+  String name = '';
+  String email = '';
+  String password = '';
+  String role = '';
+  bool isLoading = false;
 
-  LoginScreen({super.key});
+  Future<void> loginUser() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    const String apiUrl =
+        'http://10.0.2.2:8000/token'; // URL backend FastAPI
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'name': name,
+        'email': email,
+        'password': password,
+        'role': password,
+      }),
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (response.statusCode == 200) {
+      print("Login exitoso: ${response.body}");
+      final data = jsonDecode(response.body);
+      _token = data['access_token'];
+      //print(_token);
+      print("Token recibido: ${data['access_token']}");
+      //Navegar a la pantalla principal
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RegisterScreen(),
+        ),
+      );
+    } else {
+      print("Error en el login: ${response.body}");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Error al logearse: ${jsonDecode(response.body)['detail']}",
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +137,11 @@ class LoginScreen extends StatelessWidget {
                   TextFormField(
                     //grab the info of the user
                     onChanged: (value) {
-                      userName = value;
+                      name = value;
                     },
                     //validation of the user input
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if (value == null || value.isEmpty) {
                         return 'Nombre Inexistente.';
                       } else {
                         return null;
@@ -158,7 +216,7 @@ class LoginScreen extends StatelessWidget {
                     },
                     //validate input from users
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if (value == null || value.isEmpty) {
                         return 'Contraseña Incorrecta.';
                       } else {
                         return null;
@@ -248,153 +306,165 @@ class LoginScreen extends StatelessWidget {
 
                   //Login Bottom
                   const SizedBox(height: 30),
-                  InkWell(
-                    onTap: () {
-                      if (_formKey.currentState!
-                          .validate()) {
-                        print('userName = $userName');
-                        print('password = $password');
-                      } else {
-                        print('Login fallido');
-                      }
-                    },
-                    child: Container(
-                      width: 319,
-                      height: 57,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.purpleAccent,
-                            const Color.fromARGB(
-                              255,
-                              157,
-                              19,
-                              170,
+                  isLoading
+                      ? CircularProgressIndicator()
+                      : InkWell(
+                        onTap: () {
+                          if (_formKey.currentState!
+                              .validate()) {
+                            loginUser();
+                            print('userName = $name');
+                            print('password = $password');
+                          } else {
+                            print('Login fallido');
+                          }
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) =>
+                                      RegisterScreen(),
                             ),
-                          ],
+                          );
+                        },
+                        child: Container(
+                          width: 319,
+                          height: 57,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.purpleAccent,
+                                const Color.fromARGB(
+                                  255,
+                                  157,
+                                  19,
+                                  170,
+                                ),
+                              ],
+                            ),
+                          ),
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 278,
+                                top: 19,
+                                child: Opacity(
+                                  opacity: 0.5,
+                                  child: Container(
+                                    width: 60,
+                                    height: 60,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 12,
+                                        color:
+                                            const Color.fromARGB(
+                                              255,
+                                              78,
+                                              16,
+                                              90,
+                                            ),
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            30,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              Positioned(
+                                left: 260,
+                                top: 29,
+                                child: Opacity(
+                                  opacity: 0.3,
+                                  child: Container(
+                                    width: 10,
+                                    height: 10,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 3,
+                                      ),
+                                      color:
+                                          const Color.fromARGB(
+                                            255,
+                                            78,
+                                            16,
+                                            90,
+                                          ),
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            5,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              Positioned(
+                                left: 308,
+                                top: 38,
+                                child: Opacity(
+                                  opacity: 0.3,
+                                  child: Container(
+                                    width: 5.5,
+                                    height: 5.5,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            3,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 281,
+                                top: -10,
+                                child: Opacity(
+                                  opacity: 0.3,
+                                  child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            10,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              //Iniciar Sesion Text
+                              Center(
+                                child: Text(
+                                  'Iniciar Sesión',
+                                  style:
+                                      GoogleFonts.getFont(
+                                        'Nunito Sans',
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight:
+                                            FontWeight.w700,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 278,
-                            top: 19,
-                            child: Opacity(
-                              opacity: 0.5,
-                              child: Container(
-                                width: 60,
-                                height: 60,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 12,
-                                    color:
-                                        const Color.fromARGB(
-                                          255,
-                                          78,
-                                          16,
-                                          90,
-                                        ),
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        30,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          Positioned(
-                            left: 260,
-                            top: 29,
-                            child: Opacity(
-                              opacity: 0.3,
-                              child: Container(
-                                width: 10,
-                                height: 10,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 3,
-                                  ),
-                                  color:
-                                      const Color.fromARGB(
-                                        255,
-                                        78,
-                                        16,
-                                        90,
-                                      ),
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        5,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          Positioned(
-                            left: 308,
-                            top: 38,
-                            child: Opacity(
-                              opacity: 0.3,
-                              child: Container(
-                                width: 5.5,
-                                height: 5.5,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        3,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 281,
-                            top: -10,
-                            child: Opacity(
-                              opacity: 0.3,
-                              child: Container(
-                                width: 20,
-                                height: 20,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        10,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          //Iniciar Sesion Text
-                          Center(
-                            child: Text(
-                              'Iniciar Sesión',
-                              style: GoogleFonts.getFont(
-                                'Nunito Sans',
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
 
                   //dont have an account
                   SizedBox(height: 5),
