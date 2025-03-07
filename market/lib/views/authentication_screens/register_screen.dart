@@ -346,10 +346,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onTap: () {
                           if (_formKey.currentState!
                               .validate()) {
+                            registerUser();
                             print("Username = $name");
                             print("Email = $email");
                             print("Password = $password");
-                            registerUser();
                             // Ask the user if they want to create a Business
                             Navigator.pushReplacement(
                               context,
