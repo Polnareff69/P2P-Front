@@ -1,18 +1,75 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/views/business_screens/business_or_main_screen.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class CreateBusinessScreen extends StatelessWidget {
-  //const RegisterScreen({super.key});
+class CreateBusinessScreen extends StatefulWidget {
+  const CreateBusinessScreen({super.key});
+
+  @override
+  _CreateBusinessScreenState createState() =>
+      _CreateBusinessScreenState();
+}
+
+class _CreateBusinessScreenState
+    extends State<CreateBusinessScreen> {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>();
 
   //user inputs
-  late String name;
-  late String email;
-  late String password;
+  String businessName = '';
+  String businessNumber = '';
+  String businessEmail = '';
+  String businessUbication = '';
+  String businessDescription = '';
+  String businessLogo = '';
+  String userId = ''; // primary key from user
+  bool isLoading = false;
 
-  CreateBusinessScreen({super.key});
+  Future<void> createBusiness() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    const String apiUrl =
+        'http://10.0.2.2:8000/company'; // URL backend FastAPI
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'name': businessName,
+        'phonenumber': businessNumber,
+        'description': businessDescription,
+        'userid': '9a6f9d95-ded5-4192-8b4c-96269e661d76',
+      }),
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (response.statusCode == 200) {
+      print("Empresa Creada: ${response.body}");
+      //navegar a perfil de emprendedor
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BusinessOrMainScreen(),
+        ),
+      );
+    } else {
+      print("Error al crear Empresa: ${response.body}");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Error al crear Empresa: ${jsonDecode(response.body)['detail']}",
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,13 +133,13 @@ class CreateBusinessScreen extends StatelessWidget {
                   TextFormField(
                     //grab name
                     onChanged: (value) {
-                      name = value;
+                      businessName = value;
                     },
 
                     //validate info is not empty
                     validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Ingresa un Nombre Válido.';
+                      if (value == null || value.isEmpty) {
+                        return 'Ingresa el nombre de La Empresa.';
                       } else {
                         return null;
                       }
@@ -151,11 +208,11 @@ class CreateBusinessScreen extends StatelessWidget {
                   TextFormField(
                     //grab the user email
                     onChanged: (value) {
-                      email = value;
+                      businessNumber = value;
                     },
                     //validate the user inputs an email
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if (value == null || value.isEmpty) {
                         return 'Ingresa un Numero.';
                       } else {
                         return null;
@@ -224,12 +281,12 @@ class CreateBusinessScreen extends StatelessWidget {
                   TextFormField(
                     //grab the user email
                     onChanged: (value) {
-                      email = value;
+                      businessEmail = value;
                     },
                     //validate the user inputs an email
                     validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Ingresa el Correo de Tu Empresa.';
+                      if (value == null || value.isEmpty) {
+                        return 'Ingresa el Correo de la Empresa.';
                       } else {
                         return null;
                       }
@@ -294,11 +351,11 @@ class CreateBusinessScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  //Input of the user password
+                  //Input of the user university
                   TextFormField(
-                    //grab the user's password
+                    //grab the user's university
                     onChanged: (value) {
-                      password = value;
+                      businessUbication = value;
                     },
                     //validate user's password
                     validator: (value) {
@@ -371,12 +428,12 @@ class CreateBusinessScreen extends StatelessWidget {
                   TextFormField(
                     //grab name
                     onChanged: (value) {
-                      name = value;
+                      businessDescription = value;
                     },
 
                     //validate info is not empty
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if (value == null || value.isEmpty) {
                         return 'Ingresa una Descripción.';
                       } else {
                         return null;
@@ -421,8 +478,8 @@ class CreateBusinessScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(10.0),
                         child: Image.asset(
                           'assets/icons/description.png',
-                          width: 20,
-                          height: 20,
+                          width: 30,
+                          height: 30,
                         ),
                       ),
                     ),
@@ -447,12 +504,12 @@ class CreateBusinessScreen extends StatelessWidget {
                   TextFormField(
                     //grab name
                     onChanged: (value) {
-                      name = value;
+                      businessLogo = value;
                     },
 
                     //validate info is not empty
                     validator: (value) {
-                      if (value!.isEmpty) {
+                      if (value == null || value.isEmpty) {
                         return 'Ingresa un Logo.';
                       } else {
                         return null;
@@ -506,179 +563,198 @@ class CreateBusinessScreen extends StatelessWidget {
 
                   //Create Business Bottom
                   const SizedBox(height: 30),
-                  InkWell(
-                    onTap: () {
-                      if (_formKey.currentState!
-                          .validate()) {
-                        print("Username = $name");
-                        print("Email = $email");
-                        print("Password = $password");
+                  isLoading
+                      ? CircularProgressIndicator()
+                      : InkWell(
+                        onTap: () {
+                          if (_formKey.currentState!
+                              .validate()) {
+                            createBusiness();
+                            print(
+                              "BusinessName = $businessName",
+                            );
+                            print(
+                              "BusinessNumber = $businessNumber",
+                            );
+                            print(
+                              "BusinessDescription = $businessDescription",
+                            );
+                            print(
+                              "BusinessEmail = $businessEmail",
+                            );
+                            print(
+                              "BusinessLogo = $businessLogo",
+                            );
+                            print(
+                              "BusinessUniversity = $businessUbication",
+                            );
 
-                        // Ask the user if they want to create a Business
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) =>
-                                    BusinessOrMainScreen(),
-                          ),
-                        );
-                      } else {
-                        print("Ha fallado");
-                      }
-                    },
-                    child: Container(
-                      width: 319,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          10,
-                        ),
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.purpleAccent,
-                            const Color.fromARGB(
-                              255,
-                              157,
-                              19,
-                              170,
+                            // Ask the user if they want to create a Business
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) =>
+                                        BusinessOrMainScreen(),
+                              ),
+                            );
+                          } else {
+                            print("Ha fallado");
+                          }
+                        },
+                        child: Container(
+                          width: 319,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.circular(10),
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.purpleAccent,
+                                const Color.fromARGB(
+                                  255,
+                                  157,
+                                  19,
+                                  170,
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
+
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                left: 278,
+                                top: 40,
+                                child: Opacity(
+                                  opacity: 0.5,
+                                  child: Container(
+                                    width: 60,
+                                    height: 60,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 12,
+                                        color:
+                                            const Color.fromARGB(
+                                              255,
+                                              38,
+                                              43,
+                                              46,
+                                            ),
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            30,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              Positioned(
+                                left: 262,
+                                top: 50,
+                                child: Opacity(
+                                  opacity: 0.3,
+                                  child: Container(
+                                    width: 10,
+                                    height: 10,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 3,
+                                      ),
+                                      color: Colors.black,
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            5,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              Positioned(
+                                left: 300,
+                                top: 60,
+                                child: Opacity(
+                                  opacity: 0.3,
+                                  child: Container(
+                                    width: 6.5,
+                                    height: 6.5,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            3,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 258,
+                                top: 10,
+                                child: Opacity(
+                                  opacity: 0.3,
+                                  child: Container(
+                                    width: 8.5,
+                                    height: 8.5,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            3,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 275,
+                                top: -18,
+                                child: Opacity(
+                                  opacity: 0.3,
+                                  child: Container(
+                                    width: 45,
+                                    height: 45,
+                                    clipBehavior:
+                                        Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(
+                                            30,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              //Iniciar Sesion Text
+                              Center(
+                                child: Text(
+                                  '¡Crear Empresa!',
+                                  style:
+                                      GoogleFonts.getFont(
+                                        'Nunito Sans',
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight:
+                                            FontWeight.w700,
+                                      ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 278,
-                            top: 40,
-                            child: Opacity(
-                              opacity: 0.5,
-                              child: Container(
-                                width: 60,
-                                height: 60,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 12,
-                                    color:
-                                        const Color.fromARGB(
-                                          255,
-                                          38,
-                                          43,
-                                          46,
-                                        ),
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        30,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          Positioned(
-                            left: 262,
-                            top: 50,
-                            child: Opacity(
-                              opacity: 0.3,
-                              child: Container(
-                                width: 10,
-                                height: 10,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 3,
-                                  ),
-                                  color: Colors.black,
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        5,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-
-                          Positioned(
-                            left: 300,
-                            top: 60,
-                            child: Opacity(
-                              opacity: 0.3,
-                              child: Container(
-                                width: 6.5,
-                                height: 6.5,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        3,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 258,
-                            top: 10,
-                            child: Opacity(
-                              opacity: 0.3,
-                              child: Container(
-                                width: 8.5,
-                                height: 8.5,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        3,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 275,
-                            top: -18,
-                            child: Opacity(
-                              opacity: 0.3,
-                              child: Container(
-                                width: 45,
-                                height: 45,
-                                clipBehavior:
-                                    Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius:
-                                      BorderRadius.circular(
-                                        30,
-                                      ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          //Iniciar Sesion Text
-                          Center(
-                            child: Text(
-                              '¡Crear Empresa!',
-                              style: GoogleFonts.getFont(
-                                'Nunito Sans',
-                                color: Colors.white,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 40),
                 ],
               ),
