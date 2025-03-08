@@ -20,7 +20,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String name = '';
   String email = '';
   String password = '';
-  String role = 'user';
+  //String role = 'user';
   bool isLoading = false;
 
   Future<void> registerUser() async {
@@ -38,7 +38,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         'name': name,
         'email': email,
         'password': password,
-        'role': password,
+        //'role': password,
       }),
     );
 
