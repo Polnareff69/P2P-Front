@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String name = '';
   String email = '';
   String password = '';
-  String role = '';
+  //String role = '';
   bool isLoading = false;
 
   Future<void> loginUser() async {
@@ -37,9 +37,9 @@ class _LoginScreenState extends State<LoginScreen> {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'name': name,
-        'email': email,
         'password': password,
-        'role': password,
+        //'email': email,
+        //'role': password,
       }),
     );
 
