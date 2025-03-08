@@ -49,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (response.statusCode == 200) {
       print("Registro exitoso: ${response.body}");
 
-      // 🔹 Navegar a la pantalla principal después de un registro exitoso
+      // Navegar a la pantalla principal después de un registro exitoso
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
