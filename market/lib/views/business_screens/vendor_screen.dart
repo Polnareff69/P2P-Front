@@ -192,19 +192,37 @@ class VendorScreen extends StatelessWidget {
           crossAxisSpacing: 0,
           mainAxisSpacing: 0,
           children: [
-            _buildMenuButton(Icons.attach_money, "Ventas"),
-            _buildMenuButton(Icons.edit, "Editar"),
-            _buildMenuButton(Icons.receipt, "Pedidos"),
-            _buildMenuButton(Icons.star, "Reseñas"),
-            _buildMenuButton(Icons.bolt, "Plus"),
-            _buildMenuButton(Icons.help, "Ayuda"),
+            _buildMenuButton(
+              'assets/icons/sells.png',
+              "Ventas",
+            ),
+            _buildMenuButton(
+              'assets/icons/edit.png',
+              "Editar",
+            ),
+            _buildMenuButton(
+              'assets/icons/deliveries.png',
+              "Pedidos",
+            ),
+            _buildMenuButton(
+              'assets/icons/star.png',
+              "Reseñas",
+            ),
+            _buildMenuButton(
+              'assets/icons/plus.png',
+              "Plus",
+            ),
+            _buildMenuButton(
+              'assets/icons/help.png',
+              "Ayuda",
+            ),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildMenuButton(IconData icon, String label) {
+  Widget _buildMenuButton(String imagePath, String label) {
     return Column(
       children: [
         Container(
@@ -230,9 +248,11 @@ class VendorScreen extends StatelessWidget {
             ],
           ),
           child: Center(
-            child: Icon(
-              icon,
-              size: 72,
+            child: Image.asset(
+              imagePath,
+              width: 65,
+              height: 65,
+              //size: 72,
               color: Colors.black, // Icono en negro
             ),
           ),
