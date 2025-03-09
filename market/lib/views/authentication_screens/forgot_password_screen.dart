@@ -44,6 +44,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   "Correo enviado para recuperar contraseña",
                 );
               },
+              
               child: Text(
                 "Enviar correo",
                 style: GoogleFonts.nunitoSans(
