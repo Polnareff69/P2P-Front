@@ -47,7 +47,7 @@ class BusinessOrMainScreen extends StatelessWidget {
                         style: GoogleFonts.nunitoSans(
                           color: Colors.purpleAccent,
                           fontWeight: FontWeight.w900,
-                          fontSize: 28,
+                          fontSize: 29,
                         ),
                       ),
 
@@ -68,11 +68,11 @@ class BusinessOrMainScreen extends StatelessWidget {
                 Text(
                   "¿Qué quieres hacer?",
                   style: GoogleFonts.nunitoSans(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 20),
 
                 // Contenedor con botones
                 Container(
@@ -120,7 +120,7 @@ class BusinessOrMainScreen extends StatelessWidget {
                                 horizontal: 70,
                               ),
                           textStyle: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 25,
                             fontWeight: FontWeight.bold,
                           ),
                           shape: RoundedRectangleBorder(
@@ -148,7 +148,7 @@ class BusinessOrMainScreen extends StatelessWidget {
                                 horizontal: 70,
                               ),
                           textStyle: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 25,
                             fontWeight: FontWeight.bold,
                           ),
                           shape: RoundedRectangleBorder(

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:market/views/business_screens/business_or_main_screen.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:market/views/business_screens/vendor_screen.dart';
 
 class CreateBusinessScreen extends StatefulWidget {
   const CreateBusinessScreen({super.key});
@@ -566,42 +567,65 @@ class _CreateBusinessScreenState
                   isLoading
                       ? CircularProgressIndicator()
                       : InkWell(
-                        onTap: () {
+                        onTap: () async {
                           if (_formKey.currentState!
                               .validate()) {
-                            createBusiness();
-                            print(
-                              "BusinessName = $businessName",
-                            );
-                            print(
-                              "BusinessNumber = $businessNumber",
-                            );
-                            print(
-                              "BusinessDescription = $businessDescription",
-                            );
-                            print(
-                              "BusinessEmail = $businessEmail",
-                            );
-                            print(
-                              "BusinessLogo = $businessLogo",
-                            );
-                            print(
-                              "BusinessUniversity = $businessUbication",
-                            );
+                            setState(() {
+                              isLoading = true;
+                            });
 
-                            // Ask the user if they want to create a Business
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) =>
-                                        BusinessOrMainScreen(),
-                              ),
-                            );
+                            try {
+                              await createBusiness();
+                              print(
+                                "BusinessName = $businessName",
+                              );
+                              print(
+                                "BusinessNumber = $businessNumber",
+                              );
+                              print(
+                                "BusinessDescription = $businessDescription",
+                              );
+                              print(
+                                "BusinessEmail = $businessEmail",
+                              );
+                              print(
+                                "BusinessLogo = $businessLogo",
+                              );
+                              print(
+                                "BusinessUniversity = $businessUbication",
+                              );
+                              print(
+                                "redirigiendo a vendor_screen",
+                              );
+
+                              if (mounted) {
+                                // Asegurar que el widget sigue montado antes de navegar
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) =>
+                                            VendorScreen(),
+                                  ),
+                                );
+                              }
+                            } catch (e) {
+                              print(
+                                "Error al crear negocio: $e",
+                              );
+                            } finally {
+                              if (mounted) {
+                                setState(() {
+                                  isLoading =
+                                      false; // Ocultar el loading aunque falle
+                                });
+                              }
+                            }
                           } else {
                             print("Ha fallado");
                           }
                         },
+
                         child: Container(
                           width: 319,
                           height: 80,
