@@ -575,7 +575,6 @@ class _CreateBusinessScreenState
                             });
 
                             try {
-                              await createBusiness();
                               print(
                                 "BusinessName = $businessName",
                               );
@@ -597,6 +596,7 @@ class _CreateBusinessScreenState
                               print(
                                 "redirigiendo a vendor_screen",
                               );
+                              await createBusiness();
 
                               if (mounted) {
                                 // Asegurar que el widget sigue montado antes de navegar

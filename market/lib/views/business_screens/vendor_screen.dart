@@ -7,6 +7,7 @@ class VendorScreen extends StatelessWidget {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
+          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildHeader(),
             _buildUploadButton(),
@@ -85,6 +86,7 @@ class VendorScreen extends StatelessWidget {
                 fontSize: 16,
                 color: Colors.white70,
                 fontWeight: FontWeight.bold,
+                fontStyle: FontStyle.italic,
               ),
             ),
             const SizedBox(height: 20),
@@ -94,6 +96,7 @@ class VendorScreen extends StatelessWidget {
                 fontSize: 19,
                 color: Colors.white70,
                 fontWeight: FontWeight.w900,
+                fontStyle: FontStyle.italic,
               ),
             ),
             Text(
@@ -124,14 +127,15 @@ class VendorScreen extends StatelessWidget {
         Text(
           "Subir Productos",
           style: GoogleFonts.nunitoSans(
-            fontSize: 18,
+            fontSize: 19,
             fontWeight: FontWeight.w900,
+            fontStyle: FontStyle.italic,
           ),
         ),
         const SizedBox(height: 6),
         Container(
-          width: 51, // Ancho del botón
-          height: 39, // Alto del botón
+          width: 59, // Ancho del botón
+          height: 47, // Alto del botón
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
@@ -175,7 +179,7 @@ class VendorScreen extends StatelessWidget {
   Widget _buildMenu() {
     return Column(
       children: [
-        const SizedBox(height: 20),
+        const SizedBox(height: 22),
         Text(
           "Menú de For Gamers ®",
           style: GoogleFonts.nunitoSans(
@@ -184,39 +188,43 @@ class VendorScreen extends StatelessWidget {
             fontStyle: FontStyle.italic,
           ),
         ),
-        //const SizedBox(height: 15),
-        GridView.count(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(),
-          crossAxisCount: 3,
-          crossAxisSpacing: 0,
-          mainAxisSpacing: 0,
-          children: [
-            _buildMenuButton(
-              'assets/icons/sells.png',
-              "Ventas",
-            ),
-            _buildMenuButton(
-              'assets/icons/edit.png',
-              "Editar",
-            ),
-            _buildMenuButton(
-              'assets/icons/deliveries.png',
-              "Pedidos",
-            ),
-            _buildMenuButton(
-              'assets/icons/star.png',
-              "Reseñas",
-            ),
-            _buildMenuButton(
-              'assets/icons/plus.png',
-              "Plus",
-            ),
-            _buildMenuButton(
-              'assets/icons/help.png',
-              "Ayuda",
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 14,
+          ),
+          child: GridView.count(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            crossAxisCount: 3,
+            crossAxisSpacing: 0,
+            mainAxisSpacing: 6,
+            children: [
+              _buildMenuButton(
+                'assets/icons/sells.png',
+                "Ventas",
+              ),
+              _buildMenuButton(
+                'assets/icons/edit.png',
+                "Editar",
+              ),
+              _buildMenuButton(
+                'assets/icons/deliveries.png',
+                "Pedidos",
+              ),
+              _buildMenuButton(
+                'assets/icons/star.png',
+                "Reseñas",
+              ),
+              _buildMenuButton(
+                'assets/icons/plus.png',
+                "Plus",
+              ),
+              _buildMenuButton(
+                'assets/icons/help.png',
+                "Ayuda",
+              ),
+            ],
+          ),
         ),
       ],
     );
