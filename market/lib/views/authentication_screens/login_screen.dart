@@ -3,8 +3,9 @@ import 'package:market/views/authentication_screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/views/widgets/remember_me_checkbox.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+//To use models and controllers
+import 'package:market/controllers/login_controller.dart';
+import 'package:market/models/user_model.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,11 +17,12 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>();
+  final LoginController _authController = LoginController();
   String _token = "No recibido aún";
 
   String name = '';
-  String email = '';
   String password = '';
+  //String email = '';
   //String role = '';
   bool isLoading = false;
 
@@ -29,46 +31,27 @@ class _LoginScreenState extends State<LoginScreen> {
       isLoading = true;
     });
 
-    const String apiUrl =
-        'http://10.0.2.2:8000/token'; // URL backend FastAPI
-
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'name': name,
-        'password': password,
-        //'email': email,
-        //'role': password,
-      }),
-    );
-
-    setState(() {
-      isLoading = false;
-    });
-
-    if (response.statusCode == 200) {
-      print("Login exitoso: ${response.body}");
-      final data = jsonDecode(response.body);
-      _token = data['access_token'];
-      //print(_token);
-      print("Token recibido: ${data['access_token']}");
-      //Navegar a la pantalla principal
+    try {
+      final user = User(name: name, password: password);
+      _token =
+          await _authController.loginUser(user) ??
+          "No recibido aún";
+      print("Token recibido: $_token");
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => RegisterScreen(),
         ),
       );
-    } else {
-      print("Error en el login: ${response.body}");
+    } catch (e) {
+      print("Error en el login: $e");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            "Error al logearse: ${jsonDecode(response.body)['detail']}",
-          ),
-        ),
+        SnackBar(content: Text("Error al logearse: $e")),
       );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -318,14 +301,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           } else {
                             print('Login fallido');
                           }
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) =>
-                                      RegisterScreen(),
-                            ),
-                          );
                         },
                         child: Container(
                           width: 319,

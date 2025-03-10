@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:market/controllers/register_controller.dart';
+import 'package:market/models/user_register_model.dart';
 import 'package:market/views/business_screens/business_or_main_screen.dart';
 import 'package:market/views/authentication_screens/login_screen.dart';
 
@@ -16,6 +16,8 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>();
+  final RegisterController _registerController =
+      RegisterController();
 
   String name = '';
   String email = '';
@@ -28,43 +30,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
       isLoading = true;
     });
 
-    const String apiUrl =
-        'http://10.0.2.2:8000/register'; // URL backend FastAPI
+    try {
+      final user = UserRegisterModel(
+        name: name,
+        email: email,
+        password: password,
+      );
+      await _registerController.registerUser(user);
 
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'name': name,
-        'email': email,
-        'password': password,
-        //'role': password,
-      }),
-    );
-
-    setState(() {
-      isLoading = false;
-    });
-
-    if (response.statusCode == 200) {
-      print("Registro exitoso: ${response.body}");
-
-      // Navegar a la pantalla principal después de un registro exitoso
+      // Create Business or see the Market
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => BusinessOrMainScreen(),
         ),
       );
-    } else {
-      print("Error en el registro: ${response.body}");
+    } catch (e) {
+      print("Error en el registro: $e");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            "Error al registrarse: ${jsonDecode(response.body)['detail']}",
-          ),
-        ),
+        SnackBar(content: Text("Error al registrarse: $e")),
       );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -350,15 +339,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             print("Username = $name");
                             print("Email = $email");
                             print("Password = $password");
-                            // Ask the user if they want to create a Business
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) =>
-                                        BusinessOrMainScreen(),
-                              ),
-                            );
                           } else {
                             print("Ha fallado");
                           }

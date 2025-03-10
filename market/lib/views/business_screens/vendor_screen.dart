@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class VendorScreen extends StatelessWidget {
+  const VendorScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,7 +105,7 @@ class VendorScreen extends StatelessWidget {
               "\$42.000.000",
               style: GoogleFonts.nunitoSans(
                 fontSize: 33,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w900, 
                 color: const Color.fromARGB(
                   255,
                   77,
@@ -165,7 +167,7 @@ class VendorScreen extends StatelessWidget {
             child: Center(
               child: Icon(
                 Icons.add,
-                color: Colors.black,
+                color: Colors.black87,
                 size: 30, // Tamaño del icono
               ),
             ),
