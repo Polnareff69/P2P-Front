@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:market/views/business_screens/business_or_main_screen.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:market/controllers/business_controller.dart';
+import 'package:market/models/business_model.dart';
 import 'package:market/views/business_screens/vendor_screen.dart';
 
 class CreateBusinessScreen extends StatefulWidget {
@@ -17,6 +16,8 @@ class _CreateBusinessScreenState
     extends State<CreateBusinessScreen> {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>();
+  final BusinessController _businessController =
+      BusinessController();
 
   //user inputs
   String businessName = '';
@@ -25,7 +26,8 @@ class _CreateBusinessScreenState
   String businessUbication = '';
   String businessDescription = '';
   String businessLogo = '';
-  String userId = ''; // primary key from user
+  String userId =
+      'e28a46c1-d27b-4122-913f-db14c643789'; // primary key from user
   bool isLoading = false;
 
   Future<void> createBusiness() async {
@@ -33,42 +35,45 @@ class _CreateBusinessScreenState
       isLoading = true;
     });
 
-    const String apiUrl =
-        'http://10.0.2.2:8000/company'; // URL backend FastAPI
-
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'name': businessName,
-        'phonenumber': businessNumber,
-        'description': businessDescription,
-        'userid': '9a6f9d95-ded5-4192-8b4c-96269e661d76',
-      }),
-    );
-
-    setState(() {
-      isLoading = false;
-    });
-
-    if (response.statusCode == 200) {
-      print("Empresa Creada: ${response.body}");
-      //navegar a perfil de emprendedor
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => BusinessOrMainScreen(),
-        ),
+    try {
+      // Crear la empresa
+      final business = Business(
+        name: businessName,
+        phonenumber: businessNumber,
+        description: businessDescription,
+        userid: userId,
       );
-    } else {
-      print("Error al crear Empresa: ${response.body}");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            "Error al crear Empresa: ${jsonDecode(response.body)['detail']}",
+
+      await _businessController.createBusiness(business);
+
+      // Navegar a VendorScreen solo si la creación fue exitosa
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => VendorScreen(),
           ),
-        ),
-      );
+        );
+      }
+    } catch (e) {
+      // Manejar errores y mostrar un mensaje al usuario
+      print(
+        "Error al crear empresa: $e",
+      ); // Mensaje de depuración
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Error al crear empresa: $e"),
+          ),
+        );
+      }
+    } finally {
+      // Ocultar el indicador de carga
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
     }
   }
 
@@ -570,59 +575,28 @@ class _CreateBusinessScreenState
                         onTap: () async {
                           if (_formKey.currentState!
                               .validate()) {
-                            setState(() {
-                              isLoading = true;
-                            });
-
-                            try {
-                              print(
-                                "BusinessName = $businessName",
-                              );
-                              print(
-                                "BusinessNumber = $businessNumber",
-                              );
-                              print(
-                                "BusinessDescription = $businessDescription",
-                              );
-                              print(
-                                "BusinessEmail = $businessEmail",
-                              );
-                              print(
-                                "BusinessLogo = $businessLogo",
-                              );
-                              print(
-                                "BusinessUniversity = $businessUbication",
-                              );
-                              print(
-                                "redirigiendo a vendor_screen",
-                              );
-                              await createBusiness();
-
-                              if (mounted) {
-                                // Asegurar que el widget sigue montado antes de navegar
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (context) =>
-                                            VendorScreen(),
-                                  ),
-                                );
-                              }
-                            } catch (e) {
-                              print(
-                                "Error al crear negocio: $e",
-                              );
-                            } finally {
-                              if (mounted) {
-                                setState(() {
-                                  isLoading =
-                                      false; // Ocultar el loading aunque falle
-                                });
-                              }
-                            }
-                          } else {
-                            print("Ha fallado");
+                            await createBusiness();
+                            print(
+                              "BusinessName = $businessName",
+                            );
+                            print(
+                              "BusinessNumber = $businessNumber",
+                            );
+                            print(
+                              "BusinessDescription = $businessDescription",
+                            );
+                            print(
+                              "BusinessEmail = $businessEmail",
+                            );
+                            print(
+                              "BusinessLogo = $businessLogo",
+                            );
+                            print(
+                              "BusinessUniversity = $businessUbication",
+                            );
+                            print(
+                              "redirigiendo a vendor_screen",
+                            );
                           }
                         },
 
