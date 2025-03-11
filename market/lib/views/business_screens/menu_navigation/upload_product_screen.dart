@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:market/controllers/upload_product_controller.dart';
 import 'package:market/models/product_model.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class UploadProductScreen extends StatefulWidget {
   const UploadProductScreen({super.key});
@@ -37,12 +38,29 @@ class _UploadProductScreenState
   String? userId = '4bbb8690-3546-4c2b-b3a1-a07fb7fbf70e';
 
   String? selectedCategory;
-  final List<String> _sizeList = [];
+  //final List<String> _sizeList = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Subir Producto')),
+      appBar: AppBar(
+        backgroundColor: Colors.black87,
+        title: Text(
+          "Subir Productos",
+          style: GoogleFonts.lilitaOne(
+            fontSize: 45,
+            fontWeight: FontWeight.bold,
+            color: Colors.purple,
+            shadows: [
+              Shadow(
+                color: Colors.black,
+                offset: Offset(2, 3),
+                blurRadius: 4,
+              ),
+            ],
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -51,10 +69,10 @@ class _UploadProductScreenState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Campo para seleccionar imágenes
-              const Text(
+              Text(
                 'Imágenes del Producto',
-                style: TextStyle(
-                  fontSize: 16,
+                style: GoogleFonts.nunitoSans(
+                  fontSize: 17,
                   fontWeight: FontWeight.bold,
                 ),
               ),
