@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:market/views/business_screens/menu_navigation/upload_product_screen.dart';
 
 class VendorScreen extends StatelessWidget {
   const VendorScreen({super.key});
@@ -12,7 +13,7 @@ class VendorScreen extends StatelessWidget {
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildHeader(),
-            _buildUploadButton(),
+            _buildUploadButton(context),
             _buildMenu(),
           ],
         ),
@@ -105,7 +106,7 @@ class VendorScreen extends StatelessWidget {
               "\$42.000.000",
               style: GoogleFonts.nunitoSans(
                 fontSize: 33,
-                fontWeight: FontWeight.w900, 
+                fontWeight: FontWeight.w900,
                 color: const Color.fromARGB(
                   255,
                   77,
@@ -122,7 +123,7 @@ class VendorScreen extends StatelessWidget {
   }
 
   // Botón "Subir Productos"
-  Widget _buildUploadButton() {
+  Widget _buildUploadButton(BuildContext context) {
     return Column(
       children: [
         const SizedBox(height: 20),
@@ -163,6 +164,13 @@ class VendorScreen extends StatelessWidget {
             ), // Bordes circulares
             onTap: () {
               // Acción del botón
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder:
+                      (context) => UploadProductScreen(),
+                ),
+              );
             },
             child: Center(
               child: Icon(

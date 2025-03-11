@@ -28,6 +28,13 @@ class WelcomeScreen extends StatelessWidget {
               fontSize: 55,
               fontWeight: FontWeight.bold,
               color: Colors.purple,
+              shadows: [
+                Shadow(
+                  color: Colors.black,
+                  offset: Offset(2, 3),
+                  blurRadius: 4,
+                ),
+              ],
             ),
           ),
 
@@ -57,6 +64,9 @@ class WelcomeScreen extends StatelessWidget {
                   double.infinity,
                   60,
                 ),
+                elevation: 7, // Añade sombra al botón
+                shadowColor:
+                    Colors.purple, // Color de la sombra
               ),
               icon: Image.asset(
                 'assets/icons/login.png',
@@ -68,6 +78,13 @@ class WelcomeScreen extends StatelessWidget {
                   color: Colors.white,
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black.withOpacity(0.6),
+                      offset: Offset(2, 2),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
               ),
               onPressed: () {
@@ -99,6 +116,9 @@ class WelcomeScreen extends StatelessWidget {
                   double.infinity,
                   60,
                 ),
+                elevation: 7, // Añade sombra al botón
+                shadowColor:
+                    Colors.blueAccent, // Color de la sombra
               ),
               icon: Image.asset(
                 'assets/icons/register.png',
@@ -110,6 +130,13 @@ class WelcomeScreen extends StatelessWidget {
                   color: Colors.white,
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black.withOpacity(0.6),
+                      offset: Offset(2, 2),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
               ),
               onPressed: () {
