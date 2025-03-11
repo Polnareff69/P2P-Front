@@ -27,7 +27,7 @@ class _CreateBusinessScreenState
   String businessDescription = '';
   String businessLogo = '';
   String userId =
-      'e28a46c1-d27b-4122-913f-db14c643789'; // primary key from user
+      '4bbb8690-3546-4c2b-b3a1-a07fb7fbf70e'; // primary key from user
   bool isLoading = false;
 
   Future<void> createBusiness() async {

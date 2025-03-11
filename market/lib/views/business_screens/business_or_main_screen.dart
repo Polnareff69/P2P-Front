@@ -15,6 +15,13 @@ class BusinessOrMainScreen extends StatelessWidget {
             fontSize: 45,
             fontWeight: FontWeight.bold,
             color: Colors.purple,
+            shadows: [
+              Shadow(
+                color: Colors.black,
+                offset: Offset(2, 3),
+                blurRadius: 4,
+              ),
+            ],
           ),
         ),
       ),
@@ -30,7 +37,7 @@ class BusinessOrMainScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 30),
+                const SizedBox(height: 7),
                 // Logo
                 Image.asset(
                   'assets/images/logo.png',
@@ -69,7 +76,7 @@ class BusinessOrMainScreen extends StatelessWidget {
                   "¿Qué quieres hacer?",
                   style: GoogleFonts.nunitoSans(
                     fontSize: 25,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -83,17 +90,23 @@ class BusinessOrMainScreen extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(
-                      86,
-                      151,
-                      144,
-                      144,
+                      85,
+                      0,
+                      0,
+                      0,
                     ),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: Color.fromRGBO(0, 0, 0, 0.1),
+                        color: Color.fromRGBO(
+                          0,
+                          0,
+                          0,
+                          0.12,
+                        ),
                         blurRadius: 10,
                         spreadRadius: 2,
+                        offset: Offset(2, 4),
                       ),
                     ],
                   ),
@@ -116,19 +129,26 @@ class BusinessOrMainScreen extends StatelessWidget {
                           foregroundColor: Colors.white,
                           padding:
                               const EdgeInsets.symmetric(
-                                vertical: 20,
+                                vertical: 50,
                                 horizontal: 70,
                               ),
                           textStyle: const TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 29,
+                            fontWeight: FontWeight.w900,
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(15),
                           ),
+                          elevation:
+                              10, // Añade sombra al botón
+                          shadowColor:
+                              Colors
+                                  .purple, // Color de la sombra
                         ),
-                        child: const Text("Crear Empresa"),
+                        child: Center(
+                          child: const Text("Emprender"),
+                        ),
                       ),
                       const SizedBox(height: 20),
                       ElevatedButton(
@@ -144,19 +164,26 @@ class BusinessOrMainScreen extends StatelessWidget {
                           foregroundColor: Colors.white,
                           padding:
                               const EdgeInsets.symmetric(
-                                vertical: 20,
+                                vertical: 50,
                                 horizontal: 70,
                               ),
                           textStyle: const TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 29,
+                            fontWeight: FontWeight.w900,
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(15),
                           ),
+                          elevation:
+                              10, // Añade sombra al botón
+                          shadowColor:
+                              Colors
+                                  .purple, // Color de la sombra
                         ),
-                        child: const Text("Ver el mercado"),
+                        child: Center(
+                          child: const Text("Ver Mercado "),
+                        ),
                       ),
                     ],
                   ),
