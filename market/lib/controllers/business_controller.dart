@@ -2,14 +2,23 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:market/models/business_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BusinessController {
   Future<void> createBusiness(Business business) async {
     const String apiUrl = 'http://10.0.2.2:8000/company'; // URL del backend
 
+    // Recuperar el token de SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('auth_token');
+
+    if (token == null) {
+      throw Exception('No authentication token found');
+    }
+
     final response = await http.post(
       Uri.parse(apiUrl),
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer $token',},
       body: jsonEncode(business.toJson()),
     );
 

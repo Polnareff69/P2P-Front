@@ -2,6 +2,7 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:market/models/user_register_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegisterController {
   Future<void> registerUser(UserRegisterModel user) async {
@@ -16,7 +17,17 @@ class RegisterController {
 
     if (response.statusCode == 200 ||
         response.statusCode == 201) {
+      final responseData = jsonDecode(response.body);
+      final token =
+          responseData['Token']; // Extraer el token de la respuesta
+      
+      // Guardar el token en SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('auth_token', token);
+
       print("Registro exitoso: ${response.body}");
+      return token;
+      
     } else {
       throw Exception(
         'Error en el registro: ${response.body}',
