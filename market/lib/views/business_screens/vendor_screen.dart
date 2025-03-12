@@ -1,10 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/views/business_screens/menu_navigation/upload_product_screen.dart';
+//import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
-class VendorScreen extends StatelessWidget {
-  const VendorScreen({super.key});
+class VendorScreen extends StatefulWidget {
+  final String businessName; // Nombre de la empresa
+  final File? businessLogo; // Logo de la empresa
 
+  const VendorScreen({
+    super.key,
+    required this.businessName,
+    required this.businessLogo,
+  });
+
+  @override
+  _VendorScreenState createState() => _VendorScreenState();
+}
+
+class _VendorScreenState extends State<VendorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,15 +82,18 @@ class VendorScreen extends StatelessWidget {
               ),
               child: CircleAvatar(
                 radius: 73,
-                backgroundImage: AssetImage(
-                  'assets/images/profile_photo.jpg',
-                ),
+                backgroundImage:
+                    widget.businessLogo != null
+                        ? FileImage(widget.businessLogo!)
+                        : AssetImage(
+                          'assets/images/profile_photo.jpg',
+                        ),
               ),
             ),
 
             const SizedBox(height: 5),
             Text(
-              " For Gamers ®",
+              widget.businessName,
               style: GoogleFonts.nunitoSans(
                 fontSize: 23,
                 fontWeight: FontWeight.w900,
