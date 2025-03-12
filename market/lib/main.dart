@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:market/views/authentication_screens/welcome_screen.dart';
-import 'package:market/views/main_screen/businesses.dart';
 
 void main() {
   runApp(const MyApp());
