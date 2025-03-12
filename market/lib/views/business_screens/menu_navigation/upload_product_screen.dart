@@ -4,6 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:market/controllers/upload_product_controller.dart';
 import 'package:market/models/product_model.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:market/views/main_screen/businesses.dart';
+
 
 class UploadProductScreen extends StatefulWidget {
   const UploadProductScreen({super.key});
@@ -63,6 +65,13 @@ class _UploadProductScreenState
           icon: const Icon(
             Icons.arrow_back_ios_new,
             color: Colors.deepPurpleAccent,
+            shadows: [
+              Shadow(
+                color: Colors.deepPurpleAccent,
+                offset: Offset(1, 1),
+                blurRadius: 20,
+              ),
+            ],
           ), // Cambia el icono y el color
           onPressed: () {
             Navigator.pop(
@@ -88,8 +97,8 @@ class _UploadProductScreenState
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black,
-                          blurRadius: 10,
-                          spreadRadius: 2,
+                          blurRadius: 7,
+                          spreadRadius: 3,
                           offset: Offset(0, 3),
                         ),
                       ],
@@ -216,39 +225,56 @@ class _UploadProductScreenState
   }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
-      child: TextFormField(
-        controller: controller,
-        keyboardType:
-            isNumeric
-                ? TextInputType.number
-                : TextInputType.text,
-        maxLines: maxLines,
-        decoration: InputDecoration(
-          labelText: label,
-          labelStyle: GoogleFonts.nunitoSans(
-            color: Colors.black,
-            shadows: [
-              Shadow(
-                color: Colors.black87,
-                offset: Offset(0, 0),
-                blurRadius: 25,
-              ),
-            ],
-            fontWeight: FontWeight.w900,
-            fontSize: 18,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          filled: true,
-          fillColor: Colors.grey[400],
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black, // Sombra suave
+              blurRadius: 7,
+              offset: Offset(
+                2,
+                3,
+              ), // Dirección de la sombra
+            ),
+          ],
+          borderRadius: BorderRadius.circular(
+            15,
+          ), // Asegurar que la sombra siga el borde redondeado
         ),
-        validator: (value) {
-          if (value == null || value.isEmpty) {
-            return 'Este campo es obligatorio';
-          }
-          return null;
-        },
+        child: TextFormField(
+          controller: controller,
+          keyboardType:
+              isNumeric
+                  ? TextInputType.number
+                  : TextInputType.text,
+          maxLines: maxLines,
+          decoration: InputDecoration(
+            labelText: label,
+            labelStyle: GoogleFonts.nunitoSans(
+              color: Colors.black,
+              shadows: [
+                Shadow(
+                  color: Colors.black87,
+                  offset: Offset(0, 0),
+                  blurRadius: 25,
+                ),
+              ],
+              fontWeight: FontWeight.w900,
+              fontSize: 17,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            filled: true,
+            fillColor: Colors.grey[400],
+          ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Este campo es obligatorio';
+            }
+            return null;
+          },
+        ),
       ),
     );
   }
@@ -256,47 +282,64 @@ class _UploadProductScreenState
   Widget _buildDropdownField() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
-      child: DropdownButtonFormField<String>(
-        value: selectedCategory,
-        decoration: InputDecoration(
-          labelText: 'Categoría',
-          labelStyle: GoogleFonts.nunitoSans(
-            color: Colors.black,
-            shadows: [
-              Shadow(
-                color: Colors.black87,
-                offset: Offset(0, 0),
-                blurRadius: 25,
-              ),
-            ],
-            fontSize: 18,
-            fontWeight: FontWeight.w900,
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          filled: true,
-          fillColor: Colors.grey[400],
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black, // Sombra sutil
+              blurRadius: 7,
+              offset: Offset(
+                2,
+                3,
+              ), // Dirección de la sombra
+            ),
+          ],
+          borderRadius: BorderRadius.circular(
+            15,
+          ), // Redondeo para que la sombra siga la forma
         ),
-        items: const [
-          DropdownMenuItem(
-            value: 'Electrónica',
-            child: Text('Electrónica'),
+        child: DropdownButtonFormField<String>(
+          value: selectedCategory,
+          decoration: InputDecoration(
+            labelText: 'Categoría',
+            labelStyle: GoogleFonts.nunitoSans(
+              color: Colors.black,
+              shadows: [
+                Shadow(
+                  color: Colors.black87,
+                  offset: Offset(0, 0),
+                  blurRadius: 25,
+                ),
+              ],
+              fontSize: 17,
+              fontWeight: FontWeight.w900,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            filled: true,
+            fillColor: Colors.grey[400],
           ),
-          DropdownMenuItem(
-            value: 'Ropa',
-            child: Text('Ropa'),
-          ),
-          DropdownMenuItem(
-            value: 'Hogar',
-            child: Text('Hogar'),
-          ),
-        ],
-        onChanged: (value) {
-          setState(() {
-            selectedCategory = value;
-          });
-        },
+          items: const [
+            DropdownMenuItem(
+              value: 'Electrónica',
+              child: Text('Electrónica'),
+            ),
+            DropdownMenuItem(
+              value: 'Ropa',
+              child: Text('Ropa'),
+            ),
+            DropdownMenuItem(
+              value: 'Hogar',
+              child: Text('Hogar'),
+            ),
+          ],
+          onChanged: (value) {
+            setState(() {
+              selectedCategory = value;
+            });
+          },
+        ),
       ),
     );
   }
@@ -330,6 +373,10 @@ class _UploadProductScreenState
             content: Text('Producto subido exitosamente'),
           ),
         );
+        Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => BusinessesScreen()),
+      );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

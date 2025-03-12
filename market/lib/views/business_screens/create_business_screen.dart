@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:market/controllers/business_controller.dart';
 import 'package:market/models/business_model.dart';
 import 'package:market/views/business_screens/vendor_screen.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 class CreateBusinessScreen extends StatefulWidget {
   const CreateBusinessScreen({super.key});
@@ -19,16 +21,31 @@ class _CreateBusinessScreenState
   final BusinessController _businessController =
       BusinessController();
 
+  final ImagePicker _picker = ImagePicker();
+
   //user inputs
   String businessName = '';
   String businessNumber = '';
   String businessEmail = '';
   String businessUbication = '';
   String businessDescription = '';
-  String businessLogo = '';
+  File? businessLogo;
+  String? logo;
   String userId =
       '4bbb8690-3546-4c2b-b3a1-a07fb7fbf70e'; // primary key from user
   bool isLoading = false;
+
+  //function to pick an image
+  Future<void> _pickImage() async {
+    final XFile? image = await _picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    if (image != null) {
+      setState(() {
+        businessLogo = File(image.path);
+      });
+    }
+  }
 
   Future<void> createBusiness() async {
     setState(() {
@@ -36,6 +53,18 @@ class _CreateBusinessScreenState
     });
 
     try {
+      // Validar que se haya seleccionado una imagen
+      if (businessLogo == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Por favor, selecciona un logo para tu empresa.",
+            ),
+          ),
+        );
+        return;
+      }
+
       // Crear la empresa
       final business = Business(
         name: businessName,
@@ -51,7 +80,13 @@ class _CreateBusinessScreenState
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => VendorScreen(),
+            builder:
+                (context) => VendorScreen(
+                  businessName: businessName,
+                  businessLogo: businessLogo,
+                  //businessNumber: businessNumber,
+                  //businessDescription: businessDescription,
+                ),
           ),
         );
       }
@@ -113,7 +148,7 @@ class _CreateBusinessScreenState
       ),
 
       body: Padding(
-        padding: const EdgeInsets.all(25.0),
+        padding: const EdgeInsets.all(17.0),
         child: Center(
           child: SingleChildScrollView(
             child: Form(
@@ -121,6 +156,82 @@ class _CreateBusinessScreenState
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  //Business LOGO
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Logo de Tu Empresa',
+                      style: GoogleFonts.getFont(
+                        'Nunito Sans',
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        //letterSpacing: 0.2,
+                      ),
+                    ),
+                  ),
+
+                  //Input from the business logo
+                  // Campo para subir la imagen
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: Container(
+                      width: double.infinity,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(
+                          15,
+                        ),
+                        border: Border.all(
+                          color: Colors.purple,
+                          width: 2,
+                        ),
+                      ),
+                      child:
+                          businessLogo == null
+                              ? Center(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment
+                                          .center,
+                                  children: [
+                                    Icon(
+                                      Icons.add_a_photo,
+                                      size: 40,
+                                      color: Colors.purple,
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      'Selecciona un Logo',
+                                      style:
+                                          GoogleFonts.nunitoSans(
+                                            color:
+                                                Colors
+                                                    .purple,
+                                            fontSize: 16,
+                                            fontWeight:
+                                                FontWeight
+                                                    .bold,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                              : ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(
+                                      15,
+                                    ),
+                                child: Image.file(
+                                  businessLogo!,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
                   //user business name
                   Align(
                     alignment: Alignment.topLeft,
@@ -151,7 +262,7 @@ class _CreateBusinessScreenState
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
+                      fillColor: Colors.grey[200],
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
@@ -181,7 +292,7 @@ class _CreateBusinessScreenState
                       hintStyle: GoogleFonts.getFont(
                         'Nunito Sans',
                         fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                         color: Colors.blueGrey,
                       ),
                       //icons
@@ -197,7 +308,7 @@ class _CreateBusinessScreenState
                   ),
 
                   //Business Number
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 15),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
@@ -225,7 +336,7 @@ class _CreateBusinessScreenState
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
+                      fillColor: Colors.grey[200],
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
@@ -255,7 +366,7 @@ class _CreateBusinessScreenState
                       hintStyle: GoogleFonts.getFont(
                         'Nunito Sans',
                         fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                         color: Colors.blueGrey,
                       ),
                       //icons
@@ -269,8 +380,8 @@ class _CreateBusinessScreenState
                       ),
                     ),
                   ),
-                  //Business Number
-                  const SizedBox(height: 25),
+                  //Business Email
+                  const SizedBox(height: 15),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
@@ -298,7 +409,7 @@ class _CreateBusinessScreenState
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
+                      fillColor: Colors.grey[200],
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
@@ -328,7 +439,7 @@ class _CreateBusinessScreenState
                       hintStyle: GoogleFonts.getFont(
                         'Nunito Sans',
                         fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                         color: Colors.blueGrey,
                       ),
                       //icons
@@ -344,7 +455,7 @@ class _CreateBusinessScreenState
                   ),
 
                   //business Ubication
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 15),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
@@ -372,7 +483,7 @@ class _CreateBusinessScreenState
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
+                      fillColor: Colors.grey[200],
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
@@ -400,7 +511,7 @@ class _CreateBusinessScreenState
                       hintStyle: GoogleFonts.getFont(
                         'Nunito Sans',
                         fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                         color: Colors.blueGrey,
                       ),
                       //icons
@@ -415,7 +526,7 @@ class _CreateBusinessScreenState
                     ),
                   ),
 
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 15),
                   //Business Description
                   Align(
                     alignment: Alignment.topLeft,
@@ -430,7 +541,7 @@ class _CreateBusinessScreenState
                     ),
                   ),
 
-                  //Input from the business name
+                  //Input from the business description
                   TextFormField(
                     //grab name
                     onChanged: (value) {
@@ -446,7 +557,7 @@ class _CreateBusinessScreenState
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
+                      fillColor: Colors.grey[200],
                       filled: true,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
@@ -476,7 +587,7 @@ class _CreateBusinessScreenState
                       hintStyle: GoogleFonts.getFont(
                         'Nunito Sans',
                         fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w600,
                         color: Colors.blueGrey,
                       ),
                       //icons
@@ -484,82 +595,6 @@ class _CreateBusinessScreenState
                         padding: const EdgeInsets.all(10.0),
                         child: Image.asset(
                           'assets/icons/description.png',
-                          width: 30,
-                          height: 30,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 25),
-                  //Business LOGO
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Logo de Tu Empresa',
-                      style: GoogleFonts.getFont(
-                        'Nunito Sans',
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        //letterSpacing: 0.2,
-                      ),
-                    ),
-                  ),
-
-                  //Input from the business name
-                  TextFormField(
-                    //grab name
-                    onChanged: (value) {
-                      businessLogo = value;
-                    },
-
-                    //validate info is not empty
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Ingresa un Logo.';
-                      } else {
-                        return null;
-                      }
-                    },
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                      ),
-                      //borders
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                        borderSide:
-                            BorderSide
-                                .none, // Sin color cuando está enfocado
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                        borderSide:
-                            BorderSide
-                                .none, // Sin color cuando no está enfocado
-                      ),
-
-                      hintText:
-                          'Selecciona el Logo/Foto...',
-                      hintStyle: GoogleFonts.getFont(
-                        'Nunito Sans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.blueGrey,
-                      ),
-                      //icons
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Image.asset(
-                          'assets/icons/upload_image.png',
                           width: 30,
                           height: 30,
                         ),
