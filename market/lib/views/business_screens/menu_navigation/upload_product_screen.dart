@@ -32,33 +32,43 @@ class _UploadProductScreenState
       TextEditingController();
 
   final ImagePicker _picker = ImagePicker();
-  List<File> _selectedImages =
-      []; // Lista para almacenar las imágenes seleccionadas
+  final List<File> _selectedImages = [];
 
   String? userId = '4bbb8690-3546-4c2b-b3a1-a07fb7fbf70e';
-
   String? selectedCategory;
-  //final List<String> _sizeList = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         backgroundColor: Colors.black87,
         title: Text(
-          "Subir Productos",
+          "Subir Producto",
           style: GoogleFonts.lilitaOne(
-            fontSize: 45,
+            fontSize: 40,
             fontWeight: FontWeight.bold,
-            color: Colors.purple,
+            color: Colors.purpleAccent,
             shadows: [
               Shadow(
-                color: Colors.black,
-                offset: Offset(2, 3),
-                blurRadius: 4,
+                color: Colors.deepPurple,
+                offset: Offset(1, 1),
+                blurRadius: 25,
               ),
             ],
           ),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.deepPurpleAccent,
+          ), // Cambia el icono y el color
+          onPressed: () {
+            Navigator.pop(
+              context,
+            ); // Regresar a la pantalla anterior
+          },
         ),
       ),
       body: SingleChildScrollView(
@@ -68,213 +78,128 @@ class _UploadProductScreenState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Campo para seleccionar imágenes
-              Text(
-                'Imágenes del Producto',
-                style: GoogleFonts.nunitoSans(
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              GridView.builder(
-                shrinkWrap: true,
-                physics:
-                    const NeverScrollableScrollPhysics(),
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                    ),
-                itemCount: _selectedImages.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return GestureDetector(
-                      onTap: _pickImages,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          borderRadius:
-                              BorderRadius.circular(8),
+              Center(
+                child: GestureDetector(
+                  onTap: _pickImages,
+                  child: Container(
+                    height: 180,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black,
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                          offset: Offset(0, 3),
                         ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.add,
-                            size: 40,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                    );
-                  } else {
-                    return ClipRRect(
+                      ],
+                      color: Colors.grey[400],
                       borderRadius: BorderRadius.circular(
-                        8,
+                        15,
                       ),
-                      child: Image.file(
-                        _selectedImages[index - 1],
-                        fit: BoxFit.cover,
-                      ),
-                    );
-                  }
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Campo para el nombre del producto
-              TextFormField(
-                controller: _nameController,
-                decoration: const InputDecoration(
-                  labelText: 'Nombre del Producto',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor ingresa el nombre del producto';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Campo para el precio del producto
-              TextFormField(
-                controller: _priceController,
-                decoration: const InputDecoration(
-                  labelText: 'Precio',
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor ingresa el precio';
-                  }
-                  if (int.tryParse(value) == null) {
-                    return 'El precio debe ser un número entero válido';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Campo para la categoría del producto
-              DropdownButtonFormField<String>(
-                value: selectedCategory,
-                decoration: const InputDecoration(
-                  labelText: 'Categoría',
-                ),
-                items: const [
-                  DropdownMenuItem(
-                    value: 'Electrónica',
-                    child: Text('Electrónica'),
+                    ),
+                    child:
+                        _selectedImages.isEmpty
+                            ? const Icon(
+                              Icons.add_a_photo,
+                              size: 70,
+                              color: Colors.purpleAccent,
+                              shadows: [
+                                Shadow(
+                                  color: Colors.black,
+                                  offset: Offset(0, 0),
+                                  blurRadius: 30,
+                                ),
+                              ],
+                            )
+                            : ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular(15),
+                              child: Image.file(
+                                _selectedImages.first,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                   ),
-                  DropdownMenuItem(
-                    value: 'Ropa',
-                    child: Text('Ropa'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'Hogar',
-                    child: Text('Hogar'),
-                  ),
-                ],
-                onChanged: (value) {
-                  setState(() {
-                    selectedCategory = value;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor selecciona una categoría';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Campo para el descuento
-              TextFormField(
-                controller: _discountController,
-                decoration: const InputDecoration(
-                  labelText: 'Descuento',
                 ),
-                keyboardType: TextInputType.number,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
+              _buildDropdownField(),
 
-              // Campo para la cantidad
-              TextFormField(
-                controller: _quantityController,
-                decoration: const InputDecoration(
-                  labelText: 'Cantidad',
-                ),
-                keyboardType: TextInputType.number,
+              _buildTextField(
+                "Nombre del Producto",
+                _nameController,
               ),
-              const SizedBox(height: 16),
-
-              // Campo para la descripción
-              TextFormField(
-                controller: _descriptionController,
-                decoration: const InputDecoration(
-                  labelText: 'Descripción',
-                ),
+              _buildTextField(
+                "Precio",
+                _priceController,
+                isNumeric: true,
+              ),
+              _buildTextField(
+                "Descuento %",
+                _discountController,
+                isNumeric: true,
+              ),
+              _buildTextField(
+                "Cantidad",
+                _quantityController,
+                isNumeric: true,
+              ),
+              _buildTextField(
+                "Descripción",
+                _descriptionController,
                 maxLines: 3,
               ),
-              const SizedBox(height: 16),
-
-              // Botón para subir el producto
-              ElevatedButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    final price = _priceController.text;
-
-                    if (int.tryParse(price) == null) {
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'El precio debe ser un número entero válido.',
+              const SizedBox(height: 10),
+              Center(
+                child: SizedBox(
+                  width: 319,
+                  height: 60,
+                  child: InkWell(
+                    onTap: _uploadProduct,
+                    borderRadius: BorderRadius.circular(10),
+                    child: Ink(
+                      decoration: BoxDecoration(
+                        color: Colors.purple,
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 8,
+                            offset: Offset(0, 3),
+                          ),
+                        ],
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.deepPurple,
+                            Colors.purpleAccent,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Subir Producto",
+                          style: GoogleFonts.lilitaOne(
+                            fontSize: 27,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                            shadows: [
+                              Shadow(
+                                color: Colors.black,
+                                offset: Offset(2, 3),
+                                blurRadius: 7,
+                              ),
+                            ],
                           ),
                         ),
-                      );
-                      return;
-                    }
-
-                    final product = Product(
-                      Name: _nameController.text,
-                      Price:
-                          price, // Envía el precio como String
-                      Description:
-                          _descriptionController.text,
-                      UserId: userId,
-                    );
-
-                    try {
-                      await _controller.uploadProduct(
-                        product,
-                      );
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            'Producto subido exitosamente',
-                          ),
-                        ),
-                      );
-                    } catch (e) {
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Error al subir el producto: $e',
-                          ),
-                        ),
-                      );
-                    }
-                  }
-                },
-                child: const Text('Subir Producto'),
+                      ),
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -283,19 +208,135 @@ class _UploadProductScreenState
     );
   }
 
-  // Función para seleccionar imágenes
-  Future<void> _pickImages() async {
-    final List<XFile>? pickedFiles =
-        await _picker.pickMultiImage();
+  Widget _buildTextField(
+    String label,
+    TextEditingController controller, {
+    bool isNumeric = false,
+    int maxLines = 1,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: TextFormField(
+        controller: controller,
+        keyboardType:
+            isNumeric
+                ? TextInputType.number
+                : TextInputType.text,
+        maxLines: maxLines,
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: GoogleFonts.nunitoSans(
+            color: Colors.black,
+            shadows: [
+              Shadow(
+                color: Colors.black87,
+                offset: Offset(0, 0),
+                blurRadius: 25,
+              ),
+            ],
+            fontWeight: FontWeight.w900,
+            fontSize: 18,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          filled: true,
+          fillColor: Colors.grey[400],
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Este campo es obligatorio';
+          }
+          return null;
+        },
+      ),
+    );
+  }
 
-    if (pickedFiles != null) {
+  Widget _buildDropdownField() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: DropdownButtonFormField<String>(
+        value: selectedCategory,
+        decoration: InputDecoration(
+          labelText: 'Categoría',
+          labelStyle: GoogleFonts.nunitoSans(
+            color: Colors.black,
+            shadows: [
+              Shadow(
+                color: Colors.black87,
+                offset: Offset(0, 0),
+                blurRadius: 25,
+              ),
+            ],
+            fontSize: 18,
+            fontWeight: FontWeight.w900,
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          filled: true,
+          fillColor: Colors.grey[400],
+        ),
+        items: const [
+          DropdownMenuItem(
+            value: 'Electrónica',
+            child: Text('Electrónica'),
+          ),
+          DropdownMenuItem(
+            value: 'Ropa',
+            child: Text('Ropa'),
+          ),
+          DropdownMenuItem(
+            value: 'Hogar',
+            child: Text('Hogar'),
+          ),
+        ],
+        onChanged: (value) {
+          setState(() {
+            selectedCategory = value;
+          });
+        },
+      ),
+    );
+  }
+
+  Future<void> _pickImages() async {
+    final List<XFile> pickedFiles =
+        await _picker.pickMultiImage();
+    if (pickedFiles.isNotEmpty) {
       setState(() {
+        _selectedImages.clear();
         _selectedImages.addAll(
-          pickedFiles
-              .map((file) => File(file.path))
-              .toList(),
+          pickedFiles.map((file) => File(file.path)),
         );
       });
+    }
+  }
+
+  void _uploadProduct() async {
+    if (_formKey.currentState!.validate()) {
+      final product = Product(
+        Name: _nameController.text,
+        Price: _priceController.text,
+        Description: _descriptionController.text,
+        UserId: userId,
+      );
+
+      try {
+        await _controller.uploadProduct(product);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Producto subido exitosamente'),
+          ),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error al subir el producto: $e'),
+          ),
+        );
+      }
     }
   }
 }
