@@ -31,8 +31,7 @@ class _CreateBusinessScreenState
   String businessDescription = '';
   File? businessLogo;
   String? logo;
-  String userId =
-      '4bbb8690-3546-4c2b-b3a1-a07fb7fbf70e'; // primary key from user
+  //String userId ='4bbb8690-3546-4c2b-b3a1-a07fb7fbf70e'; // primary key from user
   bool isLoading = false;
 
   //function to pick an image
@@ -70,7 +69,7 @@ class _CreateBusinessScreenState
         name: businessName,
         phonenumber: businessNumber,
         description: businessDescription,
-        userid: userId,
+        //userid: userId,
       );
 
       await _businessController.createBusiness(business);
@@ -181,10 +180,6 @@ class _CreateBusinessScreenState
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(
                           15,
-                        ),
-                        border: Border.all(
-                          color: Colors.purple,
-                          width: 2,
                         ),
                       ),
                       child:

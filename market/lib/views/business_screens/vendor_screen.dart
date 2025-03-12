@@ -46,9 +46,9 @@ class _VendorScreenState extends State<VendorScreen> {
             // shadow
             boxShadow: [
               BoxShadow(
-                color: Colors.black26,
-                blurRadius: 2,
-                offset: Offset(3, 5),
+                color: Colors.black,
+                blurRadius: 4,
+                offset: Offset(1, 5),
               ),
             ],
 
@@ -98,6 +98,13 @@ class _VendorScreenState extends State<VendorScreen> {
                 fontSize: 23,
                 fontWeight: FontWeight.w900,
                 color: Colors.white,
+                shadows: [
+                  Shadow(
+                    color: Colors.black,
+                    offset: Offset(1, 1),
+                    blurRadius: 25,
+                  ),
+                ],
               ),
             ),
             Text(
@@ -130,6 +137,13 @@ class _VendorScreenState extends State<VendorScreen> {
                   207,
                   121,
                 ),
+                shadows: [
+                  Shadow(
+                    color: Colors.black,
+                    offset: Offset(1, 1),
+                    blurRadius: 25,
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 40),
@@ -169,9 +183,9 @@ class _VendorScreenState extends State<VendorScreen> {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.black26,
-                blurRadius: 2,
-                offset: Offset(2, 4),
+                color: Colors.black,
+                blurRadius: 4,
+                offset: Offset(2, 3),
               ),
             ],
           ),
@@ -276,8 +290,8 @@ class _VendorScreenState extends State<VendorScreen> {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.black45,
-                blurRadius: 2,
+                color: Colors.black,
+                blurRadius: 4,
                 offset: Offset(2, 4),
               ),
             ],
