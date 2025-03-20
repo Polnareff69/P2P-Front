@@ -222,7 +222,7 @@ class _VendorScreenState extends State<VendorScreen> {
       children: [
         const SizedBox(height: 22),
         Text(
-          "Menú de For Gamers ®",
+          "Menú For Gamers ®",
           style: GoogleFonts.nunitoSans(
             fontSize: 20,
             fontWeight: FontWeight.w900,
