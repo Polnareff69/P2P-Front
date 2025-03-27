@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:market/views/business_screens/menu_navigation/upload_product_screen.dart';
+//import 'package:market/views/business_screens/menu_navigation/upload_product_screen.dart';
+import 'package:market/views/business_screens/menu_navigation/store_preview_screen.dart';
 //import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
@@ -199,7 +200,10 @@ class _VendorScreenState extends State<VendorScreen> {
                 context,
                 MaterialPageRoute(
                   builder:
-                      (context) => UploadProductScreen(),
+                      (context) => StorePreviewScreen(
+                        businessName: widget.businessName,
+                        businessLogo: widget.businessLogo,
+                      ),
                 ),
               );
             },
