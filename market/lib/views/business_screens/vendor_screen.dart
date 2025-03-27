@@ -68,6 +68,23 @@ class _VendorScreenState extends State<VendorScreen> {
             ),
           ),
         ),
+
+        // Botón para personalizar header (en la esquina superior derecha)
+        Positioned(
+          top: 33,
+          right: 3,
+          child: Container(
+            child: IconButton(
+              icon: Icon(
+                Icons.settings_suggest,
+                color: Colors.black,
+                size: 44,
+              ),
+              onPressed: () {},
+            ),
+          ),
+        ),
+
         Column(
           children: [
             const SizedBox(height: 50),

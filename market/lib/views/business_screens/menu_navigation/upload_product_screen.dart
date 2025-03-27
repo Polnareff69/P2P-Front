@@ -182,8 +182,8 @@ class _UploadProductScreenState
                         ],
                         gradient: LinearGradient(
                           colors: [
-                            Colors.deepPurple,
                             Colors.purpleAccent,
+                            Colors.deepPurple,
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
