@@ -750,7 +750,7 @@ class _StorePreviewScreenState
             crossAxisSpacing: 15,
             mainAxisSpacing: 15,
           ),
-      itemCount: 15, // 15 espacios para productos
+      itemCount: 9, // 15 espacios para productos
       itemBuilder: (context, index) {
         return _buildProductItem();
       },
