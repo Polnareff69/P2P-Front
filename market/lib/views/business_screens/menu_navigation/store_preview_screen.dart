@@ -745,12 +745,12 @@ class _StorePreviewScreenState
       padding: EdgeInsets.all(15),
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
+            crossAxisCount: 2,
             childAspectRatio: 1,
             crossAxisSpacing: 15,
             mainAxisSpacing: 15,
           ),
-      itemCount: 9, // 15 espacios para productos
+      itemCount: 7, // 7 espacios para productos
       itemBuilder: (context, index) {
         return _buildProductItem();
       },
