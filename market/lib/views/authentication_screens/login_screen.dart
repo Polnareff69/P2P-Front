@@ -1,5 +1,6 @@
 import 'package:market/views/authentication_screens/forgot_password_screen.dart';
 import 'package:market/views/authentication_screens/register_screen.dart';
+import 'package:market/views/client_screen/user_screen.dart';
 import 'package:market/views/main_screen/businesses.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => BusinessesScreen(),
+          builder: (context) => UserScreen(businessName: name,),
         ),
       );
     } catch (e) {
