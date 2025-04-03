@@ -14,11 +14,7 @@ class FigmaToCodeApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
       ),
-      home: Scaffold(
-        body: ListView(children: [
-          PortafolioVendedor(),
-        ]),
-      ),
+      home: Scaffold(body: ListView(children: [PortafolioVendedor()])),
     );
   }
 }
@@ -62,7 +58,7 @@ class PortafolioVendedor extends StatelessWidget {
                       fontSize: 12,
                       fontFamily: 'Nunito Sans',
                       fontWeight: FontWeight.w700,
-                      height: 4.38,
+                      height: 4.8,
                     ),
                   ),
                 ),
@@ -71,8 +67,8 @@ class PortafolioVendedor extends StatelessWidget {
                 left: 135,
                 top: 446,
                 child: SizedBox(
-                  width: 239,
-                  height: 40,
+                  width: 229,
+                  height: 140,
                   child: Text(
                     'Tenis Samba OG',
                     style: TextStyle(
@@ -80,7 +76,7 @@ class PortafolioVendedor extends StatelessWidget {
                       fontSize: 16,
                       fontFamily: 'Nunito Sans',
                       fontWeight: FontWeight.w700,
-                      height: 3.28,
+                      height: 3,
                     ),
                   ),
                 ),
@@ -263,7 +259,7 @@ class PortafolioVendedor extends StatelessWidget {
                         blurRadius: 4,
                         offset: Offset(0, 4),
                         spreadRadius: 0,
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -289,7 +285,7 @@ class PortafolioVendedor extends StatelessWidget {
                         blurRadius: 4,
                         offset: Offset(0, 4),
                         spreadRadius: 0,
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -394,9 +390,7 @@ class PortafolioVendedor extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 spacing: 10,
-                                children: [
-                                
-                                ],
+                                children: [],
                               ),
                             ),
                             Container(
@@ -413,9 +407,7 @@ class PortafolioVendedor extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 spacing: 10,
-                                children: [
-                                
-                                ],
+                                children: [],
                               ),
                             ),
                           ],
@@ -446,7 +438,7 @@ class PortafolioVendedor extends StatelessWidget {
                         blurRadius: 4,
                         offset: Offset(0, 4),
                         spreadRadius: 0,
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -472,7 +464,7 @@ class PortafolioVendedor extends StatelessWidget {
                         blurRadius: 4,
                         offset: Offset(0, 4),
                         spreadRadius: 0,
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -498,7 +490,7 @@ class PortafolioVendedor extends StatelessWidget {
                         blurRadius: 4,
                         offset: Offset(0, 4),
                         spreadRadius: 0,
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -516,7 +508,7 @@ class PortafolioVendedor extends StatelessWidget {
                       fontSize: 15,
                       fontFamily: 'Nunito Sans',
                       fontWeight: FontWeight.w700,
-                      height: 3.50,
+                      height: 7,
                     ),
                   ),
                 ),
@@ -536,8 +528,8 @@ class PortafolioVendedor extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 247,
-                top: 532,
+                left: 251,
+                top: 520,
                 child: SizedBox(
                   width: 50,
                   height: 30,
@@ -547,7 +539,7 @@ class PortafolioVendedor extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 8,
                       fontFamily: 'Nunito Sans',
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w800,
                       height: 6.56,
                     ),
                   ),
