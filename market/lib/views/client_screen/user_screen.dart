@@ -477,7 +477,7 @@ class _UserScreenState extends State<UserScreen> {
         Text(
           "Menú",
           style: GoogleFonts.nunitoSans(
-            fontSize: 25,
+            fontSize: 28,
             fontWeight: FontWeight.w900,
             fontStyle: FontStyle.italic,
           ),
