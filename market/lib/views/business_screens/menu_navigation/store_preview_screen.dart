@@ -241,7 +241,8 @@ class _StorePreviewScreenState
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
+              Divider(),
 
               // Opciones
               ListTile(
