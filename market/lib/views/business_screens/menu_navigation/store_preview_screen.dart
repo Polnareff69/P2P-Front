@@ -254,7 +254,7 @@ class _StorePreviewScreenState
                   ),
                   child: Icon(
                     Icons.image_search_sharp,
-                    color: Colors.deepPurpleAccent,
+                    color: Colors.black,
                     size: 33,
                   ),
                 ),
@@ -284,7 +284,7 @@ class _StorePreviewScreenState
                   ),
                   child: Icon(
                     Icons.imagesearch_roller,
-                    color: Colors.deepPurpleAccent,
+                    color: Colors.black,
                     size: 33,
                   ),
                 ),

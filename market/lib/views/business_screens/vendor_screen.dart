@@ -264,26 +264,44 @@ class _VendorScreenState extends State<VendorScreen> {
               _buildMenuButton(
                 'assets/icons/sells.png',
                 "Ventas",
+                () {
+                  // Acción para el botón Ventas
+                },
               ),
               _buildMenuButton(
                 'assets/icons/edit.png',
                 "Editar",
+                () {
+                  // Acción para el botón Editar
+                },
               ),
               _buildMenuButton(
                 'assets/icons/deliveries.png',
                 "Pedidos",
+                () {
+                  // Acción para el botón Pedidos
+                },
               ),
               _buildMenuButton(
                 'assets/icons/star.png',
                 "Reseñas",
+                () {
+                  // Acción para el botón Reseñas
+                },
               ),
               _buildMenuButton(
                 'assets/icons/plus.png',
                 "Plus",
+                () {
+                  // Acción para el botón Plus
+                },
               ),
               _buildMenuButton(
                 'assets/icons/help.png',
                 "Ayuda",
+                () {
+                  // Acción para el botón Ayuda
+                },
               ),
             ],
           ),
@@ -292,38 +310,46 @@ class _VendorScreenState extends State<VendorScreen> {
     );
   }
 
-  Widget _buildMenuButton(String imagePath, String label) {
+  Widget _buildMenuButton(
+    String imagePath,
+    String label,
+    VoidCallback onTap,
+  ) {
     return Column(
       children: [
-        Container(
-          width: 100,
-          height: 92,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.purple.shade500,
-                Colors.purple.shade900,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            //color: Colors.purple, // Color de fondo
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black,
-                blurRadius: 4,
-                offset: Offset(2, 4),
+        InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(20),
+          child: Container(
+            width: 100,
+            height: 92,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.purple.shade500,
+                  Colors.purple.shade900,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-            ],
-          ),
-          child: Center(
-            child: Image.asset(
-              imagePath,
-              width: 65,
-              height: 65,
-              //size: 72,
-              color: Colors.black, // Icono en negro
+              //color: Colors.purple, // Color de fondo
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black,
+                  blurRadius: 4,
+                  offset: Offset(2, 4),
+                ),
+              ],
+            ),
+            child: Center(
+              child: Image.asset(
+                imagePath,
+                width: 65,
+                height: 65,
+                //size: 72,
+                color: Colors.black, // Icono en negro
+              ),
             ),
           ),
         ),
