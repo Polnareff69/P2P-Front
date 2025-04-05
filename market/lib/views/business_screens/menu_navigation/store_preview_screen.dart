@@ -234,9 +234,9 @@ class _StorePreviewScreenState
                   color: Colors.black,
                   shadows: [
                     Shadow(
-                      color: Colors.black,
-                      offset: Offset(1, 1),
-                      blurRadius: 20,
+                      color: Colors.deepPurple,
+                      offset: Offset(0, 2),
+                      blurRadius: 15,
                     ),
                   ],
                 ),
@@ -245,10 +245,17 @@ class _StorePreviewScreenState
 
               // Opciones
               ListTile(
-                leading: Icon(
-                  Icons.image_search_sharp,
-                  color: Colors.deepPurpleAccent,
-                  size: 32,
+                leading: Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple.shade400,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.image_search_sharp,
+                    color: Colors.deepPurpleAccent,
+                    size: 33,
+                  ),
                 ),
                 title: Text(
                   "Elegir imagen de fondo",
@@ -268,10 +275,17 @@ class _StorePreviewScreenState
 
               // Opción de color de gradiente
               ListTile(
-                leading: Icon(
-                  Icons.imagesearch_roller,
-                  color: Colors.deepPurpleAccent,
-                  size: 30,
+                leading: Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple.shade400,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.imagesearch_roller,
+                    color: Colors.deepPurpleAccent,
+                    size: 33,
+                  ),
                 ),
                 title: Text(
                   "Elegir colores del tema",
