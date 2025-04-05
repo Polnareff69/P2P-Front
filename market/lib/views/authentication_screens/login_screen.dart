@@ -38,10 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
           await _authController.loginUser(user) ??
           "No recibido aún";
       print("Token recibido: $_token");
+
+      // redirigir al perfil del usuario
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => UserScreen(businessName: name,),
+          builder: (context) => UserScreen(userName: name),
         ),
       );
     } catch (e) {

@@ -4,12 +4,12 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 class UserScreen extends StatefulWidget {
-  final String businessName; // Nombre de la empresa
+  final String userName; // Nombre de la empresa
   //final File? businessLogo; // Logo de la empresa
 
   const UserScreen({
     super.key,
-    required this.businessName,
+    required this.userName,
     //required this.businessLogo,
   });
 
@@ -48,7 +48,7 @@ class _UserScreenState extends State<UserScreen> {
             boxShadow: [
               BoxShadow(
                 color: Colors.black,
-                blurRadius: 4,
+                blurRadius: 8,
                 offset: Offset(1, 5),
               ),
             ],
@@ -79,6 +79,7 @@ class _UserScreenState extends State<UserScreen> {
               bottomRight: Radius.circular(44),
             ),
           ),
+
           // Overlay oscuro si hay imagen de fondo para mejorar la legibilidad
           child:
               headerBackgroundImage != null
@@ -86,8 +87,8 @@ class _UserScreenState extends State<UserScreen> {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Colors.black.withOpacity(0.5),
-                          Colors.black.withOpacity(0.3),
+                          Colors.black38,
+                          Colors.black12,
                         ],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -146,7 +147,7 @@ class _UserScreenState extends State<UserScreen> {
 
             const SizedBox(height: 5),
             Text(
-              widget.businessName,
+              widget.userName,
               style: GoogleFonts.nunitoSans(
                 fontSize: 23,
                 fontWeight: FontWeight.w900,
@@ -161,7 +162,7 @@ class _UserScreenState extends State<UserScreen> {
               ),
             ),
             Text(
-              "by: ${widget.businessName}",
+              "by: ${widget.userName}",
               style: GoogleFonts.nunitoSans(
                 fontSize: 16,
                 color: Colors.white70,
