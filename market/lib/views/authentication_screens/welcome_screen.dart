@@ -9,30 +9,27 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Spacer(),
 
           // Logo
-          Image.asset(
-            'assets/images/logo.png',
-            height: 180,
-          ),
+          Image.asset('assets/images/logo.png', height: 190),
 
           // Title 'U-Market' -> "Lilita One"
           Text(
-            "U-MARKET",
-            style: GoogleFonts.lilitaOne(
-              fontSize: 55,
-              fontWeight: FontWeight.bold,
-              color: Colors.purple,
+            "U-Market",
+            style: GoogleFonts.lobster(
+              fontSize: 70,
+              fontWeight: FontWeight.w900,
+              color: const Color.fromARGB(255, 179, 0, 161),
               shadows: [
                 Shadow(
-                  color: Colors.black,
-                  offset: Offset(2, 3),
-                  blurRadius: 4,
+                  color: const Color.fromARGB(255, 66, 15, 61),
+                  offset: Offset(7, 5),
+                  blurRadius: 0,
                 ),
               ],
             ),
@@ -41,37 +38,24 @@ class WelcomeScreen extends StatelessWidget {
           const SizedBox(height: 20),
 
           // Logo image (u_market)
-          Image.asset(
-            'assets/images/login_register.png',
-            height: 333,
-          ),
+          Image.asset('assets/images/login_register.png', height: 333),
 
           const SizedBox(height: 30),
 
           // Login Bottom
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 30,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Colors.purple, // purple background
+                backgroundColor: const Color.fromARGB(255, 179, 0, 161),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(80),
                 ),
-                minimumSize: const Size(
-                  double.infinity,
-                  60,
-                ),
-                elevation: 7, // Añade sombra al botón
-                shadowColor:
-                    Colors.purple, // Color de la sombra
+                minimumSize: const Size(double.infinity, 60),
+                elevation: 10, // Añade sombra al botón
+                shadowColor: Colors.purple, // Color de la sombra
               ),
-              icon: Image.asset(
-                'assets/icons/login.png',
-                width: 30,
-              ),
+              icon: Image.asset('assets/icons/login.png', width: 30),
               label: Text(
                 "Iniciar Sesión",
                 style: GoogleFonts.nunitoSans(
@@ -90,9 +74,7 @@ class WelcomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
                 );
               },
             ),
@@ -102,28 +84,23 @@ class WelcomeScreen extends StatelessWidget {
 
           // Register Bottom
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 30,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Colors.blue, //  blue background
+                backgroundColor: const Color.fromARGB(
+                  255,
+                  179,
+                  0,
+                  161,
+                ), //  blue background
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(80),
                 ),
-                minimumSize: const Size(
-                  double.infinity,
-                  60,
-                ),
-                elevation: 7, // Añade sombra al botón
-                shadowColor:
-                    Colors.blueAccent, // Color de la sombra
+                minimumSize: const Size(double.infinity, 60),
+                elevation: 10, // Añade sombra al botón
+                shadowColor: Colors.purple, // Color de la sombra
               ),
-              icon: Image.asset(
-                'assets/icons/register.png',
-                width: 30,
-              ),
+              icon: Image.asset('assets/icons/register.png', width: 30),
               label: Text(
                 "Registrarse",
                 style: GoogleFonts.nunitoSans(
@@ -142,9 +119,7 @@ class WelcomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => RegisterScreen(),
-                  ),
+                  MaterialPageRoute(builder: (context) => RegisterScreen()),
                 );
               },
             ),
