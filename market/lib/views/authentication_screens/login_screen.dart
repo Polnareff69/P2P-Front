@@ -1,7 +1,6 @@
 import 'package:market/views/authentication_screens/forgot_password_screen.dart';
 import 'package:market/views/authentication_screens/register_screen.dart';
 import 'package:market/views/client_screen/user_screen.dart';
-import 'package:market/views/main_screen/businesses.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/views/widgets/remember_me_checkbox.dart';
@@ -39,10 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
           await _authController.loginUser(user) ??
           "No recibido aún";
       print("Token recibido: $_token");
+
+      // redirigir al perfil del usuario
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => UserScreen(businessName: name,),
+          builder: (context) => UserScreen(userName: name),
         ),
       );
     } catch (e) {
