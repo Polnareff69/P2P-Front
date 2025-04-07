@@ -38,8 +38,8 @@ class ForgotPasswordScreen extends StatelessWidget {
             shadows: [
               Shadow(
                 color: Colors.black,
-                offset: Offset(0, 1),
-                blurRadius: 4,
+                offset: Offset(0, 0),
+                blurRadius: 1,
               ),
             ],
           ),
