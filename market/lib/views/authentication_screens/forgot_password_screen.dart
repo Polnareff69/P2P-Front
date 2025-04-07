@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
@@ -36,6 +35,13 @@ class ForgotPasswordScreen extends StatelessWidget {
             fontSize: 25,
             fontWeight: FontWeight.w900,
             color: accentColor,
+            shadows: [
+              Shadow(
+                color: Colors.black,
+                offset: Offset(0, 1),
+                blurRadius: 4,
+              ),
+            ],
           ),
         ),
       ),
@@ -78,12 +84,19 @@ class ForgotPasswordScreen extends StatelessWidget {
                       fontSize: 24,
                       fontWeight: FontWeight.w900,
                       color: Colors.black87,
+                      shadows: [
+                        Shadow(
+                          color: primaryColor,
+                          offset: Offset(0, 1),
+                          blurRadius: 4,
+                        ),
+                      ],
                     ),
                   ),
                 ),
                 // Subrayado del "¿Olvidaste tu constraseña"
                 Divider(
-                  color: Colors.grey,
+                  color: Colors.black,
                   thickness: 1.5,
                   height: 1,
                 ),
