@@ -1,5 +1,6 @@
 import 'package:market/views/authentication_screens/forgot_password_screen.dart';
 import 'package:market/views/authentication_screens/register_screen.dart';
+import 'package:market/views/business_screens/vendor_screen.dart';
 import 'package:market/views/client_screen/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +8,7 @@ import 'package:market/views/widgets/remember_me_checkbox.dart';
 //To use models and controllers
 import 'package:market/controllers/login_controller.dart';
 import 'package:market/models/user_model.dart';
+import 'package:jwt_decoder/jwt_decoder.dart'; //JWT DECODIFICADOR
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -36,16 +38,49 @@ class _LoginScreenState extends State<LoginScreen> {
       final user = User(name: name, password: password);
       _token =
           await _authController.loginUser(user) ??
-          "No recibido aún";
+          "Token no recibido aun";
       print("Token recibido: $_token");
 
-      // redirigir al perfil del usuario
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => UserScreen(userName: name),
-        ),
-      );
+      if (_token != "Token no recibido aun") {
+        //decodificamos el token JWT
+        Map<String, dynamic> decodedToken =
+            JwtDecoder.decode(_token);
+        print("Token decodificado: $decodedToken");
+
+        //extraemos la info del token
+        String role = decodedToken['Role'] ?? '';
+        String email = decodedToken['email'] ?? '';
+        String username = decodedToken['sub'] ?? '';
+
+        print("Rol del usuario: $role");
+        print("Email del usuario: $email");
+        print("Nombre de usuario: $username");
+
+        // redirigimos a perfiles segun el ROL
+        if (role.toLowerCase() == 'seller') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (context) => VendorScreen(
+                    businessName: username,
+                    businessLogo: null,
+                  ),
+            ),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (context) =>
+                      UserScreen(userName: username),
+            ),
+          );
+        }
+      } else {
+        throw Exception("No se recibio un token valido.");
+      }
     } catch (e) {
       print("Error en el login: $e");
       ScaffoldMessenger.of(context).showSnackBar(
