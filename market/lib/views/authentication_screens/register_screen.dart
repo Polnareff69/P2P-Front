@@ -9,15 +9,12 @@ class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
   @override
-  _RegisterScreenState createState() =>
-      _RegisterScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>();
-  final RegisterController _registerController =
-      RegisterController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final RegisterController _registerController = RegisterController();
 
   String name = '';
   String email = '';
@@ -41,15 +38,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // Create Business or see the Market
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (context) => BusinessOrMainScreen(),
-        ),
+        MaterialPageRoute(builder: (context) => BusinessOrMainScreen()),
       );
     } catch (e) {
       print("Error en el registro: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error al registrarse: $e")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error al registrarse: $e")));
     } finally {
       setState(() {
         isLoading = false;
@@ -74,7 +69,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     "Registrarse en U-Market",
                     style: GoogleFonts.getFont(
                       'Nunito Sans',
-                      color: Colors.purpleAccent,
+                      color: const Color.fromARGB(255, 179, 0, 161),
                       fontWeight: FontWeight.w900,
                       //letterSpacing: 0.1,
                       fontSize: 25,
@@ -86,15 +81,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     'Emprende, Compra y Vende ahora mismo',
                     style: GoogleFonts.getFont(
                       'Nunito Sans',
-                      color: const Color.fromARGB(
-                        255,
-                        28,
-                        113,
-                        156,
-                      ),
+                      color: const Color.fromARGB(255, 66, 15, 61),
                       fontWeight: FontWeight.bold,
                       //letterSpacing: 0.1,
-                      fontSize: 13.6,
+                      fontSize: 14,
                     ),
                   ),
 
@@ -134,38 +124,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
+                      fillColor: const Color.fromARGB(255, 228, 217, 217),
                       filled: true,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       //borders
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                         borderSide:
-                            BorderSide
-                                .none, // Sin color cuando está enfocado
+                            BorderSide.none, // Sin color cuando está enfocado
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                         borderSide:
                             BorderSide
                                 .none, // Sin color cuando no está enfocado
                       ),
 
-                      hintText:
-                          'Introduce tu nombre de usuario...',
+                      hintText: 'Introduce tu nombre de usuario...',
                       hintStyle: GoogleFonts.getFont(
                         'Nunito Sans',
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: Colors.blueGrey,
+                        color: const Color.fromARGB(255, 139, 96, 133),
                       ),
                       //icons
                       prefixIcon: Padding(
@@ -208,26 +190,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
+                      fillColor: const Color.fromARGB(255, 228, 217, 217),
                       filled: true,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       // borders
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                         borderSide:
-                            BorderSide
-                                .none, // Sin color cuando está enfocado
+                            BorderSide.none, // Sin color cuando está enfocado
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                         borderSide:
                             BorderSide
                                 .none, // Sin color cuando no está enfocado
@@ -238,7 +213,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         'Nunito Sans',
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: Colors.blueGrey,
+                        color: const Color.fromARGB(255, 139, 96, 133),
                       ),
                       //icons
                       prefixIcon: Padding(
@@ -282,37 +257,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
+                      fillColor: const Color.fromARGB(255, 228, 217, 217),
                       filled: true,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       //borders
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                         borderSide:
-                            BorderSide
-                                .none, // Sin color cuando está enfocado
+                            BorderSide.none, // Sin color cuando está enfocado
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                         borderSide:
                             BorderSide
                                 .none, // Sin color cuando no está enfocado
                       ),
-                      hintText:
-                          'Introduce tu contraseña...',
+                      hintText: 'Introduce tu contraseña...',
                       hintStyle: GoogleFonts.getFont(
                         'Nunito Sans',
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: Colors.blueGrey,
+                        color: const Color.fromARGB(255, 139, 96, 133),
                       ),
                       //icons
                       prefixIcon: Padding(
@@ -333,8 +300,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ? CircularProgressIndicator()
                       : InkWell(
                         onTap: () {
-                          if (_formKey.currentState!
-                              .validate()) {
+                          if (_formKey.currentState!.validate()) {
                             registerUser();
                             print("Username = $name");
                             print("Email = $email");
@@ -343,134 +309,125 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             print("Ha fallado");
                           }
                         },
-                        child: Container(
-                          width: 319,
-                          height: 57,
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(10),
-                            color: Colors.blue,
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                left: 278,
-                                top: 19,
-                                child: Opacity(
-                                  opacity: 0.5,
-                                  child: Container(
-                                    width: 60,
-                                    height: 60,
-                                    clipBehavior:
-                                        Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 12,
-                                        color:
-                                            const Color.fromARGB(
-                                              255,
-                                              38,
-                                              43,
-                                              46,
-                                            ),
+                        child: Material(
+                          elevation: 10, 
+                          borderRadius: BorderRadius.circular(80),
+                          color: const Color.fromARGB(255, 179, 0, 161),
+                          child: Container(
+                            width: 319,
+                            height: 57,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(80),
+                            ),
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  left: 278,
+                                  top: 19,
+                                  child: Opacity(
+                                    opacity: 0.5,
+                                    child: Container(
+                                      width: 60,
+                                      height: 60,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 12,
+                                          color: const Color.fromARGB(
+                                            255,
+                                            38,
+                                            43,
+                                            46,
+                                          ),
+                                        ),
+                                        borderRadius: BorderRadius.circular(30),
                                       ),
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            30,
-                                          ),
                                     ),
                                   ),
                                 ),
-                              ),
-
-                              Positioned(
-                                left: 260,
-                                top: 29,
-                                child: Opacity(
-                                  opacity: 0.3,
-                                  child: Container(
-                                    width: 10,
-                                    height: 10,
-                                    clipBehavior:
-                                        Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 3,
+                                Positioned(
+                                  left: 260,
+                                  top: 29,
+                                  child: Opacity(
+                                    opacity: 0.3,
+                                    child: Container(
+                                      width: 10,
+                                      height: 10,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(width: 3),
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.circular(5),
                                       ),
-                                      color: Colors.black,
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            5,
-                                          ),
                                     ),
                                   ),
                                 ),
-                              ),
-
-                              Positioned(
-                                left: 308,
-                                top: 38,
-                                child: Opacity(
-                                  opacity: 0.3,
-                                  child: Container(
-                                    width: 5.5,
-                                    height: 5.5,
-                                    clipBehavior:
-                                        Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            3,
-                                          ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                left: 281,
-                                top: -10,
-                                child: Opacity(
-                                  opacity: 0.3,
-                                  child: Container(
-                                    width: 20,
-                                    height: 20,
-                                    clipBehavior:
-                                        Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            10,
-                                          ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              //Iniciar Sesion Text
-                              Center(
-                                child: Text(
-                                  'Registrarse',
-                                  style:
-                                      GoogleFonts.getFont(
-                                        'Nunito Sans',
+                                Positioned(
+                                  left: 308,
+                                  top: 38,
+                                  child: Opacity(
+                                    opacity: 0.3,
+                                    child: Container(
+                                      width: 5.5,
+                                      height: 5.5,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
                                         color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight:
-                                            FontWeight.w700,
+                                        borderRadius: BorderRadius.circular(3),
                                       ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ],
+                                Positioned(
+                                  left: 281,
+                                  top: -10,
+                                  child: Opacity(
+                                    opacity: 0.3,
+                                    child: Container(
+                                      width: 20,
+                                      height: 20,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                          255,
+                                          0,
+                                          0,
+                                          0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                //Iniciar Sesion Text
+                                Center(
+                                  child: Text(
+                                    'Registrarse',
+                                    style: GoogleFonts.nunitoSans(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w700,
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors.black.withOpacity(0.6),
+                                          offset: Offset(2, 2),
+                                          blurRadius: 4,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
 
                   //already have an account
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 8),
+
                   Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         '¿Ya tienes una cuenta? ',
@@ -493,7 +450,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Text(
                           'Inicia Sesión',
                           style: GoogleFonts.roboto(
-                            color: Colors.blue,
+                            color: Colors.purple,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

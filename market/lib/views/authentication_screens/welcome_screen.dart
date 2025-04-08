@@ -21,14 +21,14 @@ class WelcomeScreen extends StatelessWidget {
           // Title 'U-Market' -> "Lilita One"
           Text(
             "U-Market",
-            style: GoogleFonts.lobster(
-              fontSize: 70,
+            style: GoogleFonts.philosopher(
+              fontSize: 75,
               fontWeight: FontWeight.w900,
               color: const Color.fromARGB(255, 179, 0, 161),
               shadows: [
                 Shadow(
                   color: const Color.fromARGB(255, 66, 15, 61),
-                  offset: Offset(7, 5),
+                  offset: Offset(5, 4),
                   blurRadius: 0,
                 ),
               ],
@@ -54,6 +54,7 @@ class WelcomeScreen extends StatelessWidget {
                 minimumSize: const Size(double.infinity, 60),
                 elevation: 10, // Añade sombra al botón
                 shadowColor: Colors.purple, // Color de la sombra
+                
               ),
               icon: Image.asset('assets/icons/login.png', width: 30),
               label: Text(
@@ -101,6 +102,7 @@ class WelcomeScreen extends StatelessWidget {
                 shadowColor: Colors.purple, // Color de la sombra
               ),
               icon: Image.asset('assets/icons/register.png', width: 30),
+
               label: Text(
                 "Registrarse",
                 style: GoogleFonts.nunitoSans(
@@ -113,6 +115,7 @@ class WelcomeScreen extends StatelessWidget {
                       offset: Offset(2, 2),
                       blurRadius: 4,
                     ),
+                    
                   ],
                 ),
               ),

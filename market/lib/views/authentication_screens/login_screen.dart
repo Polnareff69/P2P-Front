@@ -16,8 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final GlobalKey<FormState> _formKey =
-      GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final LoginController _authController = LoginController();
   String _token = "No recibido aún";
 
@@ -34,23 +33,19 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       final user = User(name: name, password: password);
-      _token =
-          await _authController.loginUser(user) ??
-          "No recibido aún";
+      _token = await _authController.loginUser(user) ?? "No recibido aún";
       print("Token recibido: $_token");
 
       // redirigir al perfil del usuario
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (context) => UserScreen(userName: name),
-        ),
+        MaterialPageRoute(builder: (context) => UserScreen(userName: name)),
       );
     } catch (e) {
       print("Error en el login: $e");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error al logearse: $e")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error al logearse: $e")));
     } finally {
       setState(() {
         isLoading = false;
@@ -75,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     "Iniciar Sesión en U-Market",
                     style: GoogleFonts.getFont(
                       'Nunito Sans',
-                      color: Colors.purpleAccent,
+                      color: const Color.fromARGB(255, 179, 0, 161),
                       fontWeight: FontWeight.w900,
                       //letterSpacing: 0.1,
                       fontSize: 25,
@@ -87,15 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     'Sumergete en el Mercado Universitario',
                     style: GoogleFonts.getFont(
                       'Nunito Sans',
-                      color: const Color.fromARGB(
-                        255,
-                        28,
-                        113,
-                        156,
-                      ),
+                      color: const Color.fromARGB(255, 66, 15, 61),
                       fontWeight: FontWeight.bold,
                       //letterSpacing: 0.1,
-                      fontSize: 13.6,
+                      fontSize: 14,
                     ),
                   ),
 
@@ -134,38 +124,30 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
+                      fillColor: const Color.fromARGB(255, 228, 217, 217),
                       filled: true,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       //borders
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                         borderSide:
-                            BorderSide
-                                .none, // Sin color cuando está enfocado
+                            BorderSide.none, // Sin color cuando está enfocado
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                         borderSide:
                             BorderSide
                                 .none, // Sin color cuando no está enfocado
                       ),
 
-                      hintText:
-                          'Introduce tu nombre de usuario...',
+                      hintText: 'Introduce tu nombre de usuario...',
                       hintStyle: GoogleFonts.getFont(
                         'Nunito Sans',
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: Colors.blueGrey,
+                        color: const Color.fromARGB(255, 139, 96, 133),
                       ),
                       //icons
                       prefixIcon: Padding(
@@ -209,37 +191,29 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                     decoration: InputDecoration(
-                      fillColor: Colors.white,
+                      fillColor: const Color.fromARGB(255, 228, 217, 217),
                       filled: true,
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       //borders
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                         borderSide:
-                            BorderSide
-                                .none, // Sin color cuando está enfocado
+                            BorderSide.none, // Sin color cuando está enfocado
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
+                        borderRadius: BorderRadius.circular(15),
                         borderSide:
                             BorderSide
                                 .none, // Sin color cuando no está enfocado
                       ),
-                      hintText:
-                          'Introduce tu contraseña...',
+                      hintText: 'Introduce tu contraseña...',
                       hintStyle: GoogleFonts.getFont(
                         'Nunito Sans',
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        color: Colors.blueGrey,
+                        color: const Color.fromARGB(255, 139, 96, 133),
                       ),
                       //icons
                       prefixIcon: Padding(
@@ -254,11 +228,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
 
-                  //Remember password and Forgot Password
+                  //Recordar y Recuperar contraseña
                   const SizedBox(height: 13),
                   Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       RememberMeCheckbox(
                         onChanged: (value) {
@@ -270,9 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder:
-                                  (context) =>
-                                      ForgotPasswordScreen(),
+                              builder: (context) => ForgotPasswordScreen(),
                             ),
                           );
                         },
@@ -282,8 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                             color: Colors.black,
-                            decoration:
-                                TextDecoration.underline,
+                            decoration: TextDecoration.underline,
                           ),
                         ),
                       ),
@@ -296,8 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ? CircularProgressIndicator()
                       : InkWell(
                         onTap: () {
-                          if (_formKey.currentState!
-                              .validate()) {
+                          if (_formKey.currentState!.validate()) {
                             loginUser();
                             print('userName = $name');
                             print('password = $password');
@@ -309,17 +278,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 319,
                           height: 57,
                           decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(80),
                             gradient: LinearGradient(
                               colors: [
                                 Colors.purpleAccent,
-                                const Color.fromARGB(
-                                  255,
-                                  157,
-                                  19,
-                                  170,
-                                ),
+                                const Color.fromARGB(255, 157, 19, 170),
                               ],
                             ),
                           ),
@@ -333,23 +296,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Container(
                                     width: 60,
                                     height: 60,
-                                    clipBehavior:
-                                        Clip.antiAlias,
+                                    clipBehavior: Clip.antiAlias,
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                         width: 12,
-                                        color:
-                                            const Color.fromARGB(
-                                              255,
-                                              78,
-                                              16,
-                                              90,
-                                            ),
+                                        color: const Color.fromARGB(
+                                          255,
+                                          78,
+                                          16,
+                                          90,
+                                        ),
                                       ),
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            30,
-                                          ),
+                                      borderRadius: BorderRadius.circular(30),
                                     ),
                                   ),
                                 ),
@@ -363,23 +321,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Container(
                                     width: 10,
                                     height: 10,
-                                    clipBehavior:
-                                        Clip.antiAlias,
+                                    clipBehavior: Clip.antiAlias,
                                     decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 3,
+                                      border: Border.all(width: 3),
+                                      color: const Color.fromARGB(
+                                        255,
+                                        78,
+                                        16,
+                                        90,
                                       ),
-                                      color:
-                                          const Color.fromARGB(
-                                            255,
-                                            78,
-                                            16,
-                                            90,
-                                          ),
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            5,
-                                          ),
+                                      borderRadius: BorderRadius.circular(5),
                                     ),
                                   ),
                                 ),
@@ -393,14 +344,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Container(
                                     width: 5.5,
                                     height: 5.5,
-                                    clipBehavior:
-                                        Clip.antiAlias,
+                                    clipBehavior: Clip.antiAlias,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            3,
-                                          ),
+                                      borderRadius: BorderRadius.circular(3),
                                     ),
                                   ),
                                 ),
@@ -413,14 +360,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   child: Container(
                                     width: 20,
                                     height: 20,
-                                    clipBehavior:
-                                        Clip.antiAlias,
+                                    clipBehavior: Clip.antiAlias,
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            10,
-                                          ),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
                                 ),
@@ -429,14 +372,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               Center(
                                 child: Text(
                                   'Iniciar Sesión',
-                                  style:
-                                      GoogleFonts.getFont(
-                                        'Nunito Sans',
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight:
-                                            FontWeight.w700,
-                                      ),
+                                  style: GoogleFonts.getFont(
+                                    'Nunito Sans',
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
                             ],
@@ -447,8 +388,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   //dont have an account
                   SizedBox(height: 5),
                   Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         '¿No tienes una cuenta? ',
