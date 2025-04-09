@@ -310,7 +310,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           }
                         },
                         child: Material(
-                          elevation: 10, 
+                          elevation: 10,
                           borderRadius: BorderRadius.circular(80),
                           color: const Color.fromARGB(255, 179, 0, 161),
                           child: Container(
@@ -372,7 +372,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       height: 5.5,
                                       clipBehavior: Clip.antiAlias,
                                       decoration: BoxDecoration(
-                                        color: Colors.white,
+                                        color: const Color.fromARGB(
+                                          255,
+                                          0,
+                                          0,
+                                          0,
+                                        ),
                                         borderRadius: BorderRadius.circular(3),
                                       ),
                                     ),
@@ -404,7 +409,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   child: Text(
                                     'Registrarse',
                                     style: GoogleFonts.nunitoSans(
-                                      color: Colors.white,
+                                      color: const Color.fromARGB(
+                                        255,
+                                        255,
+                                        255,
+                                        255,
+                                      ),
                                       fontSize: 25,
                                       fontWeight: FontWeight.w700,
                                       shadows: [
