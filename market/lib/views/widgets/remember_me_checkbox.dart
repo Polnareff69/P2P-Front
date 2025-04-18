@@ -29,10 +29,15 @@ class RememberMeCheckboxState
             });
           },
           child: Container(
-            width: 20,
-            height: 20,
+            width: 22,
+            height: 22,
             decoration: BoxDecoration(
-              color: Colors.purpleAccent, // Fondo rosa
+              color: const Color.fromARGB(
+                255,
+                97,
+                13,
+                175,
+              ), // Fondo rosa
               borderRadius: BorderRadius.circular(6),
             ),
             child: Icon(
