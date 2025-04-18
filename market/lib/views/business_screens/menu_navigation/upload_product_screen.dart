@@ -6,9 +6,19 @@ import 'package:market/models/product_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/views/main_screen/businesses.dart';
 
-
 class UploadProductScreen extends StatefulWidget {
-  const UploadProductScreen({super.key});
+  // lista de categorías
+  final List<String> categories;
+
+  const UploadProductScreen({
+    super.key,
+    //si no me pasan categorías, una lista de categorias predeterminada.
+    this.categories = const [
+      'Electronica',
+      'Ropa',
+      'Vapes',
+    ],
+  });
 
   @override
   State<UploadProductScreen> createState() =>
@@ -38,6 +48,15 @@ class _UploadProductScreenState
 
   String? userId = '4bbb8690-3546-4c2b-b3a1-a07fb7fbf70e';
   String? selectedCategory;
+
+  @override
+  void initState() {
+    super.initState();
+    // Inicializar la categoría seleccionada con la primera de la lista si existe
+    if (widget.categories.isNotEmpty) {
+      selectedCategory = widget.categories.first;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -320,20 +339,14 @@ class _UploadProductScreenState
             filled: true,
             fillColor: Colors.grey[400],
           ),
-          items: const [
-            DropdownMenuItem(
-              value: 'Electrónica',
-              child: Text('Electrónica'),
-            ),
-            DropdownMenuItem(
-              value: 'Ropa',
-              child: Text('Ropa'),
-            ),
-            DropdownMenuItem(
-              value: 'Hogar',
-              child: Text('Hogar'),
-            ),
-          ],
+          //Construir dinamicamente las opciones del dropdown basadas en las categorias recibidas
+          items:
+              widget.categories.map((String category) {
+                return DropdownMenuItem(
+                  value: category,
+                  child: Text(category),
+                );
+              }).toList(),
           onChanged: (value) {
             setState(() {
               selectedCategory = value;
@@ -374,9 +387,11 @@ class _UploadProductScreenState
           ),
         );
         Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => BusinessesScreen()),
-      );
+          context,
+          MaterialPageRoute(
+            builder: (context) => BusinessesScreen(),
+          ),
+        );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

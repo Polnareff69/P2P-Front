@@ -227,7 +227,7 @@ class _StorePreviewScreenState
             children: [
               // Título
               Text(
-                "Personalizar Tema",
+                "Personalizar Mi Estilo",
                 style: GoogleFonts.nunitoSans(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
@@ -779,7 +779,17 @@ class _StorePreviewScreenState
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => UploadProductScreen(),
+            builder:
+                (context) => UploadProductScreen(
+                  // Pasamos todas las categorías excepto "Todo" que es solo para filtrar
+                  categories:
+                      categories
+                          .where(
+                            (category) =>
+                                category != "Todo",
+                          )
+                          .toList(),
+                ),
           ),
         );
       },
