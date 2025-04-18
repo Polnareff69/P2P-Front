@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
         // Agregamos la decoración con la imagen de fondo
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/fondo.png'), // Ruta a tu imagen
+            image: AssetImage('assets/images/fondo (1).png'), // Ruta a tu imagen
             fit: BoxFit.cover, // Para que cubra toda la pantalla
           ),
         ),

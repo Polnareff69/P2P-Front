@@ -13,7 +13,9 @@ class WelcomeScreen extends StatelessWidget {
         // Aquí agregamos la imagen de fondo
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/fondo.png'), // Ruta a tu imagen
+            image: AssetImage(
+              'assets/images/fondo (1).png',
+            ), // Ruta a tu imagen
             fit: BoxFit.cover,
           ),
         ),
