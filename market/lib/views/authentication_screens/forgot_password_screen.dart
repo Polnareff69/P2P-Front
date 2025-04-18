@@ -64,8 +64,8 @@ class ForgotPasswordScreen extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Colors.black.withOpacity(0.5),
-                Colors.black.withOpacity(0.7),
+                Colors.black.withOpacity(0.4),
+                Colors.black.withOpacity(0.6),
               ],
             ),
           ),

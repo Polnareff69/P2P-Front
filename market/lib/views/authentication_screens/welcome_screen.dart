@@ -76,7 +76,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     backgroundColor:
                         Colors
-                            .black45, // Fondo muy transparente
+                            .black54, // Fondo muy transparente
                   ),
                   icon: Icon(
                     Icons.login_sharp,
@@ -134,7 +134,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                     backgroundColor:
                         Colors
-                            .black38, // Fondo muy transparente
+                            .black54, // Fondo muy transparente
                   ),
                   icon: Icon(
                     Icons.person_add,

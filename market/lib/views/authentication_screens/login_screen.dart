@@ -113,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // Puedes elegir entre varias opciones:
 
                 // 1. Color sólido semitransparente
-                color: Colors.black38,
+                color: Colors.black26,
 
                 // 2. Gradiente lineal
                 /*
@@ -215,26 +215,36 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         },
                         decoration: InputDecoration(
-                          fillColor: Colors.black87,
+                          fillColor: Colors.black
+                              .withOpacity(0.5),
                           filled: true,
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(15),
                           ),
                           //borders
+                          // Borde cuando está enfocado
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(15),
-                            borderSide:
-                                BorderSide
-                                    .none, // Sin color cuando está enfocado
+                            borderSide: BorderSide(
+                              color:
+                                  Colors
+                                      .purpleAccent, // Color del borde cuando está enfocado
+                              width:
+                                  2.0, // Grosor del borde
+                            ),
                           ),
+                          // Borde cuando no está enfocado
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(15),
-                            borderSide:
-                                BorderSide
-                                    .none, // Sin color cuando no está enfocado
+                            borderSide: BorderSide(
+                              color: Colors.white.withOpacity(
+                                0.5,
+                              ), // Color del borde normal
+                              width: 2, // Grosor del borde
+                            ),
                           ),
 
                           hintText:
@@ -291,26 +301,36 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         },
                         decoration: InputDecoration(
-                          fillColor: Colors.black87,
+                          fillColor: Colors.black
+                              .withOpacity(0.4),
                           filled: true,
                           border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(15),
                           ),
                           //borders
+                          // Borde cuando está enfocado
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(15),
-                            borderSide:
-                                BorderSide
-                                    .none, // Sin color cuando está enfocado
+                            borderSide: BorderSide(
+                              color:
+                                  Colors
+                                      .purpleAccent, // Color del borde cuando está enfocado
+                              width:
+                                  2.0, // Grosor del borde
+                            ),
                           ),
+                          // Borde cuando no está enfocado
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.circular(15),
-                            borderSide:
-                                BorderSide
-                                    .none, // Sin color cuando no está enfocado
+                            borderSide: BorderSide(
+                              color: Colors.white.withOpacity(
+                                0.5,
+                              ), // Color del borde normal
+                              width: 2, // Grosor del borde
+                            ),
                           ),
                           hintText:
                               'Introduce tu contraseña...',
