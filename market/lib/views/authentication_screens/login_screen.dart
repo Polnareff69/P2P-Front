@@ -106,6 +106,42 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
 
+          // Overlay sobre la imagen de fondo
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                // Puedes elegir entre varias opciones:
+
+                // 1. Color sólido semitransparente
+                color: Colors.black38,
+
+                // 2. Gradiente lineal
+                /*
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.3),
+                    Colors.black.withOpacity(0.7),
+                  ],
+                ),
+                */
+
+                // 3. Gradiente radial
+                /*
+                gradient: RadialGradient(
+                  center: Alignment.center,
+                  radius: 1.0,
+                  colors: [
+                    Colors.black.withOpacity(0.3),
+                    Colors.black.withOpacity(0.7),
+                  ],
+                ),
+                */
+              ),
+            ),
+          ),
+
           // Contenido original
           Padding(
             padding: const EdgeInsets.all(25.0),
@@ -240,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       //Input of the user password
                       TextFormField(
-                        obscureText: true,
+                        obscureText: false,
                         //grab the info of the user
                         onChanged: (value) {
                           password = value;
@@ -282,7 +318,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             'Nunito Sans',
                             fontSize: 17,
                             fontWeight: FontWeight.w500,
-                            color: Colors.blueGrey,
+                            color: Colors.white,
                           ),
                           //icons
                           prefixIcon: Padding(
@@ -297,6 +333,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           suffixIcon: Icon(
                             Icons.visibility,
+                            color: const Color.fromARGB(
+                              255,
+                              75,
+                              75,
+                              75,
+                            ),
                           ),
                         ),
                       ),
