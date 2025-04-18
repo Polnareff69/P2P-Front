@@ -43,14 +43,15 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
 
+              const SizedBox(height: 50),
               /*
               Image.asset(
-                'assets/images/galaxy.png',
+                'assets/images/planeta.png',
                 width: 350,
                 height: 350,
               ),
               */
-              const SizedBox(height: 250),
+              const SizedBox(height: 200),
 
               // Login Button - Transparente con borde
               Padding(
