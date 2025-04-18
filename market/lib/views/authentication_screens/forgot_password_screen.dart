@@ -8,7 +8,7 @@ class ForgotPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Definimos los colores para un esquema más coherente
-    const primaryColor = Color(0xFF9C27B0);
+    //const primaryColor = Color(0xFF9C27B0);
     //const accentColor = Color(0xFFE040FB);
 
     return Scaffold(
