@@ -36,8 +36,8 @@ class WelcomeScreen extends StatelessWidget {
                   shadows: [
                     Shadow(
                       color: Colors.deepPurple,
-                      offset: Offset(0, 1),
-                      blurRadius: 15,
+                      offset: Offset(1, 3),
+                      blurRadius: 4,
                     ),
                   ],
                 ),
@@ -91,7 +91,7 @@ class WelcomeScreen extends StatelessWidget {
                       fontWeight: FontWeight.w900,
                       shadows: [
                         Shadow(
-                          color: Colors.black,
+                          color: Colors.deepPurpleAccent,
                           offset: Offset(1, 2),
                           blurRadius: 15,
                         ),
@@ -149,7 +149,7 @@ class WelcomeScreen extends StatelessWidget {
                       fontWeight: FontWeight.w900,
                       shadows: [
                         Shadow(
-                          color: Colors.black,
+                          color: Colors.deepPurpleAccent,
                           offset: Offset(1, 2),
                           blurRadius: 15,
                         ),

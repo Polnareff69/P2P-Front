@@ -50,8 +50,9 @@ class RememberMeCheckboxState
         const Text(
           "Recordarme",
           style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
+            fontSize: 15.5,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
       ],
