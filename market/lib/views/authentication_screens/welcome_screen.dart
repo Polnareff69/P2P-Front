@@ -9,127 +9,133 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Spacer(),
-
-          // Logo
-          Image.asset('assets/images/logo.png', height: 190),
-
-          // Title 'U-Market' -> "Lilita One"
-          Text(
-            "U-Market",
-            style: GoogleFonts.philosopher(
-              fontSize: 75,
-              fontWeight: FontWeight.w900,
-              color: const Color.fromARGB(255, 179, 0, 161),
-              shadows: [
-                Shadow(
-                  color: const Color.fromARGB(255, 66, 15, 61),
-                  offset: Offset(5, 4),
-                  blurRadius: 0,
-                ),
-              ],
-            ),
+      body: Container(
+        // Aquí agregamos la imagen de fondo
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/fondo.png'), // Ruta a tu imagen
+            fit: BoxFit.cover,
           ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Spacer(),
 
-          const SizedBox(height: 20),
+            // Logo
+            Image.asset('assets/images/logo.png', height: 190),
 
-          // Logo image (u_market)
-          Image.asset('assets/images/login_register.png', height: 333),
-
-          const SizedBox(height: 30),
-
-          // Login Bottom
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 179, 0, 161),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(80),
-                ),
-                minimumSize: const Size(double.infinity, 60),
-                elevation: 10, // Añade sombra al botón
-                shadowColor: Colors.purple, // Color de la sombra
-                
+            // Title 'U-Market' -> "Lilita One"
+            Text(
+              "U-Market",
+              style: GoogleFonts.gemunuLibre(
+                fontSize: 85,
+                fontWeight: FontWeight.w600,
+                color: const Color.fromARGB(255, 255, 255, 255),
+                shadows: [
+                  Shadow(
+                    color: const Color.fromARGB(255, 66, 15, 61),
+                    offset: Offset(5, 4),
+                    blurRadius: 0,
+                  ),
+                ],
               ),
-              icon: Image.asset('assets/icons/login.png', width: 30),
-              label: Text(
-                "Iniciar Sesión",
-                style: GoogleFonts.nunitoSans(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black.withOpacity(0.6),
-                      offset: Offset(2, 2),
-                      blurRadius: 4,
-                    ),
-                  ],
-                ),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
-              },
             ),
-          ),
 
-          const SizedBox(height: 15),
+            const SizedBox(height: 20),
 
-          // Register Bottom
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(
-                  255,
-                  179,
-                  0,
-                  161,
-                ), //  blue background
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(80),
+            // Logo image (u_market)
+            //Image.asset('assets/images/login_register.png', height: 333),
+
+            //const SizedBox(height: 30),
+
+            // Login Bottom
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 148, 0, 211),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(80),
+                  ),
+                  minimumSize: const Size(double.infinity, 60),
+                  elevation: 10, // Añade sombra al botón
+                  shadowColor: Colors.purple, // Color de la sombra
                 ),
-                minimumSize: const Size(double.infinity, 60),
-                elevation: 10, // Añade sombra al botón
-                shadowColor: Colors.purple, // Color de la sombra
-              ),
-              icon: Image.asset('assets/icons/register.png', width: 30),
-
-              label: Text(
-                "Registrarse",
-                style: GoogleFonts.nunitoSans(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black.withOpacity(0.6),
-                      offset: Offset(2, 2),
-                      blurRadius: 4,
-                    ),
-                    
-                  ],
+                icon: Image.asset('assets/icons/login.png', width: 30),
+                label: Text(
+                  "Iniciar Sesión",
+                  style: GoogleFonts.nunitoSans(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(0.6),
+                        offset: Offset(2, 2),
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
                 ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
+                  );
+                },
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterScreen()),
-                );
-              },
             ),
-          ),
 
-          const Spacer(),
-        ],
+            const SizedBox(height: 15),
+
+            // Register Bottom
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(
+                    255,
+                    148,
+                    0,
+                    211,
+                  ), //  blue background
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(80),
+                  ),
+                  minimumSize: const Size(double.infinity, 60),
+                  elevation: 10, // Añade sombra al botón
+                  shadowColor: Colors.purple, // Color de la sombra
+                ),
+                icon: Image.asset('assets/icons/register.png', width: 30),
+
+                label: Text(
+                  "Registrarse",
+                  style: GoogleFonts.nunitoSans(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(0.6),
+                        offset: Offset(2, 2),
+                        blurRadius: 4,
+                      ),
+                    ],
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterScreen()),
+                  );
+                },
+              ),
+            ),
+
+            const Spacer(),
+          ],
+        ),
       ),
     );
   }
