@@ -10,147 +10,170 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
         children: [
-          const Spacer(),
-
-          // Logo
-          Image.asset(
-            'assets/images/logo.png',
-            height: 180,
-          ),
-
-          // Title 'U-Market' -> "Lilita One"
-          Text(
-            "U-MARKET",
-            style: GoogleFonts.lilitaOne(
-              fontSize: 55,
-              fontWeight: FontWeight.bold,
-              color: Colors.purple,
-              shadows: [
-                Shadow(
-                  color: Colors.black,
-                  offset: Offset(2, 3),
-                  blurRadius: 4,
-                ),
-              ],
+          // Imagen de fondo
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/background.jpg',
+              fit: BoxFit.cover,
             ),
           ),
 
-          const SizedBox(height: 20),
+          // Contenido principal
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Spacer(),
 
-          // Logo image (u_market)
-          Image.asset(
-            'assets/images/login_register.png',
-            height: 333,
-          ),
-
-          const SizedBox(height: 30),
-
-          // Login Bottom
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 30,
-            ),
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Colors.purple, // purple background
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                minimumSize: const Size(
-                  double.infinity,
-                  60,
-                ),
-                elevation: 7, // Añade sombra al botón
-                shadowColor:
-                    Colors.purple, // Color de la sombra
+              // Logo
+              Image.asset(
+                'assets/images/logoU.png',
+                height: 250,
               ),
-              icon: Image.asset(
-                'assets/icons/login.png',
-                width: 30,
-              ),
-              label: Text(
-                "Iniciar Sesión",
-                style: GoogleFonts.nunitoSans(
-                  color: Colors.white,
-                  fontSize: 25,
+
+              // Title 'U-Market' -> "Lilita One"
+              Text(
+                "U-MARKET",
+                style: GoogleFonts.lilitaOne(
+                  fontSize: 55,
                   fontWeight: FontWeight.bold,
+                  color: Colors.purple,
                   shadows: [
                     Shadow(
-                      color: Colors.black.withOpacity(0.6),
-                      offset: Offset(2, 2),
+                      color: Colors.black,
+                      offset: Offset(2, 3),
                       blurRadius: 4,
                     ),
                   ],
                 ),
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginScreen(),
-                  ),
-                );
-              },
-            ),
-          ),
 
-          const SizedBox(height: 15),
+              const SizedBox(height: 20),
 
-          // Register Bottom
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 30,
-            ),
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Colors.blue, //  blue background
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                minimumSize: const Size(
-                  double.infinity,
-                  60,
-                ),
-                elevation: 7, // Añade sombra al botón
-                shadowColor:
-                    Colors.blueAccent, // Color de la sombra
+              /* Logo image (u_market)
+              Image.asset(
+                'assets/images/login_register.png',
+                height: 333,
               ),
-              icon: Image.asset(
-                'assets/icons/register.png',
-                width: 30,
-              ),
-              label: Text(
-                "Registrarse",
-                style: GoogleFonts.nunitoSans(
-                  color: Colors.white,
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      color: Colors.black.withOpacity(0.6),
-                      offset: Offset(2, 2),
-                      blurRadius: 4,
+              */
+              const SizedBox(height: 30),
+
+              // Login Bottom
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                ),
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Colors.purple, // purple background
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        10,
+                      ),
                     ),
-                  ],
+                    minimumSize: const Size(
+                      double.infinity,
+                      60,
+                    ),
+                    elevation: 7, // Añade sombra al botón
+                    shadowColor:
+                        Colors.purple, // Color de la sombra
+                  ),
+                  icon: Image.asset(
+                    'assets/icons/login.png',
+                    width: 30,
+                  ),
+                  label: Text(
+                    "Iniciar Sesión",
+                    style: GoogleFonts.nunitoSans(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black.withOpacity(
+                            0.6,
+                          ),
+                          offset: Offset(2, 2),
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    );
+                  },
                 ),
               ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => RegisterScreen(),
-                  ),
-                );
-              },
-            ),
-          ),
 
-          const Spacer(),
+              const SizedBox(height: 15),
+
+              // Register Bottom
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 30,
+                ),
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:
+                        Colors.blue, //  blue background
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        10,
+                      ),
+                    ),
+                    minimumSize: const Size(
+                      double.infinity,
+                      60,
+                    ),
+                    elevation: 7, // Añade sombra al botón
+                    shadowColor:
+                        Colors
+                            .blueAccent, // Color de la sombra
+                  ),
+                  icon: Image.asset(
+                    'assets/icons/register.png',
+                    width: 30,
+                  ),
+                  label: Text(
+                    "Registrarse",
+                    style: GoogleFonts.nunitoSans(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black.withOpacity(
+                            0.6,
+                          ),
+                          offset: Offset(2, 2),
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder:
+                            (context) => RegisterScreen(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
+              const Spacer(),
+            ],
+          ),
         ],
       ),
     );

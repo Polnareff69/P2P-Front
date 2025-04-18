@@ -730,6 +730,9 @@ class _StorePreviewScreenState
                     if (selectedCategory == category) {
                       selectedCategory = "Todo";
                     }
+                    // También actualizamos los productos que tengan esta categoría
+                    // Por ahora no tenemos la categoría en el modelo, pero cuando lo tengamos
+                    // deberíamos actualizar los productos aquí
                   });
                   Navigator.pop(context);
                   print(
