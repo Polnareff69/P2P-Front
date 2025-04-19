@@ -15,7 +15,7 @@ class WelcomeScreen extends StatelessWidget {
           // Imagen de fondo
           Positioned.fill(
             child: Image.asset(
-              'assets/images/background5.jpg',
+              'assets/images/welcome_screen.png',
               fit: BoxFit.cover,
             ),
           ),
