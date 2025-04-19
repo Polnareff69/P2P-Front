@@ -34,9 +34,9 @@ class RememberMeCheckboxState
             decoration: BoxDecoration(
               color: const Color.fromARGB(
                 255,
-                97,
-                13,
-                175,
+                122,
+                16,
+                221,
               ), // Fondo rosa
               borderRadius: BorderRadius.circular(6),
             ),
