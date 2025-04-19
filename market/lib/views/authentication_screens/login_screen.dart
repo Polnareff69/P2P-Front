@@ -214,6 +214,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             return null;
                           }
                         },
+                        style: GoogleFonts.getFont(
+                          'Nunito Sans',
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+
                         decoration: InputDecoration(
                           fillColor: Colors.black
                               .withOpacity(0.5),
@@ -300,6 +307,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             return null;
                           }
                         },
+                        style: GoogleFonts.getFont(
+                          'Nunito Sans',
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
                         decoration: InputDecoration(
                           fillColor: Colors.black
                               .withOpacity(0.4),
