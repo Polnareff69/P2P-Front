@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
 
-          // Contenido original
+          // Contenido
           Padding(
             padding: const EdgeInsets.all(25.0),
             child: Center(

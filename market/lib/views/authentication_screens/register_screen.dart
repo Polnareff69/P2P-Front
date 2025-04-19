@@ -60,451 +60,458 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  //Login Title
-                  Text(
-                    "Registrarse en U-Market",
-                    style: GoogleFonts.getFont(
-                      'Nunito Sans',
-                      color: Colors.purpleAccent,
-                      fontWeight: FontWeight.w900,
-                      //letterSpacing: 0.1,
-                      fontSize: 25,
-                    ),
-                  ),
+      body: Stack(
+        children: [
+          // Imagen de fondo
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/register_img.png', // Usa la misma imagen o cambia a otra que prefieras
+              fit: BoxFit.cover,
+            ),
+          ),
 
-                  //Message below the title
-                  Text(
-                    'Emprende, Compra y Vende ahora mismo',
-                    style: GoogleFonts.getFont(
-                      'Nunito Sans',
-                      color: const Color.fromARGB(
-                        255,
-                        28,
-                        113,
-                        156,
-                      ),
-                      fontWeight: FontWeight.bold,
-                      //letterSpacing: 0.1,
-                      fontSize: 13.6,
-                    ),
-                  ),
+          // Overlay sobre la imagen de fondo
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                // Puedes elegir entre varias opciones:
 
-                  //Login Image
-                  Image.asset(
-                    'assets/images/user_register.png',
-                    width: 250,
-                    height: 250,
-                  ),
-                  //user name text
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Nombre de Usuario',
-                      style: GoogleFonts.getFont(
-                        'Nunito Sans',
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        //letterSpacing: 0.2,
-                      ),
-                    ),
-                  ),
+                // 1. Color sólido semitransparente
+                color: Colors.black38,
 
-                  //Input from the user_name
-                  TextFormField(
-                    //grab name
-                    onChanged: (value) {
-                      name = value;
-                    },
+                // 2. Gradiente lineal
+                /*
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.3),
+                    Colors.black.withOpacity(0.7),
+                  ],
+                ),
+                */
 
-                    //validate info is not empty
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Ingresa un nombre.';
-                      } else {
-                        return null;
-                      }
-                    },
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                      ),
-                      //borders
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                        borderSide:
-                            BorderSide
-                                .none, // Sin color cuando está enfocado
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                        borderSide:
-                            BorderSide
-                                .none, // Sin color cuando no está enfocado
-                      ),
-
-                      hintText:
-                          'Introduce tu nombre de usuario...',
-                      hintStyle: GoogleFonts.getFont(
-                        'Nunito Sans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.blueGrey,
-                      ),
-                      //icons
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Image.asset(
-                          'assets/icons/user.png',
-                          width: 20,
-                          height: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  //user email
-                  const SizedBox(height: 20),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Email',
-                      style: GoogleFonts.getFont(
-                        'Nunito Sans',
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        //letterSpacing: 0.2,
-                      ),
-                    ),
-                  ),
-                  //Input of the user email
-                  TextFormField(
-                    //grab the user email
-                    onChanged: (value) {
-                      email = value;
-                    },
-                    //validate the user inputs an email
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Ingresa un correo.';
-                      } else {
-                        return null;
-                      }
-                    },
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                      ),
-                      // borders
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                        borderSide:
-                            BorderSide
-                                .none, // Sin color cuando está enfocado
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                        borderSide:
-                            BorderSide
-                                .none, // Sin color cuando no está enfocado
-                      ),
-
-                      hintText: 'Introduce tu email...',
-                      hintStyle: GoogleFonts.getFont(
-                        'Nunito Sans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.blueGrey,
-                      ),
-                      //icons
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Image.asset(
-                          'assets/icons/email.png',
-                          width: 20,
-                          height: 20,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  //user password
-                  const SizedBox(height: 20),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Contaseña',
-                      style: GoogleFonts.getFont(
-                        'Nunito Sans',
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        //letterSpacing: 0.2,
-                      ),
-                    ),
-                  ),
-                  //Input of the user password
-                  TextFormField(
-                    obscureText: true,
-                    //grab the user's password
-                    onChanged: (value) {
-                      password = value;
-                    },
-                    //validate user's password
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Ingresa una contraseña.';
-                      } else {
-                        return null;
-                      }
-                    },
-                    decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                      ),
-                      //borders
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                        borderSide:
-                            BorderSide
-                                .none, // Sin color cuando está enfocado
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                          15,
-                        ),
-                        borderSide:
-                            BorderSide
-                                .none, // Sin color cuando no está enfocado
-                      ),
-                      hintText:
-                          'Introduce tu contraseña...',
-                      hintStyle: GoogleFonts.getFont(
-                        'Nunito Sans',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.blueGrey,
-                      ),
-                      //icons
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Image.asset(
-                          'assets/icons/password.png',
-                          width: 20,
-                          height: 20,
-                        ),
-                      ),
-                      suffixIcon: Icon(Icons.visibility),
-                    ),
-                  ),
-
-                  //Register Bottom
-                  const SizedBox(height: 30),
-                  isLoading
-                      ? CircularProgressIndicator()
-                      : InkWell(
-                        onTap: () {
-                          if (_formKey.currentState!
-                              .validate()) {
-                            registerUser();
-                            print("Username = $name");
-                            print("Email = $email");
-                            print("Password = $password");
-                          } else {
-                            print("Ha fallado");
-                          }
-                        },
-                        child: Container(
-                          width: 319,
-                          height: 57,
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                BorderRadius.circular(10),
-                            color: Colors.blue,
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                left: 278,
-                                top: 19,
-                                child: Opacity(
-                                  opacity: 0.5,
-                                  child: Container(
-                                    width: 60,
-                                    height: 60,
-                                    clipBehavior:
-                                        Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 12,
-                                        color:
-                                            const Color.fromARGB(
-                                              255,
-                                              38,
-                                              43,
-                                              46,
-                                            ),
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            30,
-                                          ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              Positioned(
-                                left: 260,
-                                top: 29,
-                                child: Opacity(
-                                  opacity: 0.3,
-                                  child: Container(
-                                    width: 10,
-                                    height: 10,
-                                    clipBehavior:
-                                        Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 3,
-                                      ),
-                                      color: Colors.black,
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            5,
-                                          ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-
-                              Positioned(
-                                left: 308,
-                                top: 38,
-                                child: Opacity(
-                                  opacity: 0.3,
-                                  child: Container(
-                                    width: 5.5,
-                                    height: 5.5,
-                                    clipBehavior:
-                                        Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            3,
-                                          ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                left: 281,
-                                top: -10,
-                                child: Opacity(
-                                  opacity: 0.3,
-                                  child: Container(
-                                    width: 20,
-                                    height: 20,
-                                    clipBehavior:
-                                        Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(
-                                            10,
-                                          ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              //Iniciar Sesion Text
-                              Center(
-                                child: Text(
-                                  'Registrarse',
-                                  style:
-                                      GoogleFonts.getFont(
-                                        'Nunito Sans',
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight:
-                                            FontWeight.w700,
-                                      ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
-                  //already have an account
-                  const SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '¿Ya tienes una cuenta? ',
-                        style: GoogleFonts.roboto(
-                          fontWeight: FontWeight.w500,
-                          //letterSpacing: 1,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return LoginScreen();
-                              },
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Inicia Sesión',
-                          style: GoogleFonts.roboto(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                // 3. Gradiente radial
+                /*
+                gradient: RadialGradient(
+                  center: Alignment.center,
+                  radius: 1.0,
+                  colors: [
+                    Colors.black.withOpacity(0.3),
+                    Colors.black.withOpacity(0.7),
+                  ],
+                ),
+                */
               ),
             ),
           ),
-        ),
+
+          //Contenido
+          Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
+                    children: [
+                      //Login Title
+                      Text(
+                        "Registrarse",
+                        style: GoogleFonts.getFont(
+                          'Nunito Sans',
+                          color: Colors.purpleAccent,
+                          fontWeight: FontWeight.w900,
+                          //letterSpacing: 0.1,
+                          fontSize: 40,
+                        ),
+                      ),
+
+                      //Message below the title
+                      Text(
+                        'Emprende, Compra y Vende ahora mismo',
+                        style: GoogleFonts.getFont(
+                          'Nunito Sans',
+                          color: Colors.white,
+                          fontWeight: FontWeight.w900,
+                          //letterSpacing: 0.1,
+                          fontSize: 17.6,
+                        ),
+                      ),
+
+                      //Login Image
+                      Image.asset(
+                        'assets/images/welcome_img.png',
+                        width: 280,
+                        height: 280,
+                      ),
+                      //user name text
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Nombre de Usuario',
+                          style: GoogleFonts.getFont(
+                            'Nunito Sans',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                            //letterSpacing: 0.2,
+                          ),
+                        ),
+                      ),
+
+                      //Input from the user_name
+                      TextFormField(
+                        //grab name
+                        onChanged: (value) {
+                          name = value;
+                        },
+
+                        //validate info is not empty
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty) {
+                            return 'Ingresa un nombre.';
+                          } else {
+                            return null;
+                          }
+                        },
+                        decoration: InputDecoration(
+                          fillColor: Colors.black
+                              .withOpacity(0.5),
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(15),
+                          ),
+                          //borders
+                          // Borde cuando está enfocado
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(15),
+                            borderSide: BorderSide(
+                              color:
+                                  Colors
+                                      .purpleAccent, // Color del borde cuando está enfocado
+                              width:
+                                  2.0, // Grosor del borde
+                            ),
+                          ),
+                          // Borde cuando no está enfocado
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(15),
+                            borderSide: BorderSide(
+                              color: Colors.white.withOpacity(
+                                0.5,
+                              ), // Color del borde normal
+                              width: 2, // Grosor del borde
+                            ),
+                          ),
+
+                          hintText:
+                              'Introduce tu nombre de usuario...',
+                          hintStyle: GoogleFonts.getFont(
+                            'Nunito Sans',
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                          //icons
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(
+                              10.0,
+                            ),
+                            child: Image.asset(
+                              'assets/icons/user.png',
+                              width: 20,
+                              height: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      //user email
+                      const SizedBox(height: 20),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Email',
+                          style: GoogleFonts.getFont(
+                            'Nunito Sans',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                            //letterSpacing: 0.2,
+                          ),
+                        ),
+                      ),
+                      //Input of the user email
+                      TextFormField(
+                        //grab the user email
+                        onChanged: (value) {
+                          email = value;
+                        },
+                        //validate the user inputs an email
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty) {
+                            return 'Ingresa un correo.';
+                          } else {
+                            return null;
+                          }
+                        },
+                        decoration: InputDecoration(
+                          fillColor: Colors.black
+                              .withOpacity(0.5),
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(15),
+                          ),
+                          // borders
+                          // Borde cuando está enfocado
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(15),
+                            borderSide: BorderSide(
+                              color:
+                                  Colors
+                                      .purpleAccent, // Color del borde cuando está enfocado
+                              width:
+                                  2.0, // Grosor del borde
+                            ),
+                          ),
+                          // Borde cuando no está enfocado
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(15),
+                            borderSide: BorderSide(
+                              color: Colors.white.withOpacity(
+                                0.5,
+                              ), // Color del borde normal
+                              width: 2, // Grosor del borde
+                            ),
+                          ),
+
+                          hintText: 'Introduce tu email...',
+                          hintStyle: GoogleFonts.getFont(
+                            'Nunito Sans',
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                          //icons
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(
+                              10.0,
+                            ),
+                            child: Image.asset(
+                              'assets/icons/email.png',
+                              width: 20,
+                              height: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      //user password
+                      const SizedBox(height: 20),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Contaseña',
+                          style: GoogleFonts.getFont(
+                            'Nunito Sans',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                            //letterSpacing: 0.2,
+                          ),
+                        ),
+                      ),
+                      //Input of the user password
+                      TextFormField(
+                        obscureText: true,
+                        //grab the user's password
+                        onChanged: (value) {
+                          password = value;
+                        },
+                        //validate user's password
+                        validator: (value) {
+                          if (value == null ||
+                              value.isEmpty) {
+                            return 'Ingresa una contraseña.';
+                          } else {
+                            return null;
+                          }
+                        },
+                        decoration: InputDecoration(
+                          fillColor: Colors.black
+                              .withOpacity(0.5),
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(15),
+                          ),
+                          //borders
+                          // Borde cuando está enfocado
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(15),
+                            borderSide: BorderSide(
+                              color:
+                                  Colors
+                                      .purpleAccent, // Color del borde cuando está enfocado
+                              width:
+                                  2.0, // Grosor del borde
+                            ),
+                          ),
+                          // Borde cuando no está enfocado
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(15),
+                            borderSide: BorderSide(
+                              color: Colors.white.withOpacity(
+                                0.5,
+                              ), // Color del borde normal
+                              width: 2, // Grosor del borde
+                            ),
+                          ),
+                          hintText:
+                              'Introduce tu contraseña...',
+                          hintStyle: GoogleFonts.getFont(
+                            'Nunito Sans',
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                          //icons
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(
+                              10.0,
+                            ),
+                            child: Image.asset(
+                              'assets/icons/password.png',
+                              width: 20,
+                              height: 20,
+                            ),
+                          ),
+                          suffixIcon: Icon(
+                            Icons.visibility,
+                          ),
+                        ),
+                      ),
+
+                      //Register Bottom
+                      const SizedBox(height: 30),
+                      isLoading
+                          ? CircularProgressIndicator()
+                          : InkWell(
+                            onTap: () {
+                              if (_formKey.currentState!
+                                  .validate()) {
+                                registerUser();
+                                print("Username = $name");
+                                print("Email = $email");
+                                print(
+                                  "Password = $password",
+                                );
+                              } else {
+                                print("Ha fallado");
+                              }
+                            },
+                            child: Container(
+                              width: 319,
+                              height: 65,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(
+                                      25,
+                                    ),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.deepPurpleAccent
+                                        .withOpacity(0.5),
+                                    const Color.fromARGB(
+                                      255,
+                                      157,
+                                      19,
+                                      170,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              child: Stack(
+                                children: [
+                                  //Iniciar Sesion Text
+                                  Center(
+                                    child: Text(
+                                      'Registrarse',
+                                      style:
+                                          GoogleFonts.getFont(
+                                            'Nunito Sans',
+                                            color:
+                                                Colors
+                                                    .white,
+                                            fontSize: 25,
+                                            fontWeight:
+                                                FontWeight
+                                                    .w700,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+
+                      //already have an account
+                      const SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '¿Ya tienes una cuenta? ',
+                            style: GoogleFonts.roboto(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15.5,
+                              color: Colors.white,
+                              //letterSpacing: 1,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return LoginScreen();
+                                  },
+                                ),
+                              );
+                            },
+                            child: Text(
+                              'Inicia Sesión',
+                              style: GoogleFonts.roboto(
+                                color: Colors.purpleAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15.5,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
