@@ -227,9 +227,9 @@ class _StorePreviewScreenState
             children: [
               // Título
               Text(
-                "Personalizar Mi Estilo",
+                "Personalizar Catálogo",
                 style: GoogleFonts.nunitoSans(
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w900,
                   fontSize: 25,
                   color: Colors.black,
                   shadows: [
