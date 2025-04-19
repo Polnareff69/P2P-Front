@@ -24,22 +24,38 @@ class ForgotPasswordScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back_rounded,
+            Icons.arrow_back_ios_new,
             color: Colors.white,
-          ),
-          onPressed: () => Navigator.of(context).pop(),
+            shadows: [
+              Shadow(
+                color: Colors.deepPurple,
+                offset: Offset(1, 1),
+                blurRadius: 15,
+              ),
+            ],
+          ), // Cambia el icono y el color
+          onPressed: () {
+            Navigator.pop(
+              context,
+            ); // Regresar a la pantalla anterior
+          },
         ),
         title: Text(
           "Recuperar contraseña",
           style: GoogleFonts.nunitoSans(
-            fontSize: 28,
+            fontSize: 29,
             fontWeight: FontWeight.w900,
             color: Colors.white,
             shadows: [
               Shadow(
-                color: Colors.black,
-                offset: Offset(0, 1),
-                blurRadius: 3,
+                color: Colors.deepPurple.withOpacity(0.8),
+                offset: const Offset(1, 3),
+                blurRadius: 10,
+              ),
+              Shadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: const Offset(2, 3),
+                blurRadius: 4,
               ),
             ],
           ),
@@ -95,6 +111,13 @@ class ForgotPasswordScreen extends StatelessWidget {
                           Icons.lock_reset,
                           size: 100,
                           color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black,
+                              offset: Offset(1, 2),
+                              blurRadius: 15,
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -109,8 +132,15 @@ class ForgotPasswordScreen extends StatelessWidget {
                           color: Colors.white,
                           shadows: [
                             Shadow(
-                              color: Colors.black,
-                              offset: Offset(0, 2),
+                              color: Colors.deepPurple
+                                  .withOpacity(0.8),
+                              offset: const Offset(1, 3),
+                              blurRadius: 10,
+                            ),
+                            Shadow(
+                              color: Colors.black
+                                  .withOpacity(0.6),
+                              offset: const Offset(2, 3),
                               blurRadius: 4,
                             ),
                           ],
@@ -155,6 +185,12 @@ class ForgotPasswordScreen extends StatelessWidget {
                         ],
                       ),
                       child: TextFormField(
+                        style: GoogleFonts.getFont(
+                          'Nunito Sans',
+                          fontSize: 16.5,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
                         decoration: InputDecoration(
                           labelText: "Correo electrónico",
                           hintText: "tu-correo@gmail.com",
@@ -283,6 +319,26 @@ class ForgotPasswordScreen extends StatelessWidget {
                                 fontSize: 18,
                                 fontWeight: FontWeight.w900,
                                 letterSpacing: 1.0,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.deepPurple
+                                        .withOpacity(0.8),
+                                    offset: const Offset(
+                                      1,
+                                      3,
+                                    ),
+                                    blurRadius: 10,
+                                  ),
+                                  Shadow(
+                                    color: Colors.black
+                                        .withOpacity(0.6),
+                                    offset: const Offset(
+                                      2,
+                                      3,
+                                    ),
+                                    blurRadius: 4,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
