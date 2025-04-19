@@ -126,6 +126,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           fontWeight: FontWeight.w900,
                           //letterSpacing: 0.1,
                           fontSize: 40,
+                          shadows: [
+                            Shadow(
+                              color: Colors.deepPurple
+                                  .withOpacity(0.8),
+                              offset: const Offset(1, 3),
+                              blurRadius: 10,
+                            ),
+                            Shadow(
+                              color: Colors.black
+                                  .withOpacity(0.6),
+                              offset: const Offset(2, 4),
+                              blurRadius: 4,
+                            ),
+                          ],
                         ),
                       ),
 
