@@ -65,6 +65,24 @@ class BusinessOrMainScreen extends StatelessWidget {
           ),
         ),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+            shadows: [
+              Shadow(
+                color: Colors.purpleAccent,
+                offset: Offset(1, 1),
+                blurRadius: 20,
+              ),
+            ],
+          ), // Cambia el icono y el color
+          onPressed: () {
+            Navigator.pop(
+              context,
+            ); // Regresar a la pantalla anterior
+          },
+        ),
       ),
 
       // Contenido principal
