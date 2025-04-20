@@ -223,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value) {
                           if (value == null ||
                               value.isEmpty) {
-                            return 'Nombre Inexistente.';
+                            return 'Nombre incorrecto.';
                           } else {
                             return null;
                           }
@@ -315,7 +315,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value) {
                           if (value == null ||
                               value.isEmpty) {
-                            return 'Contraseña Incorrecta.';
+                            return 'Contraseña incorrecta.';
                           } else {
                             return null;
                           }

@@ -347,7 +347,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Align(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          'Contaseña',
+                          'Contraseña',
                           style: GoogleFonts.getFont(
                             'Nunito Sans',
                             fontSize: 20,
