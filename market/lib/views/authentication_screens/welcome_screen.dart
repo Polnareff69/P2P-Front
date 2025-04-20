@@ -133,12 +133,18 @@ class WelcomeScreen extends StatelessWidget {
                   duration: const Duration(
                     milliseconds: 800,
                   ),
-                  curve: Curves.easeOutBack,
+                  curve: Curves.easeOut,
                   builder: (context, value, child) {
                     return Opacity(
                       opacity: value,
                       child: Transform.translate(
-                        offset: Offset(0, 50 * (1 - value)),
+                        offset: Offset(
+                          0,
+                          50 *
+                              (1 -
+                                  Curves.easeOutBack
+                                      .transform(value)),
+                        ),
                         child: child,
                       ),
                     );
@@ -171,12 +177,18 @@ class WelcomeScreen extends StatelessWidget {
                   duration: const Duration(
                     milliseconds: 1000,
                   ),
-                  curve: Curves.easeOutBack,
+                  curve: Curves.easeOut,
                   builder: (context, value, child) {
                     return Opacity(
                       opacity: value,
                       child: Transform.translate(
-                        offset: Offset(0, 50 * (1 - value)),
+                        offset: Offset(
+                          0,
+                          50 *
+                              (1 -
+                                  Curves.easeOutBack
+                                      .transform(value)),
+                        ),
                         child: child,
                       ),
                     );
