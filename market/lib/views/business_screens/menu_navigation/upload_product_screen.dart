@@ -66,15 +66,20 @@ class _UploadProductScreenState
         backgroundColor: Colors.black87,
         title: Text(
           "Subir Producto",
-          style: GoogleFonts.lilitaOne(
+          style: GoogleFonts.nunitoSans(
             fontSize: 40,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w900,
             color: Colors.purpleAccent,
             shadows: [
               Shadow(
-                color: Colors.deepPurple,
-                offset: Offset(1, 1),
-                blurRadius: 25,
+                color: Colors.deepPurple.withOpacity(0.8),
+                offset: const Offset(1, 3),
+                blurRadius: 10,
+              ),
+              Shadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: const Offset(2, 4),
+                blurRadius: 4,
               ),
             ],
           ),
@@ -181,8 +186,8 @@ class _UploadProductScreenState
               const SizedBox(height: 10),
               Center(
                 child: SizedBox(
-                  width: 319,
-                  height: 60,
+                  width: 270,
+                  height: 70,
                   child: InkWell(
                     onTap: _uploadProduct,
                     borderRadius: BorderRadius.circular(10),
@@ -210,16 +215,23 @@ class _UploadProductScreenState
                       ),
                       child: Center(
                         child: Text(
-                          "Subir Producto",
-                          style: GoogleFonts.lilitaOne(
-                            fontSize: 27,
+                          "Ofertar",
+                          style: GoogleFonts.nunitoSans(
+                            fontSize: 29,
                             fontWeight: FontWeight.w900,
                             color: Colors.white,
                             shadows: [
                               Shadow(
-                                color: Colors.black,
-                                offset: Offset(2, 3),
-                                blurRadius: 7,
+                                color: Colors.deepPurple
+                                    .withOpacity(0.8),
+                                offset: const Offset(1, 3),
+                                blurRadius: 10,
+                              ),
+                              Shadow(
+                                color: Colors.black
+                                    .withOpacity(0.6),
+                                offset: const Offset(2, 4),
+                                blurRadius: 4,
                               ),
                             ],
                           ),

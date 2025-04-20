@@ -23,7 +23,7 @@ class BusinessesScreen extends StatelessWidget {
           34,
         ),
         title: Text(
-          "Empresas",
+          "Negocios",
           style: GoogleFonts.lilitaOne(
             fontSize: 40,
             fontWeight: FontWeight.bold,

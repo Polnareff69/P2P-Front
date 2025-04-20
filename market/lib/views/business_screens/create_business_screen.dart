@@ -121,7 +121,7 @@ class _CreateBusinessScreenState
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'Crea Tu Empresa',
+              'Cumple tu sueño',
               style: GoogleFonts.nunitoSans(
                 color: Colors.white,
                 fontWeight: FontWeight.w900,
@@ -143,7 +143,7 @@ class _CreateBusinessScreenState
               ),
             ),
             Text(
-              'Para Hacer Tu Empresa Más Grande',
+              '¡Emprende con nosotros!',
               style: GoogleFonts.nunitoSans(
                 color: Colors.white,
                 fontSize: 13.6,
@@ -205,7 +205,7 @@ class _CreateBusinessScreenState
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Logo de Tu Empresa',
+                              'Logo de tu Negocio',
                               style: GoogleFonts.nunitoSans(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -282,7 +282,7 @@ class _CreateBusinessScreenState
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Nombre de Tu Empresa',
+                              'Nombre de tu Negocio',
                               style: GoogleFonts.nunitoSans(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -298,7 +298,7 @@ class _CreateBusinessScreenState
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty) {
-                                return 'Ingresa el nombre de La Empresa.';
+                                return 'Aquí el nombre de tu Negocio.';
                               } else {
                                 return null;
                               }
@@ -340,7 +340,7 @@ class _CreateBusinessScreenState
                                         BorderSide.none,
                                   ),
                               hintText:
-                                  'Introduce el nombre de tu Empresa...',
+                                  'Aquí nombre de tu Negocio...',
                               hintStyle:
                                   GoogleFonts.nunitoSans(
                                     fontSize: 14,
@@ -369,7 +369,7 @@ class _CreateBusinessScreenState
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Número de Tu Empresa',
+                              'Número de tu Negocio',
                               style: GoogleFonts.nunitoSans(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -385,7 +385,7 @@ class _CreateBusinessScreenState
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty) {
-                                return 'Ingresa un Numero.';
+                                return 'Aqui el número.';
                               } else {
                                 return null;
                               }
@@ -427,7 +427,7 @@ class _CreateBusinessScreenState
                                         BorderSide.none,
                                   ),
                               hintText:
-                                  'Introduce el numero de tu Empresa...',
+                                  'Aquí número de contacto...',
                               hintStyle:
                                   GoogleFonts.nunitoSans(
                                     fontSize: 14,
@@ -456,7 +456,7 @@ class _CreateBusinessScreenState
                           Align(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              'Correo Empresarial',
+                              'Correo',
                               style: GoogleFonts.nunitoSans(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -472,7 +472,7 @@ class _CreateBusinessScreenState
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty) {
-                                return 'Ingresa el Correo de la Empresa.';
+                                return 'Aquí correo de contacto.';
                               } else {
                                 return null;
                               }
@@ -514,7 +514,7 @@ class _CreateBusinessScreenState
                                         BorderSide.none,
                                   ),
                               hintText:
-                                  'Introduce el correo de tu Empresa...',
+                                  'Aquí correo de contacto...',
                               hintStyle:
                                   GoogleFonts.nunitoSans(
                                     fontSize: 14,
@@ -644,7 +644,7 @@ class _CreateBusinessScreenState
                             validator: (value) {
                               if (value == null ||
                                   value.isEmpty) {
-                                return 'Ingresa una Descripción.';
+                                return 'Aquí cuentanos sobre tu Negocio.';
                               } else {
                                 return null;
                               }
@@ -687,7 +687,7 @@ class _CreateBusinessScreenState
                                         BorderSide.none,
                                   ),
                               hintText:
-                                  'Describe que hace tu Empresa...',
+                                  'Aquí cuentanos sobre tu Negocio...',
                               hintStyle:
                                   GoogleFonts.nunitoSans(
                                     fontSize: 14,
@@ -892,7 +892,7 @@ class _CreateBusinessScreenState
                                               width: 10,
                                             ),
                                             Text(
-                                              '¡Crear Empresa!',
+                                              '¡Quiero Emprender!',
                                               style: GoogleFonts.nunitoSans(
                                                 color:
                                                     Colors

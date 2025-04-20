@@ -187,7 +187,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validator: (value) {
                           if (value == null ||
                               value.isEmpty) {
-                            return 'Ingresa un nombre.';
+                            return 'Aqui tu usuario.';
                           } else {
                             return null;
                           }
@@ -231,8 +231,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
 
-                          hintText:
-                              'Introduce tu nombre de usuario...',
+                          hintText: 'Usuario...',
                           hintStyle: GoogleFonts.getFont(
                             'Nunito Sans',
                             fontSize: 17,
@@ -278,7 +277,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validator: (value) {
                           if (value == null ||
                               value.isEmpty) {
-                            return 'Ingresa un correo.';
+                            return 'Aquí tu correo.';
                           } else {
                             return null;
                           }
@@ -322,7 +321,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
 
-                          hintText: 'Introduce tu email...',
+                          hintText: 'Correo...',
                           hintStyle: GoogleFonts.getFont(
                             'Nunito Sans',
                             fontSize: 17,
@@ -369,7 +368,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         validator: (value) {
                           if (value == null ||
                               value.isEmpty) {
-                            return 'Ingresa una contraseña.';
+                            return 'Aquí tu contraseña.';
                           } else {
                             return null;
                           }
@@ -412,8 +411,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               width: 2, // Grosor del borde
                             ),
                           ),
-                          hintText:
-                              'Introduce tu contraseña...',
+                          hintText: 'Contraseña...',
                           hintStyle: GoogleFonts.getFont(
                             'Nunito Sans',
                             fontSize: 17,

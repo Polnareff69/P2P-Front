@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       //Message below the title
                       Text(
-                        'Sumergete en el Mercado Universitario',
+                        'Ingresa a un mundo de oportunidades',
                         style: GoogleFonts.getFont(
                           'Nunito Sans',
                           color: Colors.white,
@@ -268,8 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
 
-                          hintText:
-                              'Introduce tu nombre de usuario...',
+                          hintText: 'Usuario...',
                           hintStyle: GoogleFonts.getFont(
                             'Nunito Sans',
                             fontSize: 17,
@@ -359,8 +358,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: 2, // Grosor del borde
                             ),
                           ),
-                          hintText:
-                              'Introduce tu contraseña...',
+                          hintText: 'Contraseña...',
                           hintStyle: GoogleFonts.getFont(
                             'Nunito Sans',
                             fontSize: 17,
