@@ -384,6 +384,18 @@ class _UploadProductScreenState
 
   void _uploadProduct() async {
     if (_formKey.currentState!.validate()) {
+      // Verificar si se ha seleccionado una imagen
+      if (_selectedImages.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Por favor, selecciona una imagen para el producto',
+            ),
+          ),
+        );
+        return;
+      }
+
       final product = Product(
         Name: _nameController.text,
         Price: _priceController.text,
@@ -392,12 +404,18 @@ class _UploadProductScreenState
       );
 
       try {
-        await _controller.uploadProduct(product);
+        // Ahora pasamos también la lista de imágenes seleccionadas
+        await _controller.uploadProduct(
+          product,
+          _selectedImages,
+        );
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Producto subido exitosamente'),
           ),
         );
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

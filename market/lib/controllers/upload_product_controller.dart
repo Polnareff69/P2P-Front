@@ -1,12 +1,14 @@
-// lib/controllers/upload_product_controller.dart
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:market/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http_parser/http_parser.dart';
 
 class UploadProductController {
   Future<void> uploadProduct(
-    Product product, [
+    Product product,
+    List<File> images, [
     String? companyId,
   ]) async {
     // Obtener el CompanyId de SharedPreferences si no se proporciona uno
@@ -21,14 +23,45 @@ class UploadProductController {
       }
     }
 
-    final String apiUrl =
-        'http://10.0.2.2:8000/product/$companyId'; // URL del backend
+    // Construir la URL con los parámetros de consulta
+    final queryParams = {
+      'Name': product.Name ?? '',
+      'Description': product.Description ?? '',
+      'Price': product.Price ?? '',
+    };
+
+    final baseUrl =
+        'http://10.0.2.2:8000/product/$companyId';
+    final uri = Uri.parse(
+      baseUrl,
+    ).replace(queryParameters: queryParams);
 
     try {
-      final response = await http.post(
-        Uri.parse(apiUrl),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(product.toJson()),
+      // Crear un objeto multipart request
+      var request = http.MultipartRequest('POST', uri);
+
+      // Agregar la imagen si hay alguna
+      if (images.isNotEmpty) {
+        final file = images.first;
+        final fileName = file.path.split('/').last;
+
+        final multipartFile = await http
+            .MultipartFile.fromPath(
+          'ProductImg',
+          file.path,
+          contentType: MediaType(
+            'image',
+            getImageMimeType(fileName),
+          ),
+        );
+
+        request.files.add(multipartFile);
+      }
+
+      // Enviar la solicitud
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(
+        streamedResponse,
       );
 
       if (response.statusCode == 200 ||
@@ -44,5 +77,18 @@ class UploadProductController {
     } catch (e) {
       throw Exception('Error en la conexión: $e');
     }
+  }
+
+  // Función auxiliar para determinar el tipo MIME de la imagen
+  String getImageMimeType(String fileName) {
+    if (fileName.endsWith('.jpg') ||
+        fileName.endsWith('.jpeg')) {
+      return 'jpeg';
+    } else if (fileName.endsWith('.png')) {
+      return 'png';
+    } else if (fileName.endsWith('.gif')) {
+      return 'gif';
+    }
+    return 'jpeg'; // Valor predeterminado
   }
 }
