@@ -249,33 +249,81 @@ class _VendorScreenState extends State<VendorScreen> {
     );
   }
 
-  // Botón "Subir Productos"
+  // Botón "Subir Productos" con fondo elegante
   Widget _buildUploadButton(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 20),
-        Text(
-          "Subir Productos",
-          style: GoogleFonts.nunito(
-            fontSize: 19,
-            fontWeight: FontWeight.w900,
-            fontStyle: FontStyle.italic,
-            color: Colors.white,
-            shadows: [
-              Shadow(
-                color: Colors.deepPurple.withOpacity(0.5),
-                offset: const Offset(0, 2),
-                blurRadius: 10,
+        const SizedBox(height: 25),
+
+        // Título con fondo transparente y borde morado
+        Container(
+          padding: EdgeInsets.symmetric(
+            vertical: 5,
+            horizontal: 15,
+          ),
+          margin: EdgeInsets.only(bottom: 8),
+          decoration: BoxDecoration(
+            // Fondo transparente con efecto glaseado
+            gradient: LinearGradient(
+              colors: [
+                Colors.purpleAccent.withOpacity(0.1),
+                Colors.deepPurpleAccent.withOpacity(0.15),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            // Borde delineado en morado
+            border: Border.all(
+              color: Colors.purple.shade400,
+              width: 1.2,
+            ),
+            borderRadius: BorderRadius.circular(15),
+            // Efecto de brillo con sombra sutil
+            boxShadow: [
+              BoxShadow(
+                color: Colors.purple.shade700.withOpacity(
+                  0.25,
+                ),
+                blurRadius: 8,
+                spreadRadius: 0,
+                offset: Offset(0, 2),
               ),
-              Shadow(
-                color: Colors.black.withOpacity(0.6),
-                offset: const Offset(1, 3),
-                blurRadius: 4,
+              // Brillo interior
+              BoxShadow(
+                color: Colors.purple.shade300.withOpacity(
+                  0.1,
+                ),
+                blurRadius: 6,
+                spreadRadius: -1,
+                offset: Offset(0, 0),
               ),
             ],
           ),
+          child: Text(
+            "Subir Productos",
+            textAlign: TextAlign.center,
+            style: GoogleFonts.nunito(
+              fontSize: 17,
+              fontWeight: FontWeight.w900,
+              fontStyle: FontStyle.italic,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                  color: Colors.deepPurple.withOpacity(0.6),
+                  offset: const Offset(1, 1),
+                  blurRadius: 5,
+                ),
+                Shadow(
+                  color: Colors.black.withOpacity(0.5),
+                  offset: const Offset(0, 2),
+                  blurRadius: 3,
+                ),
+              ],
+            ),
+          ),
         ),
-        const SizedBox(height: 6),
+
+        const SizedBox(height: 8),
         Container(
           width: 59, // Ancho del botón
           height: 47, // Alto del botón
@@ -627,78 +675,132 @@ class _VendorScreenState extends State<VendorScreen> {
   Widget _buildMenu() {
     return Column(
       children: [
-        const SizedBox(height: 22),
-        Text(
-          "Menú For Gamers ®",
-          style: GoogleFonts.nunito(
-            fontSize: 20,
-            fontWeight: FontWeight.w900,
-            fontStyle: FontStyle.italic,
-            color: Colors.white,
-            shadows: [
-              Shadow(
-                color: Colors.deepPurple.withOpacity(0.5),
-                offset: const Offset(0, 2),
-                blurRadius: 10,
-              ),
-              Shadow(
-                color: Colors.black.withOpacity(0.6),
-                offset: const Offset(1, 3),
-                blurRadius: 4,
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 14,
-          ),
-          child: GridView.count(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            crossAxisCount: 3,
-            crossAxisSpacing: 0,
-            mainAxisSpacing: 6,
+        // Integración del título del menú y botones en un solo contenedor
+        Container(
+          margin: EdgeInsets.only(top: 30),
+          child: Column(
             children: [
-              _buildMenuButton(
-                'assets/icons/sells.png',
-                "Ventas",
-                () {
-                  // Acción para el botón Ventas
-                },
+              // Título integrado con los botones
+              Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 20,
+                ),
+                margin: EdgeInsets.only(bottom: 28),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.purpleAccent.withOpacity(0.1),
+                      Colors.deepPurpleAccent.withOpacity(
+                        0.15,
+                      ),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  border: Border.all(
+                    color: Colors.purple.shade400,
+                    width: 1.2,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.purple.shade700
+                          .withOpacity(0.25),
+                      blurRadius: 8,
+                      spreadRadius: 0,
+                      offset: Offset(0, 2),
+                    ),
+                    // Brillo interior
+                    BoxShadow(
+                      color: Colors.purple.shade300
+                          .withOpacity(0.1),
+                      blurRadius: 6,
+                      spreadRadius: -1,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                ),
+
+                child: Text(
+                  "Menú For Gamers ®",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.nunito(
+                    fontSize: 19,
+                    fontWeight: FontWeight.w900,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(
+                          0.6,
+                        ),
+                        offset: const Offset(1, 1),
+                        blurRadius: 3,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              _buildMenuButton(
-                'assets/icons/edit.png',
-                "Editar",
-                _showEditProfileOptions, // Ahora este botón abre el modal para editar el perfil
-              ),
-              _buildMenuButton(
-                'assets/icons/deliveries.png',
-                "Pedidos",
-                () {
-                  // Acción para el botón Pedidos
-                },
-              ),
-              _buildMenuButton(
-                'assets/icons/star.png',
-                "Reseñas",
-                () {
-                  // Acción para el botón Reseñas
-                },
-              ),
-              _buildMenuButton(
-                'assets/icons/plus.png',
-                "Plus",
-                () {
-                  // Acción para el botón Plus
-                },
-              ),
-              _buildMenuButton(
-                'assets/icons/help.png',
-                "Ayuda",
-                () {
-                  // Acción para el botón Ayuda
-                },
+              // Los botones inmediatamente después del título
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                ),
+                child: GridView.count(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 3,
+                  mainAxisSpacing: 3,
+                  padding:
+                      EdgeInsets
+                          .zero, // Elimina padding predeterminado
+                  childAspectRatio:
+                      0.9, // Ajusta para que los botones no sean tan altos
+                  children: [
+                    _buildMenuButton(
+                      'assets/icons/sells.png',
+                      "Ventas",
+                      () {
+                        // Acción para el botón Ventas
+                      },
+                    ),
+                    _buildMenuButton(
+                      'assets/icons/edit.png',
+                      "Editar",
+                      _showEditProfileOptions,
+                    ),
+                    _buildMenuButton(
+                      'assets/icons/deliveries.png',
+                      "Pedidos",
+                      () {
+                        // Acción para el botón Pedidos
+                      },
+                    ),
+                    _buildMenuButton(
+                      'assets/icons/star.png',
+                      "Reseñas",
+                      () {
+                        // Acción para el botón Reseñas
+                      },
+                    ),
+                    _buildMenuButton(
+                      'assets/icons/plus.png',
+                      "Plus",
+                      () {
+                        // Acción para el botón Plus
+                      },
+                    ),
+                    _buildMenuButton(
+                      'assets/icons/help.png',
+                      "Ayuda",
+                      () {
+                        // Acción para el botón Ayuda
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

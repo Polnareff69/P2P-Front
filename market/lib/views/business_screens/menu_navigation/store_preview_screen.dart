@@ -35,12 +35,26 @@ class _StorePreviewScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Color(0xFF121212),
       body: SingleChildScrollView(
         child: Column(
           children: [
             _buildHeader(),
-            const SizedBox(height: 18),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 10.0,
+                bottom: 5.0,
+              ),
+              child: Text(
+                "Categorías",
+                style: GoogleFonts.nunito(
+                  fontSize: 19,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
             _buildCategoryButtons(),
             // Texto para subir productos
             Padding(
@@ -49,11 +63,11 @@ class _StorePreviewScreenState
                 bottom: 5.0,
               ),
               child: Text(
-                "Sube Tus Productos",
-                style: GoogleFonts.nunitoSans(
-                  fontSize: 18,
+                "Mis Productos",
+                style: GoogleFonts.nunito(
+                  fontSize: 19,
                   fontWeight: FontWeight.w900,
-                  color: Colors.black87,
+                  color: Colors.white,
                 ),
                 textAlign: TextAlign.center,
               ),

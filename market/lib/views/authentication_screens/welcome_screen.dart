@@ -311,7 +311,7 @@ class WelcomeScreen extends StatelessWidget {
   }
 }
 
-// Painter para crear un efecto de estrellas/brillos en el fondo
+// Painter para crear un efecto de estrellas en el fondo
 class StarFieldPainter extends CustomPainter {
   final List<Star> stars = [];
 
