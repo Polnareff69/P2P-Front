@@ -90,8 +90,11 @@ class WelcomeScreen extends StatelessWidget {
                             (bounds) => LinearGradient(
                               colors: [
                                 Colors.purple,
+
+                                Colors.purple,
                                 Colors.white,
 
+                                Colors.deepPurple,
                                 Colors.deepPurple,
                               ],
                               begin: Alignment.topLeft,
@@ -102,7 +105,12 @@ class WelcomeScreen extends StatelessWidget {
                           style: GoogleFonts.lilitaOne(
                             fontSize: 65,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: const Color.fromARGB(
+                              255,
+                              255,
+                              255,
+                              255,
+                            ),
                             shadows: [
                               Shadow(
                                 color: Colors.deepPurple

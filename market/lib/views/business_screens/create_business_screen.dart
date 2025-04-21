@@ -116,7 +116,24 @@ class _CreateBusinessScreenState
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.white),
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+            shadows: [
+              Shadow(
+                color: Colors.deepPurple,
+                offset: Offset(1, 1),
+                blurRadius: 15,
+              ),
+            ],
+          ), // Cambia el icono y el color
+          onPressed: () {
+            Navigator.pop(
+              context,
+            ); // Regresar a la pantalla anterior
+          },
+        ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -169,14 +186,14 @@ class _CreateBusinessScreenState
           // Capa oscura para mejor legibilidad
           Positioned.fill(
             child: Container(
-              color: Colors.black.withOpacity(0.6),
+              color: Colors.black.withOpacity(0.5),
             ),
           ),
 
           // Contenido del formulario
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(17.0),
+              padding: const EdgeInsets.all(15.0),
               child: Center(
                 child: SingleChildScrollView(
                   child: Form(
@@ -194,7 +211,7 @@ class _CreateBusinessScreenState
                           color: Colors.white.withOpacity(
                             0.3,
                           ),
-                          width: 2,
+                          width: 3,
                         ),
                       ),
                       child: Column(
@@ -327,7 +344,7 @@ class _CreateBusinessScreenState
                                       color:
                                           Colors
                                               .purpleAccent,
-                                      width: 1,
+                                      width: 1.5,
                                     ),
                                   ),
                               enabledBorder:
@@ -901,7 +918,7 @@ class _CreateBusinessScreenState
                                                     25,
                                                 fontWeight:
                                                     FontWeight
-                                                        .w700,
+                                                        .w800,
                                               ),
                                             ),
                                           ],
