@@ -36,6 +36,8 @@ class _VendorScreenState extends State<VendorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //fondo de color rgba(48,56,65,1)
+      backgroundColor: Color(0xFF121212),
       body: SingleChildScrollView(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,8 +64,8 @@ class _VendorScreenState extends State<VendorScreen> {
             boxShadow: [
               BoxShadow(
                 color: Colors.black,
-                blurRadius: 8,
-                offset: Offset(1, 5),
+                blurRadius: 5,
+                offset: Offset(1, 4.5),
               ),
             ],
 
@@ -124,7 +126,7 @@ class _VendorScreenState extends State<VendorScreen> {
             child: IconButton(
               icon: Icon(
                 Icons.settings_suggest,
-                color: Colors.black,
+                color: Color(0xFF121212),
                 size: 44,
               ),
               onPressed: () {
@@ -167,7 +169,7 @@ class _VendorScreenState extends State<VendorScreen> {
             const SizedBox(height: 5),
             Text(
               widget.businessName,
-              style: GoogleFonts.nunitoSans(
+              style: GoogleFonts.nunito(
                 fontSize: 23,
                 fontWeight: FontWeight.w900,
                 color: Colors.white,
@@ -182,7 +184,7 @@ class _VendorScreenState extends State<VendorScreen> {
             ),
             Text(
               "By Alejo_AM ★",
-              style: GoogleFonts.nunitoSans(
+              style: GoogleFonts.nunito(
                 fontSize: 16,
                 color: Colors.white70,
                 fontWeight: FontWeight.bold,
@@ -192,11 +194,25 @@ class _VendorScreenState extends State<VendorScreen> {
             const SizedBox(height: 20),
             Text(
               "Mis Ganancias",
-              style: GoogleFonts.nunitoSans(
+              style: GoogleFonts.nunito(
                 fontSize: 19,
-                color: Colors.white70,
+                color: Colors.white,
                 fontWeight: FontWeight.w900,
                 fontStyle: FontStyle.italic,
+                shadows: [
+                  Shadow(
+                    color: Colors.deepPurple.withOpacity(
+                      0.5,
+                    ),
+                    offset: const Offset(0, 2),
+                    blurRadius: 10,
+                  ),
+                  Shadow(
+                    color: Colors.black.withOpacity(0.6),
+                    offset: const Offset(1, 3),
+                    blurRadius: 4,
+                  ),
+                ],
               ),
             ),
             Text(
@@ -212,9 +228,16 @@ class _VendorScreenState extends State<VendorScreen> {
                 ),
                 shadows: [
                   Shadow(
-                    color: Colors.black,
-                    offset: Offset(1, 1),
-                    blurRadius: 25,
+                    color: Colors.deepPurple.withOpacity(
+                      0.5,
+                    ),
+                    offset: const Offset(0, 2),
+                    blurRadius: 20,
+                  ),
+                  Shadow(
+                    color: Colors.black.withOpacity(0.6),
+                    offset: const Offset(1, 3),
+                    blurRadius: 8,
                   ),
                 ],
               ),
@@ -233,10 +256,23 @@ class _VendorScreenState extends State<VendorScreen> {
         const SizedBox(height: 20),
         Text(
           "Subir Productos",
-          style: GoogleFonts.nunitoSans(
+          style: GoogleFonts.nunito(
             fontSize: 19,
             fontWeight: FontWeight.w900,
             fontStyle: FontStyle.italic,
+            color: Colors.white,
+            shadows: [
+              Shadow(
+                color: Colors.deepPurple.withOpacity(0.5),
+                offset: const Offset(0, 2),
+                blurRadius: 10,
+              ),
+              Shadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: const Offset(1, 3),
+                blurRadius: 4,
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 6),
@@ -258,7 +294,7 @@ class _VendorScreenState extends State<VendorScreen> {
               BoxShadow(
                 color: Colors.black,
                 blurRadius: 4,
-                offset: Offset(2, 3),
+                offset: Offset(1, 2),
               ),
             ],
           ),
@@ -284,8 +320,8 @@ class _VendorScreenState extends State<VendorScreen> {
             child: Center(
               child: Icon(
                 Icons.add,
-                color: Colors.black87,
-                size: 30, // Tamaño del icono
+                color: Color(0xFF121212),
+                size: 35, // Tamaño del icono
               ),
             ),
           ),
@@ -594,10 +630,23 @@ class _VendorScreenState extends State<VendorScreen> {
         const SizedBox(height: 22),
         Text(
           "Menú For Gamers ®",
-          style: GoogleFonts.nunitoSans(
+          style: GoogleFonts.nunito(
             fontSize: 20,
             fontWeight: FontWeight.w900,
             fontStyle: FontStyle.italic,
+            color: Colors.white,
+            shadows: [
+              Shadow(
+                color: Colors.deepPurple.withOpacity(0.5),
+                offset: const Offset(0, 2),
+                blurRadius: 10,
+              ),
+              Shadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: const Offset(1, 3),
+                blurRadius: 4,
+              ),
+            ],
           ),
         ),
         Padding(
@@ -686,7 +735,7 @@ class _VendorScreenState extends State<VendorScreen> {
                 BoxShadow(
                   color: Colors.black,
                   blurRadius: 4,
-                  offset: Offset(2, 4),
+                  offset: Offset(1, 2),
                 ),
               ],
             ),
@@ -696,7 +745,7 @@ class _VendorScreenState extends State<VendorScreen> {
                 width: 65,
                 height: 65,
                 //size: 72,
-                color: Colors.black, // Icono en negro
+                color: Color(0xFF121212), // Icono en negro
               ),
             ),
           ),
@@ -704,10 +753,22 @@ class _VendorScreenState extends State<VendorScreen> {
         const SizedBox(height: 5),
         Text(
           label,
-          style: GoogleFonts.nunitoSans(
+          style: GoogleFonts.nunito(
             fontSize: 17,
             fontWeight: FontWeight.w900,
-            color: Colors.black,
+            color: Colors.white,
+            shadows: [
+              Shadow(
+                color: Colors.deepPurple.withOpacity(0.5),
+                offset: const Offset(0, 2),
+                blurRadius: 10,
+              ),
+              Shadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: const Offset(1, 3),
+                blurRadius: 4,
+              ),
+            ],
           ),
         ),
       ],
