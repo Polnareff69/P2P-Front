@@ -120,7 +120,7 @@ class _UploadProductScreenState
           // Capa oscura para mejor legibilidad
           Positioned.fill(
             child: Container(
-              color: Colors.black.withOpacity(0.5),
+              color: Colors.black.withOpacity(0.3),
             ),
           ),
 
@@ -255,7 +255,9 @@ class _UploadProductScreenState
                                       ),
                                   gradient: LinearGradient(
                                     colors: [
-                                      Colors.purpleAccent,
+                                      Colors
+                                          .purple
+                                          .shade400,
                                       const Color.fromARGB(
                                         255,
                                         59,
@@ -407,6 +409,36 @@ class _UploadProductScreenState
                                               fontWeight:
                                                   FontWeight
                                                       .w900,
+                                              shadows: [
+                                                Shadow(
+                                                  color: Colors
+                                                      .deepPurple
+                                                      .withOpacity(
+                                                        0.8,
+                                                      ),
+                                                  offset:
+                                                      const Offset(
+                                                        1,
+                                                        3,
+                                                      ),
+                                                  blurRadius:
+                                                      10,
+                                                ),
+                                                Shadow(
+                                                  color: Colors
+                                                      .black
+                                                      .withOpacity(
+                                                        0.6,
+                                                      ),
+                                                  offset:
+                                                      const Offset(
+                                                        2,
+                                                        4,
+                                                      ),
+                                                  blurRadius:
+                                                      4,
+                                                ),
+                                              ],
                                             ),
                                           ),
                                           SizedBox(

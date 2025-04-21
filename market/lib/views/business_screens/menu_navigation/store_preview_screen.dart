@@ -171,6 +171,7 @@ class _StorePreviewScreenState
           'assets/icons/edit.png',
           width: 35,
           height: 35,
+          color: Color(0xFF121212),
         ),
       ),
     );
@@ -225,7 +226,7 @@ class _StorePreviewScreenState
             child: IconButton(
               icon: Icon(
                 Icons.settings_suggest_outlined,
-                color: Colors.black,
+                color: Color(0xFF121212),
                 size: 44,
               ),
               onPressed: _showCustomizeHeaderOptions,
@@ -243,8 +244,8 @@ class _StorePreviewScreenState
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Colors.black,
-                  width: 4,
+                  color: Colors.black26,
+                  width: 5,
                 ),
               ),
               child: CircleAvatar(
