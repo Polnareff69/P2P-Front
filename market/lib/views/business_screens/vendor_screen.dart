@@ -36,7 +36,7 @@ class _VendorScreenState extends State<VendorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //fondo de color rgba(48,56,65,1)
+      //fondo de color oscuro
       backgroundColor: Color(0xFF121212),
       body: SingleChildScrollView(
         child: Column(
@@ -259,7 +259,7 @@ class _VendorScreenState extends State<VendorScreen> {
         Container(
           padding: EdgeInsets.symmetric(
             vertical: 5,
-            horizontal: 15,
+            horizontal: 10,
           ),
           margin: EdgeInsets.only(bottom: 8),
           decoration: BoxDecoration(

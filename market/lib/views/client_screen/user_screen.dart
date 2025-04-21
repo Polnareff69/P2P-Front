@@ -26,6 +26,8 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //fondo de color oscuro
+      backgroundColor: Color(0xFF121212),
       body: SingleChildScrollView(
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -472,66 +474,132 @@ class _UserScreenState extends State<UserScreen> {
   Widget _buildMenu() {
     return Column(
       children: [
-        const SizedBox(height: 33),
-        Text(
-          "Menú",
-          style: GoogleFonts.nunitoSans(
-            fontSize: 28,
-            fontWeight: FontWeight.w900,
-            fontStyle: FontStyle.italic,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 14,
-          ),
-          child: GridView.count(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            crossAxisCount: 3,
-            //childAspectRatio: 1,
-            crossAxisSpacing: 0,
-            mainAxisSpacing: 10,
+        // Integración del título del menú y botones en un solo contenedor
+        Container(
+          margin: EdgeInsets.only(top: 30),
+          child: Column(
             children: [
-              _buildMenuButton(
-                'assets/icons/sells.png',
-                "Compras",
-                () {
-                  // Acción para el botón Compras
-                },
+              // Título integrado con los botones
+              Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 20,
+                ),
+                margin: EdgeInsets.only(bottom: 28),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.purpleAccent.withOpacity(0.1),
+                      Colors.deepPurpleAccent.withOpacity(
+                        0.15,
+                      ),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  border: Border.all(
+                    color: Colors.purple.shade400,
+                    width: 1.2,
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.purple.shade700
+                          .withOpacity(0.25),
+                      blurRadius: 8,
+                      spreadRadius: 0,
+                      offset: Offset(0, 2),
+                    ),
+                    // Brillo interior
+                    BoxShadow(
+                      color: Colors.purple.shade300
+                          .withOpacity(0.1),
+                      blurRadius: 6,
+                      spreadRadius: -1,
+                      offset: Offset(0, 0),
+                    ),
+                  ],
+                ),
+
+                child: Text(
+                  "Opciones",
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.nunito(
+                    fontSize: 19,
+                    fontWeight: FontWeight.w900,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(
+                          0.6,
+                        ),
+                        offset: const Offset(1, 1),
+                        blurRadius: 3,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              _buildMenuButton(
-                'assets/icons/edit.png',
-                "Editar",
-                _showEditProfileOptions, // Ahora este botón abre el modal para editar el perfil
-              ),
-              _buildMenuButton(
-                'assets/icons/deliveries.png',
-                "Pedidos",
-                () {
-                  // Acción para el botón Pedidos
-                },
-              ),
-              _buildMenuButton(
-                'assets/icons/star.png',
-                "Reseñas",
-                () {
-                  // Acción para el botón Reseñas
-                },
-              ),
-              _buildMenuButton(
-                'assets/icons/plus.png',
-                "Emprender",
-                () {
-                  // Acción para el botón Emprender
-                },
-              ),
-              _buildMenuButton(
-                'assets/icons/help.png',
-                "Ayuda",
-                () {
-                  // Acción para el botón Ayuda
-                },
+              // Los botones inmediatamente después del título
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                ),
+                child: GridView.count(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 3,
+                  mainAxisSpacing: 3,
+                  padding:
+                      EdgeInsets
+                          .zero, // Elimina padding predeterminado
+                  childAspectRatio:
+                      0.9, // Ajusta para que los botones no sean tan altos
+                  children: [
+                    _buildMenuButton(
+                      'assets/icons/sells.png',
+                      "Ventas",
+                      () {
+                        // Acción para el botón Ventas
+                      },
+                    ),
+                    _buildMenuButton(
+                      'assets/icons/edit.png',
+                      "Editar",
+                      _showEditProfileOptions,
+                    ),
+                    _buildMenuButton(
+                      'assets/icons/deliveries.png',
+                      "Pedidos",
+                      () {
+                        // Acción para el botón Pedidos
+                      },
+                    ),
+                    _buildMenuButton(
+                      'assets/icons/star.png',
+                      "Reseñas",
+                      () {
+                        // Acción para el botón Reseñas
+                      },
+                    ),
+                    _buildMenuButton(
+                      'assets/icons/plus.png',
+                      "Plus",
+                      () {
+                        // Acción para el botón Plus
+                      },
+                    ),
+                    _buildMenuButton(
+                      'assets/icons/help.png',
+                      "Ayuda",
+                      () {
+                        // Acción para el botón Ayuda
+                      },
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -579,7 +647,7 @@ class _UserScreenState extends State<UserScreen> {
                 width: 65,
                 height: 65,
                 //size: 72,
-                color: Colors.black, // Icono en negro
+                color: Color(0xFF121212), // Icono en negro
               ),
             ),
           ),
@@ -590,7 +658,19 @@ class _UserScreenState extends State<UserScreen> {
           style: GoogleFonts.nunitoSans(
             fontSize: 17,
             fontWeight: FontWeight.w900,
-            color: Colors.black,
+            color: Colors.white,
+            shadows: [
+              Shadow(
+                color: Colors.deepPurple.withOpacity(0.5),
+                offset: const Offset(0, 2),
+                blurRadius: 10,
+              ),
+              Shadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: const Offset(1, 3),
+                blurRadius: 4,
+              ),
+            ],
           ),
         ),
       ],

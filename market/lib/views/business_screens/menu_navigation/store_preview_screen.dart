@@ -40,10 +40,51 @@ class _StorePreviewScreenState
         child: Column(
           children: [
             _buildHeader(),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 10.0,
-                bottom: 5.0,
+            const SizedBox(height: 20),
+
+            // Título con fondo transparente y borde morado
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: 5,
+                horizontal: 10,
+              ),
+              margin: EdgeInsets.only(bottom: 1),
+              decoration: BoxDecoration(
+                // Fondo transparente con efecto glaseado
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.purpleAccent.withOpacity(0.1),
+                    Colors.deepPurpleAccent.withOpacity(
+                      0.15,
+                    ),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                // Borde delineado en morado
+                border: Border.all(
+                  color: Colors.purple.shade400,
+                  width: 1.2,
+                ),
+                borderRadius: BorderRadius.circular(15),
+                // Efecto de brillo con sombra sutil
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.purple.shade700
+                        .withOpacity(0.25),
+                    blurRadius: 8,
+                    spreadRadius: 0,
+                    offset: Offset(0, 2),
+                  ),
+                  // Brillo interior
+                  BoxShadow(
+                    color: Colors.purple.shade300
+                        .withOpacity(0.1),
+                    blurRadius: 6,
+                    spreadRadius: -1,
+                    offset: Offset(0, 0),
+                  ),
+                ],
               ),
               child: Text(
                 "Categorías",
@@ -56,11 +97,51 @@ class _StorePreviewScreenState
               ),
             ),
             _buildCategoryButtons(),
-            // Texto para subir productos
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 10.0,
-                bottom: 5.0,
+            const SizedBox(height: 15),
+
+            // Título con fondo transparente y borde morado
+            Container(
+              padding: EdgeInsets.symmetric(
+                vertical: 5,
+                horizontal: 10,
+              ),
+              margin: EdgeInsets.only(bottom: 8),
+              decoration: BoxDecoration(
+                // Fondo transparente con efecto glaseado
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.purpleAccent.withOpacity(0.1),
+                    Colors.deepPurpleAccent.withOpacity(
+                      0.15,
+                    ),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                // Borde delineado en morado
+                border: Border.all(
+                  color: Colors.purple.shade400,
+                  width: 1.2,
+                ),
+                borderRadius: BorderRadius.circular(15),
+                // Efecto de brillo con sombra sutil
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.purple.shade700
+                        .withOpacity(0.25),
+                    blurRadius: 8,
+                    spreadRadius: 0,
+                    offset: Offset(0, 2),
+                  ),
+                  // Brillo interior
+                  BoxShadow(
+                    color: Colors.purple.shade300
+                        .withOpacity(0.1),
+                    blurRadius: 6,
+                    spreadRadius: -1,
+                    offset: Offset(0, 0),
+                  ),
+                ],
               ),
               child: Text(
                 "Mis Productos",
@@ -639,10 +720,10 @@ class _StorePreviewScreenState
               "Añadir Categoría",
               style: GoogleFonts.nunitoSans(
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Color(0xFF121212),
                 shadows: [
                   Shadow(
-                    color: Colors.black,
+                    color: Color(0xFF121212),
                     offset: Offset(1, 1),
                     blurRadius: 20,
                   ),
@@ -709,12 +790,12 @@ class _StorePreviewScreenState
           (context) => AlertDialog(
             title: Text(
               "Eliminar Categoría",
-              style: GoogleFonts.nunitoSans(
+              style: GoogleFonts.nunito(
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: Color(0xFF121212),
                 shadows: [
                   Shadow(
-                    color: Colors.black,
+                    color: Color(0xFF121212),
                     offset: Offset(1, 1),
                     blurRadius: 20,
                   ),
@@ -754,7 +835,7 @@ class _StorePreviewScreenState
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red.shade600,
+                  backgroundColor: Color(0xFF121212),
                 ),
                 child: Text(
                   "Eliminar",
