@@ -162,7 +162,7 @@ class BusinessOrMainScreen extends StatelessWidget {
                               shape: BoxShape.circle,
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.purple
+                                  color: Colors.black45
                                       .withOpacity(0.3),
                                   blurRadius: 20,
                                   spreadRadius: 5,
@@ -170,8 +170,8 @@ class BusinessOrMainScreen extends StatelessWidget {
                               ],
                             ),
                             child: Image.asset(
-                              'assets/images/logo.png',
-                              height: 180,
+                              'assets/images/UMarketBlack.png',
+                              height: 200,
                             ),
                           ),
                         );

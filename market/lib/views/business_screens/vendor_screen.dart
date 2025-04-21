@@ -445,7 +445,7 @@ class _VendorScreenState extends State<VendorScreen> {
                 leading: Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurpleAccent.shade400,
+                    color: Colors.deepPurpleAccent.shade700,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -478,7 +478,7 @@ class _VendorScreenState extends State<VendorScreen> {
                 leading: Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurpleAccent.shade400,
+                    color: Colors.deepPurpleAccent.shade700,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -542,7 +542,7 @@ class _VendorScreenState extends State<VendorScreen> {
                         (profileImage != null ||
                                 headerBackgroundImage !=
                                     null)
-                            ? Colors.black
+                            ? Colors.white70
                             : Colors.grey,
                   ),
                 ),

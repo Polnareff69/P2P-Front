@@ -133,7 +133,48 @@ class WelcomeScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 50),
-                const SizedBox(height: 200),
+                // LOGO
+                Container(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.purple.shade800
+                            .withOpacity(0.4),
+                        blurRadius: 70,
+                        spreadRadius: 1,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(75),
+                    child: Image.asset(
+                      'assets/images/UMarketBlack.png', // Asegúrate que esta imagen exista
+                      fit: BoxFit.cover,
+                      errorBuilder: (
+                        context,
+                        error,
+                        stackTrace,
+                      ) {
+                        // Fallback si la imagen no se encuentra
+                        return Container(
+                          color: Colors.purple.withOpacity(
+                            0.2,
+                          ),
+                          child: Icon(
+                            Icons.image,
+                            size: 60,
+                            color: Colors.white,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 100),
 
                 // Botones con animación
                 TweenAnimationBuilder<double>(
