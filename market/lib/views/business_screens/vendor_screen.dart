@@ -144,8 +144,8 @@ class _VendorScreenState extends State<VendorScreen> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Colors.black,
-                  width: 4,
+                  color: Colors.black26,
+                  width: 5,
                 ),
               ),
               child: CircleAvatar(
@@ -158,7 +158,7 @@ class _VendorScreenState extends State<VendorScreen> {
                               widget.businessLogo!,
                             )
                             : AssetImage(
-                                  'assets/images/profile_photo.jpg',
+                                  'assets/images/ejecutivo.jpg',
                                 )
                                 as ImageProvider),
               ),
