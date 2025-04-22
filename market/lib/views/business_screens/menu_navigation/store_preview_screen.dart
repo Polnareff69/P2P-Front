@@ -881,9 +881,17 @@ class _StorePreviewScreenState
                               SnackBar(
                                 content: Text(
                                   '¡Categoría añadida exitosamente!',
+                                  style: GoogleFonts.nunito(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight:
+                                        FontWeight.bold,
+                                  ),
                                 ),
-                                backgroundColor:
-                                    Colors.green.shade700,
+                                backgroundColor: Colors
+                                    .deepPurpleAccent
+                                    .shade700
+                                    .withOpacity(0.5),
                                 duration: Duration(
                                   seconds: 2,
                                 ),
@@ -929,71 +937,185 @@ class _StorePreviewScreenState
     );
   }
 
-  // Función para mostrar el diálogo de eliminar categoría
+  // Función para mostrar el diálogo de eliminar categoría con diseño mejorado
   void _showDeleteCategoryDialog(String category) {
     showDialog(
       context: context,
+      // Permite que el diálogo se cierre al tocar fuera
+      barrierDismissible: true,
+      // Hace que el fondo sea más oscuro para mejor contraste
+      barrierColor: Colors.black.withOpacity(0.6),
       builder:
-          (context) => AlertDialog(
-            title: Text(
-              "Eliminar Categoría",
-              style: GoogleFonts.nunito(
-                fontWeight: FontWeight.bold,
+          (context) => Dialog(
+            // Hacemos el fondo transparente para usar nuestro propio contenedor con fondo personalizado
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            child: Container(
+              // Ajustamos el ancho al 85% del ancho de la pantalla
+              width:
+                  MediaQuery.of(context).size.width * 0.85,
+              padding: EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 24,
+              ),
+              // Usamos el mismo estilo que en el diálogo de añadir categoría
+              decoration: BoxDecoration(
                 color: Color(0xFF121212),
-                shadows: [
-                  Shadow(
-                    color: Color(0xFF121212),
-                    offset: Offset(1, 1),
-                    blurRadius: 20,
+                // Bordes redondeados para un aspecto más moderno
+                borderRadius: BorderRadius.circular(30),
+                // Agregamos sombra para dar profundidad
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color.fromARGB(
+                      255,
+                      54,
+                      2,
+                      78,
+                    ),
+                    blurRadius: 15,
+                    spreadRadius: 1,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                // Asegura que el diálogo ocupe solo el espacio necesario
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Título con el mismo estilo que el diálogo de añadir
+                  Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 12),
+                      Text(
+                        "Eliminar Categoría",
+                        style: GoogleFonts.nunitoSans(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              color: Colors.deepPurpleAccent
+                                  .withOpacity(0.5),
+                              offset: Offset(0, 2),
+                              blurRadius: 4,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(),
+                  SizedBox(height: 10),
+                  // Contenedor para el mensaje de confirmación con el mismo estilo
+                  Text(
+                    "¿Estás seguro que deseas eliminar la categoría '$category'?",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      height: 1.5,
+                    ),
+                  ),
+
+                  SizedBox(height: 25),
+                  // Botones con mejor alineación y diseño, igual que en añadir categoría
+                  Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed:
+                            () => Navigator.pop(context),
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                        ),
+                        child: Text(
+                          "Cancelar",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            categories.remove(category);
+                            if (selectedCategory ==
+                                category) {
+                              selectedCategory = "Todo";
+                            }
+                            // También actualizamos los productos que tengan esta categoría
+                            // Por ahora no tenemos la categoría en el modelo, pero cuando lo tengamos
+                            // deberíamos actualizar los productos aquí
+                          });
+                          Navigator.pop(context);
+                          print(
+                            "Categorias de la Empresa: $categories",
+                          );
+
+                          // Mensaje de confirmación similar al de añadir
+                          ScaffoldMessenger.of(
+                            context,
+                          ).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Categoría eliminada exitosamente',
+                                style: GoogleFonts.nunito(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight:
+                                      FontWeight.bold,
+                                ),
+                              ),
+                              backgroundColor:
+                                  Colors.black87,
+                              duration: Duration(
+                                seconds: 2,
+                              ),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          // Usamos un color rojo para indicar eliminación
+                          backgroundColor:
+                              Colors
+                                  .deepPurpleAccent
+                                  .shade700,
+                          foregroundColor: Colors.white,
+                          elevation: 5,
+                          shadowColor: Colors.black
+                              .withOpacity(0.5),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 12,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          "Eliminar",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            content: Text(
-              "¿Estás seguro que deseas eliminar la categoría '$category'?",
-              style: TextStyle(fontSize: 15),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(
-                  "Cancelar",
-                  style: TextStyle(
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    categories.remove(category);
-                    if (selectedCategory == category) {
-                      selectedCategory = "Todo";
-                    }
-                    // También actualizamos los productos que tengan esta categoría
-                    // Por ahora no tenemos la categoría en el modelo, pero cuando lo tengamos
-                    // deberíamos actualizar los productos aquí
-                  });
-                  Navigator.pop(context);
-                  print(
-                    "Categorias de la Empresa: $categories",
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF121212),
-                ),
-                child: Text(
-                  "Eliminar",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-            ],
           ),
     );
   }
