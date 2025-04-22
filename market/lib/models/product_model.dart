@@ -2,22 +2,22 @@
 class Product {
   String? Name;
   String? Price;
+  String? Description;
   //String? category;
   //int? discount;
   //int? quantity;
-  String? Description;
   //List<String> sizes = [];
   //List<String> images = []; // Cambiamos File a String para enviar URLs o base64
-  String? UserId;
+  //String? UserId;
 
   Product({
     this.Name,
     this.Price,
+    this.Description,
     //this.category,
     //this.discount,
     //this.quantity,
-    this.Description,
-    this.UserId,
+    //this.UserId,
     //required this.sizes,
     //equired this.images,
   });
@@ -27,13 +27,13 @@ class Product {
     return {
       'Name': Name,
       'Price': Price,
+      'Description': Description,
       //'category': category,
       //'discount': discount,
       //'quantity': quantity,
-      'Description': Description,
       //'sizes': sizes,
       //'images': images,
-      'UserId': UserId,
+      //'UserId': UserId,
     };
   }
 }

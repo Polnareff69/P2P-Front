@@ -46,7 +46,7 @@ class _UploadProductScreenState
   final ImagePicker _picker = ImagePicker();
   final List<File> _selectedImages = [];
 
-  String? userId = '4bbb8690-3546-4c2b-b3a1-a07fb7fbf70e';
+  //String? userId = '4bbb8690-3546-4c2b-b3a1-a07fb7fbf70e';
   String? selectedCategory;
 
   @override
@@ -692,7 +692,7 @@ class _UploadProductScreenState
         Name: _nameController.text,
         Price: _priceController.text,
         Description: _descriptionController.text,
-        UserId: userId,
+        //UserId: userId,
       );
 
       try {
