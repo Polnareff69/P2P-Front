@@ -283,7 +283,7 @@ class _StorePreviewScreenState
               ),
             ),
             Text(
-              "By Maria ★",
+              "By Alejo_AM ★",
               style: GoogleFonts.nunitoSans(
                 fontSize: 16,
                 color: Colors.white70,

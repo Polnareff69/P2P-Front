@@ -42,8 +42,12 @@ class BusinessOrMainScreen extends StatelessWidget {
           shaderCallback:
               (bounds) => LinearGradient(
                 colors: [
+                  Colors.purpleAccent,
                   Colors.purple,
-                  Colors.deepPurple.shade800,
+
+                  Colors.white60,
+                  Colors.purpleAccent,
+                  Colors.purple,
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -56,9 +60,14 @@ class BusinessOrMainScreen extends StatelessWidget {
               color: Colors.white,
               shadows: [
                 Shadow(
-                  color: Colors.black.withOpacity(0.7),
-                  offset: const Offset(2, 3),
-                  blurRadius: 5,
+                  color: Colors.deepPurple.withOpacity(0.8),
+                  offset: const Offset(1, 3),
+                  blurRadius: 10,
+                ),
+                Shadow(
+                  color: Colors.black.withOpacity(0.6),
+                  offset: const Offset(2, 4),
+                  blurRadius: 4,
                 ),
               ],
             ),

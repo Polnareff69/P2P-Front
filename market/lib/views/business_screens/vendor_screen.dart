@@ -120,36 +120,33 @@ class _VendorScreenState extends State<VendorScreen> {
         ),
         // NUEVO: Botón para volver atrás usando el widget CustomBackButton
         Positioned(
-          top: 33,
-          left: 10,
+          top: 42,
+          left: 15,
           child: Container(
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(30),
-            ),
             padding: EdgeInsets.symmetric(
               horizontal: 8,
               vertical: 4,
             ),
             // Usamos el widget personalizado
-            child: CustomBackButton(
-              color: Color(0xFF121212),
-              size: 24.0,
-              showShadow: false,
+            child: BackIcon(
+              iconColor: Colors.black,
+              size: 25,
+              shadowColor: Colors.black,
             ),
           ),
         ),
 
         // Botón para personalizar header (en la esquina superior derecha)
         Positioned(
-          top: 33,
+          top: 30,
           right: 3,
           child: Container(
             child: IconButton(
               icon: Icon(
                 Icons.settings_suggest,
-                color: Color(0xFF121212),
+                color: Colors.black,
                 size: 44,
+                shadows: [Shadow(color: Colors.black)],
               ),
               onPressed: () {
                 // Este botón se usará para otras funcionalidades en el futuro
