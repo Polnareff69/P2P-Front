@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:market/views/business_screens/menu_navigation/store_preview_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:market/views/widgets/custom_back_button.dart';
 
 class VendorScreen extends StatefulWidget {
   final String businessName; // Nombre de la empresa
@@ -116,6 +117,27 @@ class _VendorScreenState extends State<VendorScreen> {
                     ),
                   )
                   : null,
+        ),
+        // NUEVO: Botón para volver atrás usando el widget CustomBackButton
+        Positioned(
+          top: 33,
+          left: 10,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            padding: EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 4,
+            ),
+            // Usamos el widget personalizado
+            child: CustomBackButton(
+              color: Color(0xFF121212),
+              size: 24.0,
+              showShadow: false,
+            ),
+          ),
         ),
 
         // Botón para personalizar header (en la esquina superior derecha)
