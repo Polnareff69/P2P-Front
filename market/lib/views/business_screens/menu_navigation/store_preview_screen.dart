@@ -1007,10 +1007,10 @@ class _StorePreviewScreenState
                     ],
                   ),
                   Divider(),
-                  SizedBox(height: 10),
+                  SizedBox(height: 15),
                   // Contenedor para el mensaje de confirmación con el mismo estilo
                   Text(
-                    "¿Estás seguro que deseas eliminar la categoría '$category'?",
+                    "¿Quieres eliminar la categoría '$category'?",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
