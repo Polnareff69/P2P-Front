@@ -189,16 +189,16 @@ class _UserScreenState extends State<UserScreen> {
         return Container(
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Color(0xFF121212),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25),
               topRight: Radius.circular(25),
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: const Color.fromARGB(255, 54, 2, 78),
                 blurRadius: 10,
-                offset: Offset(0, -5),
+                offset: Offset(1, -5),
               ),
             ],
           ),
@@ -222,10 +222,15 @@ class _UserScreenState extends State<UserScreen> {
                 style: GoogleFonts.nunitoSans(
                   fontWeight: FontWeight.w900,
                   fontSize: 26,
-                  color: Colors.black,
+                  color: Colors.white,
                   shadows: [
                     Shadow(
-                      color: Colors.deepPurple,
+                      color: const Color.fromARGB(
+                        255,
+                        54,
+                        2,
+                        78,
+                      ),
                       offset: Offset(0, 2),
                       blurRadius: 15,
                     ),
@@ -233,7 +238,7 @@ class _UserScreenState extends State<UserScreen> {
                 ),
               ),
 
-              SizedBox(height: 15),
+              SizedBox(height: 6),
               Divider(),
 
               // Opción para foto de perfil
@@ -241,7 +246,7 @@ class _UserScreenState extends State<UserScreen> {
                 leading: Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple.shade400,
+                    color: Colors.deepPurpleAccent.shade700,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -255,10 +260,12 @@ class _UserScreenState extends State<UserScreen> {
                   style: GoogleFonts.nunitoSans(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
+                    color: Colors.white,
                   ),
                 ),
                 subtitle: Text(
                   "Elige una imagen de tu galería",
+                  style: TextStyle(color: Colors.white54),
                 ),
                 onTap: () {
                   Navigator.pop(context);
@@ -286,10 +293,12 @@ class _UserScreenState extends State<UserScreen> {
                   style: GoogleFonts.nunitoSans(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
+                    color: Colors.white,
                   ),
                 ),
                 subtitle: Text(
                   "Personaliza el fondo de tu perfil",
+                  style: TextStyle(color: Colors.white54),
                 ),
                 onTap: () {
                   Navigator.pop(context);
@@ -315,7 +324,7 @@ class _UserScreenState extends State<UserScreen> {
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    Icons.restore,
+                    Icons.restore_rounded,
                     color:
                         (profileImage != null ||
                                 headerBackgroundImage !=
@@ -334,7 +343,7 @@ class _UserScreenState extends State<UserScreen> {
                         (profileImage != null ||
                                 headerBackgroundImage !=
                                     null)
-                            ? Colors.black
+                            ? Colors.white
                             : Colors.grey,
                   ),
                 ),

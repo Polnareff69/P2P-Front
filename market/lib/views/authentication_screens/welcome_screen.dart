@@ -135,8 +135,8 @@ class WelcomeScreen extends StatelessWidget {
                 const SizedBox(height: 50),
                 // LOGO
                 Container(
-                  width: 200,
-                  height: 200,
+                  width: 250,
+                  height: 250,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     boxShadow: [
@@ -174,7 +174,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 100),
+                const SizedBox(height: 95),
 
                 // Botones con animación
                 TweenAnimationBuilder<double>(

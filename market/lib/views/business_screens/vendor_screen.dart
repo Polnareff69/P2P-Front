@@ -523,7 +523,7 @@ class _VendorScreenState extends State<VendorScreen> {
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    Icons.restore,
+                    Icons.restore_rounded,
                     color:
                         (profileImage != null ||
                                 headerBackgroundImage !=
