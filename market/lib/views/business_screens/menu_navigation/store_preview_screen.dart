@@ -158,6 +158,7 @@ class _StorePreviewScreenState
           ],
         ),
       ),
+      /*
       floatingActionButton: FloatingActionButton(
         onPressed: _showCustomizeHeaderOptions,
         backgroundColor: const Color.fromARGB(
@@ -174,7 +175,7 @@ class _StorePreviewScreenState
           height: 35,
           color: Color(0xFF121212),
         ),
-      ),
+      ),*/
     );
   }
 
@@ -718,77 +719,212 @@ class _StorePreviewScreenState
     );
   }
 
-  // Función para mostrar el diálogo de añadir categoría
+  // Función para mostrar el diálogo de añadir categoría con diseño mejorado
   void _showAddCategoryDialog() {
     final TextEditingController categoryController =
         TextEditingController();
 
+    // Usamos Dialog en lugar de AlertDialog para tener más control sobre el diseño
     showDialog(
       context: context,
+      // Permite que el diálogo se cierre al tocar fuera
+      barrierDismissible: true,
+      // Hace que el fondo sea más oscuro para mejor contraste
+      barrierColor: Colors.black.withOpacity(0.6),
       builder:
-          (context) => AlertDialog(
-            title: Text(
-              "Añadir Categoría",
-              style: GoogleFonts.nunitoSans(
-                fontWeight: FontWeight.bold,
+          (context) => Dialog(
+            // Hacemos el fondo transparente para usar nuestro propio contenedor con gradiente
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            child: Container(
+              // Ajustamos el ancho al 85% del ancho de la pantalla
+              width:
+                  MediaQuery.of(context).size.width * 0.85,
+              padding: EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 24,
+              ),
+              // Aquí agregamos un gradiente como fondo
+              decoration: BoxDecoration(
                 color: Color(0xFF121212),
-                shadows: [
-                  Shadow(
-                    color: Color(0xFF121212),
-                    offset: Offset(1, 1),
-                    blurRadius: 20,
+                // Bordes redondeados para un aspecto más moderno
+                borderRadius: BorderRadius.circular(30),
+                // Agregamos sombra para dar profundidad
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color.fromARGB(
+                      255,
+                      54,
+                      2,
+                      78,
+                    ),
+                    blurRadius: 15,
+                    spreadRadius: 1,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                // Asegura que el diálogo ocupe solo el espacio necesario
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Título con icono para mejor comunicación visual
+                  Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 12),
+                      Text(
+                        "Añadir Categoría",
+                        style: GoogleFonts.nunitoSans(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              color: Colors.deepPurpleAccent
+                                  .withOpacity(0.5),
+                              offset: Offset(0, 2),
+                              blurRadius: 4,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 25),
+                  // Campo de texto con diseño mejorado
+                  Container(
+                    decoration: BoxDecoration(
+                      // Fondo semi-transparente
+                      color: Colors.white.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(
+                        12,
+                      ),
+                      // Borde sutil para definir mejor el campo
+                      border: Border.all(
+                        color: Colors.white.withOpacity(
+                          0.2,
+                        ),
+                        width: 1,
+                      ),
+                    ),
+                    child: TextField(
+                      controller: categoryController,
+                      style: TextStyle(color: Colors.white),
+                      cursorColor: Colors.white,
+                      textCapitalization:
+                          TextCapitalization.sentences,
+                      decoration: InputDecoration(
+                        hintText: "Nombre de la categoría",
+                        hintStyle: TextStyle(
+                          color: Colors.white70,
+                        ),
+                        prefixIcon: Icon(
+                          Icons.edit,
+                          color: Colors.white70,
+                        ),
+                        // Quitamos el borde predeterminado
+                        border: InputBorder.none,
+                        contentPadding:
+                            EdgeInsets.symmetric(
+                              vertical: 16,
+                              horizontal: 16,
+                            ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 25),
+                  // Botones con mejor alineación y diseño
+                  Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed:
+                            () => Navigator.pop(context),
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 12,
+                          ),
+                        ),
+                        child: Text(
+                          "Cancelar",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (categoryController
+                              .text
+                              .isNotEmpty) {
+                            setState(() {
+                              print(
+                                "Categorias de la Empresa: $categories",
+                              );
+                              categories.add(
+                                categoryController.text,
+                              );
+                            });
+                            Navigator.pop(context);
+
+                            // Opcional: Añadir mensaje de confirmación
+                            ScaffoldMessenger.of(
+                              context,
+                            ).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '¡Categoría añadida exitosamente!',
+                                ),
+                                backgroundColor:
+                                    Colors.green.shade700,
+                                duration: Duration(
+                                  seconds: 2,
+                                ),
+                              ),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          // Color invertido para contrastar con el fondo
+                          backgroundColor:
+                              Colors
+                                  .deepPurpleAccent
+                                  .shade700,
+                          foregroundColor:
+                              Colors.purple.shade800,
+                          elevation: 5,
+                          shadowColor: Colors.black
+                              .withOpacity(0.5),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 12,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          "Añadir",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            content: TextField(
-              controller: categoryController,
-              decoration: InputDecoration(
-                hintText: "Nombre de la categoría",
-                border: OutlineInputBorder(),
-              ),
-              textCapitalization:
-                  TextCapitalization.sentences,
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(
-                  "Cancelar",
-                  style: TextStyle(
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  if (categoryController.text.isNotEmpty) {
-                    setState(() {
-                      print(
-                        "Categorias de la Empresa: $categories",
-                      );
-                      categories.add(
-                        categoryController.text,
-                      );
-                    });
-                    Navigator.pop(context);
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.purple.shade800,
-                ),
-                child: Text(
-                  "Añadir",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
           ),
     );
   }
