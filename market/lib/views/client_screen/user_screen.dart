@@ -50,8 +50,8 @@ class _UserScreenState extends State<UserScreen> {
             boxShadow: [
               BoxShadow(
                 color: Colors.black,
-                blurRadius: 8,
-                offset: Offset(1, 5),
+                blurRadius: 5,
+                offset: Offset(1, 4.5),
               ),
             ],
 

@@ -40,7 +40,7 @@ class _StorePreviewScreenState
         child: Column(
           children: [
             _buildHeader(),
-            const SizedBox(height: 20),
+            const SizedBox(height: 22),
 
             // Título con fondo transparente y borde morado
             Container(
@@ -96,14 +96,15 @@ class _StorePreviewScreenState
                 textAlign: TextAlign.center,
               ),
             ),
+            const SizedBox(height: 7),
             _buildCategoryButtons(),
-            const SizedBox(height: 15),
+            const SizedBox(height: 13),
 
             // Título con fondo transparente y borde morado
             Container(
               padding: EdgeInsets.symmetric(
-                vertical: 5,
-                horizontal: 10,
+                vertical: 7,
+                horizontal: 12,
               ),
               margin: EdgeInsets.only(bottom: 8),
               decoration: BoxDecoration(
@@ -305,16 +306,16 @@ class _StorePreviewScreenState
         return Container(
           padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Color(0xFF121212),
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25),
               topRight: Radius.circular(25),
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.2),
+                color: const Color.fromARGB(255, 54, 2, 78),
                 blurRadius: 10,
-                offset: Offset(0, -5),
+                offset: Offset(1, -5),
               ),
             ],
           ),
@@ -326,18 +327,23 @@ class _StorePreviewScreenState
                 "Personalizar Catálogo",
                 style: GoogleFonts.nunitoSans(
                   fontWeight: FontWeight.w900,
-                  fontSize: 25,
-                  color: Colors.black,
+                  fontSize: 26,
+                  color: Colors.white,
                   shadows: [
                     Shadow(
-                      color: Colors.deepPurple,
+                      color: const Color.fromARGB(
+                        255,
+                        54,
+                        2,
+                        78,
+                      ),
                       offset: Offset(0, 2),
                       blurRadius: 15,
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 10),
               Divider(),
 
               // Opciones
@@ -345,11 +351,11 @@ class _StorePreviewScreenState
                 leading: Container(
                   padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple.shade400,
+                    color: Colors.deepPurpleAccent.shade700,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    Icons.image_search_sharp,
+                    Icons.photo_camera,
                     color: Colors.black,
                     size: 33,
                   ),
@@ -358,10 +364,12 @@ class _StorePreviewScreenState
                   "Elegir imagen de fondo",
                   style: GoogleFonts.nunitoSans(
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
                 subtitle: Text(
                   "Se mantienen los colores para los botones",
+                  style: TextStyle(color: Colors.white54),
                 ),
                 onTap: () {
                   Navigator.pop(context);
@@ -375,7 +383,7 @@ class _StorePreviewScreenState
                 leading: Container(
                   padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple.shade400,
+                    color: Colors.deepPurpleAccent.shade700,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -388,10 +396,12 @@ class _StorePreviewScreenState
                   "Elegir colores del tema",
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
+                    color: Colors.white,
                   ),
                 ),
                 subtitle: Text(
                   "Color del fondo y botones de categorías",
+                  style: TextStyle(color: Colors.white54),
                 ),
                 onTap: () {
                   Navigator.pop(context);
@@ -426,7 +436,7 @@ class _StorePreviewScreenState
                                         .shade500 ||
                                 endColor !=
                                     Colors.purple.shade900
-                            ? Colors.black
+                            ? Colors.white
                             : Colors.grey,
                   ),
                 ),
