@@ -8,7 +8,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart'; //seleccionar col
 import 'package:market/controllers/upload_product_controller.dart';
 import 'package:market/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
+
 
 class StorePreviewScreen extends StatefulWidget {
   final String businessName;
