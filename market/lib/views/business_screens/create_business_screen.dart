@@ -29,10 +29,10 @@ class _CreateBusinessScreenState
   String businessUbication = '';
   String businessDescription = '';
   File? businessLogo;
-  String? logo;
+  File? businessBackgroundImage;
   bool isLoading = false;
 
-  // function to pick an image
+  // Funcion para escoger una imagen de logo
   Future<void> _pickImage() async {
     final XFile? image = await _picker.pickImage(
       source: ImageSource.gallery,
@@ -40,6 +40,18 @@ class _CreateBusinessScreenState
     if (image != null) {
       setState(() {
         businessLogo = File(image.path);
+      });
+    }
+  }
+
+  // Función para seleccionar una imagen de fondo
+  Future<void> _pickBackgroundImage() async {
+    final XFile? image = await _picker.pickImage(
+      source: ImageSource.gallery,
+    );
+    if (image != null) {
+      setState(() {
+        businessBackgroundImage = File(image.path);
       });
     }
   }
@@ -59,6 +71,28 @@ class _CreateBusinessScreenState
             ),
           ),
         );
+        setState(() {
+          isLoading = false;
+        });
+        return;
+      }
+
+      // Crear una imagen de fondo por defecto si el usuario no la ha seleccionado
+      // Esta imagen se utilizará como fondo de empresa
+      //File backgroundImage;
+      if (businessBackgroundImage == null) {
+        // Puedes usar una imagen de fondo por defecto desde los assets
+        // O puedes mostrar un mensaje pidiendo al usuario que seleccione una imagen de fondo
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "Por favor, selecciona una imagen de fondo para tu empresa.",
+            ),
+          ),
+        );
+        setState(() {
+          isLoading = false;
+        });
         return;
       }
 
@@ -69,7 +103,12 @@ class _CreateBusinessScreenState
         description: businessDescription,
       );
 
-      await _businessController.createBusiness(business);
+      // Llamada al controlador con el objeto business y los archivos de imagen
+      await _businessController.createBusiness(
+        business,
+        businessLogo!,
+        businessBackgroundImage!,
+      );
 
       // Navegar a VendorScreen solo si la creación fue exitosa
       if (mounted) {
@@ -160,10 +199,10 @@ class _CreateBusinessScreenState
               ),
             ),
             Text(
-              '¡Emprende con nosotros!',
+              '¡Crea tu tienda y emprende nosotros!',
               style: GoogleFonts.nunitoSans(
                 color: Colors.white,
-                fontSize: 13.6,
+                fontSize: 13.8,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -186,7 +225,7 @@ class _CreateBusinessScreenState
           // Capa oscura para mejor legibilidad
           Positioned.fill(
             child: Container(
-              color: Colors.black.withOpacity(0.5),
+              color: Color(0xFF121212).withOpacity(0.6),
             ),
           ),
 
@@ -201,9 +240,9 @@ class _CreateBusinessScreenState
                     child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(
-                          0.5,
-                        ),
+                        color: Color(
+                          0xFF121212,
+                        ).withOpacity(0.7),
                         borderRadius: BorderRadius.circular(
                           20,
                         ),
@@ -265,7 +304,7 @@ class _CreateBusinessScreenState
                                               height: 10,
                                             ),
                                             Text(
-                                              'Selecciona un Logo',
+                                              'Logo de tu Negocio',
                                               style: GoogleFonts.nunitoSans(
                                                 color:
                                                     Colors
@@ -294,7 +333,82 @@ class _CreateBusinessScreenState
                           ),
 
                           const SizedBox(height: 15),
-
+                          // Background Image
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              'Imagen de Fondo',
+                              style: GoogleFonts.nunitoSans(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 2),
+                          // Input for the business background
+                          GestureDetector(
+                            onTap: _pickBackgroundImage,
+                            child: Container(
+                              width: double.infinity,
+                              height: 150,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[800]
+                                    ?.withOpacity(0.5),
+                                borderRadius:
+                                    BorderRadius.circular(
+                                      15,
+                                    ),
+                              ),
+                              child:
+                                  businessBackgroundImage ==
+                                          null
+                                      ? Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .center,
+                                          children: [
+                                            Icon(
+                                              Icons
+                                                  .imagesearch_roller_rounded,
+                                              size: 42,
+                                              color:
+                                                  Colors
+                                                      .purpleAccent,
+                                            ),
+                                            const SizedBox(
+                                              height: 10,
+                                            ),
+                                            Text(
+                                              'Fondo de tu Negocio',
+                                              style: GoogleFonts.nunitoSans(
+                                                color:
+                                                    Colors
+                                                        .grey[400],
+                                                fontSize:
+                                                    16,
+                                                fontWeight:
+                                                    FontWeight
+                                                        .bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                      : ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(
+                                              15,
+                                            ),
+                                        child: Image.file(
+                                          businessBackgroundImage!,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                            ),
+                          ),
+                          const SizedBox(height: 15),
                           // Business Name
                           Align(
                             alignment: Alignment.topLeft,
