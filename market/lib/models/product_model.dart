@@ -3,6 +3,7 @@ class Product {
   String? Name;
   String? Price;
   String? Description;
+  String? productImg;
   //String? category;
   //int? discount;
   //int? quantity;
@@ -11,6 +12,7 @@ class Product {
     this.Name,
     this.Price,
     this.Description,
+    this.productImg,
     //this.category,
     //this.discount,
     //this.quantity,
@@ -26,5 +28,15 @@ class Product {
       //'discount': discount,
       //'quantity': quantity,
     };
+  }
+
+  // Crear un objeto Product desde JSON
+  factory Product.fromJson(Map<String, dynamic> json) {
+    return Product(
+      Name: json['name'],
+      Price: json['price']?.toString(),
+      Description: json['description'],
+      productImg: json['productimg'],
+    );
   }
 }

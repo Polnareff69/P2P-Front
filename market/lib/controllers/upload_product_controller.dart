@@ -3,8 +3,38 @@ import 'package:http/http.dart' as http;
 import 'package:market/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
+import 'dart:convert';
 
 class UploadProductController {
+  //funcion para obtener productos de una empresa
+  Future<List<Product>> getCompanyProducts(
+    String companyId,
+  ) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+          'http://10.0.2.2:8000/company/products/$companyId',
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonResponse = json.decode(
+          response.body,
+        );
+        return jsonResponse
+            .map((data) => Product.fromJson(data))
+            .toList();
+      } else {
+        throw Exception(
+          'Error al obtener productos: ${response.statusCode}',
+        );
+      }
+    } catch (e) {
+      throw Exception('Error en la conexión: $e');
+    }
+  }
+
+  //funcion para subir productos
   Future<void> uploadProduct(
     Product product,
     List<File> images, [

@@ -4,7 +4,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:market/controllers/upload_product_controller.dart';
 import 'package:market/models/product_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:market/views/main_screen/businesses.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:market/views/business_screens/menu_navigation/store_preview_screen.dart';
+
 
 class UploadProductScreen extends StatefulWidget {
   // lista de categorías
@@ -696,6 +698,14 @@ class _UploadProductScreenState
       );
 
       try {
+        // Obtener el company_id de SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      final companyId = prefs.getString('company_id');
+      final businessName = prefs.getString('business_name') ?? 'Mi Tienda';
+      
+      if (companyId == null) {
+        throw Exception('No hay ID de empresa almacenado');
+      }
         // Ahora pasamos también la lista de imágenes seleccionadas
         await _controller.uploadProduct(
           product,
@@ -708,12 +718,16 @@ class _UploadProductScreenState
           ),
         );
 
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BusinessesScreen(),
+        // Navegar a StorePreviewScreen en lugar de BusinessesScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => StorePreviewScreen(
+            businessName: businessName,
+            businessLogo: null, // O como lo estés manejando
           ),
-        );
+        ),
+      );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

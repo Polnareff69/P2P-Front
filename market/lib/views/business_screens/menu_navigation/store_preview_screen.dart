@@ -4,6 +4,11 @@ import 'package:market/views/business_screens/menu_navigation/upload_product_scr
 import 'dart:io';
 import 'package:image_picker/image_picker.dart'; //seleccionar imagenes
 import 'package:flutter_colorpicker/flutter_colorpicker.dart'; //seleccionar colores
+//obtener
+import 'package:market/controllers/upload_product_controller.dart';
+import 'package:market/models/product_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class StorePreviewScreen extends StatefulWidget {
   final String businessName;
@@ -22,6 +27,59 @@ class StorePreviewScreen extends StatefulWidget {
 
 class _StorePreviewScreenState
     extends State<StorePreviewScreen> {
+  //Variables para trackear los productos de la empresa
+
+  List<Product> products = [];
+  bool isLoading = true;
+  final UploadProductController _productController =
+      UploadProductController();
+
+  // Método initState para cargar productos al iniciar la pantalla
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProducts();
+  }
+
+  // Método para cargar los productos
+  Future<void> _loadProducts() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final companyId = prefs.getString('company_id');
+
+      if (companyId == null) {
+        throw Exception('No hay ID de empresa almacenado');
+      }
+
+      final loadedProducts = await _productController
+          .getCompanyProducts(companyId);
+
+      setState(() {
+        products = loadedProducts;
+        isLoading = false;
+      });
+
+      print('Productos cargados: ${products.length}');
+    } catch (e) {
+      print('Error al cargar productos: $e');
+      setState(() {
+        isLoading = false;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error al cargar productos: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   // Lista para almacenar las categorías dinámicas
   List<String> categories = ["Todo"];
   String selectedCategory = "Todo";
@@ -37,6 +95,7 @@ class _StorePreviewScreenState
     return Scaffold(
       backgroundColor: Color(0xFF121212),
       body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
             _buildHeader(),
@@ -1121,6 +1180,45 @@ class _StorePreviewScreenState
   }
 
   Widget _buildProductGrid() {
+    if (isLoading) {
+      return Center(
+        child: CircularProgressIndicator(
+          color: Colors.purpleAccent,
+        ),
+      );
+    }
+
+    // Si no hay productos, mostrar mensaje y botón para añadir
+    if (products.isEmpty) {
+      return Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              "No tienes productos aún",
+              style: GoogleFonts.nunito(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.white70,
+              ),
+            ),
+          ),
+          _buildProductItem(), // Botón para añadir producto
+        ],
+      );
+    }
+
+    // Filtrar productos por categoría si no es "Todo"
+    List<Product> filteredProducts = products;
+    if (selectedCategory != "Todo") {
+      // Si tienes la propiedad 'category' habilitada en tu modelo, usar:
+      // filteredProducts = products.where((product) => product.category == selectedCategory).toList();
+      // Como no está habilitada aún, solo filtraremos en el futuro
+    }
+
+    // Lista de productos + botón para añadir
+    final displayItems = [...filteredProducts, null];
+
     return GridView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
@@ -1128,14 +1226,144 @@ class _StorePreviewScreenState
       gridDelegate:
           SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 1,
+            childAspectRatio: 0.8,
             crossAxisSpacing: 15,
             mainAxisSpacing: 15,
           ),
-      itemCount: 7, // 7 espacios para productos
+      itemCount: displayItems.length,
       itemBuilder: (context, index) {
-        return _buildProductItem();
+        // El último item es para añadir nuevo producto
+        if (index == displayItems.length - 1) {
+          return _buildProductItem();
+        }
+
+        // Mostrar producto real
+        return _buildRealProductItem(displayItems[index]!);
       },
+    );
+  }
+
+  Widget _buildRealProductItem(Product product) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[900],
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            blurRadius: 4,
+            offset: Offset(1, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Imagen del producto
+          Expanded(
+            flex: 3,
+            child: ClipRRect(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
+              ),
+              child:
+                  product.productImg != null
+                      ? Image.network(
+                        'http://10.0.2.2:8000/ProductImg?fileLocation=${Uri.encodeComponent(product.productImg!)}',
+                        fit: BoxFit.cover,
+                        errorBuilder: (
+                          context,
+                          error,
+                          stackTrace,
+                        ) {
+                          print(
+                            'Error al cargar imagen: $error',
+                          );
+                          return Container(
+                            color: Colors.grey[800],
+                            child: Icon(
+                              Icons.image_not_supported,
+                              color: Colors.white70,
+                              size: 50,
+                            ),
+                          );
+                        },
+                        loadingBuilder: (
+                          context,
+                          child,
+                          loadingProgress,
+                        ) {
+                          if (loadingProgress == null)
+                            return child;
+                          return Container(
+                            color: Colors.grey[800],
+                            child: Center(
+                              child:
+                                  CircularProgressIndicator(
+                                    color:
+                                        Colors.purpleAccent,
+                                  ),
+                            ),
+                          );
+                        },
+                      )
+                      : Container(
+                        color: Colors.grey[800],
+                        child: Icon(
+                          Icons.image,
+                          color: Colors.white70,
+                          size: 50,
+                        ),
+                      ),
+            ),
+          ),
+
+          // Detalles del producto
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.Name ?? 'Sin nombre',
+                    style: GoogleFonts.nunito(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    '\$${product.Price ?? '0'}',
+                    style: GoogleFonts.nunito(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.greenAccent,
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    product.Description ??
+                        'Sin descripción',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.white70,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -1158,7 +1386,10 @@ class _StorePreviewScreenState
                           .toList(),
                 ),
           ),
-        );
+        ).then((_) {
+          // Al regresar, recargamos los productos
+          _loadProducts();
+        });
       },
       child: Container(
         decoration: BoxDecoration(
