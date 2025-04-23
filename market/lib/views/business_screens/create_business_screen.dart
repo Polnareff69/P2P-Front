@@ -235,6 +235,7 @@ class _CreateBusinessScreenState
               padding: const EdgeInsets.all(15.0),
               child: Center(
                 child: SingleChildScrollView(
+                  
                   child: Form(
                     key: _formKey,
                     child: Container(

@@ -41,34 +41,30 @@ class BusinessController {
       request.headers['Authorization'] = 'Bearer $token';
 
       // Agregar los archivos (sin agregar campos al formulario)
-      if (businessLogo != null) {
-        final logoFile = await http.MultipartFile.fromPath(
-          'companyimg',
-          businessLogo.path,
-          contentType: MediaType(
-            'image',
-            getImageMimeType(
-              businessLogo.path.split('/').last,
-            ),
+      final logoFile = await http.MultipartFile.fromPath(
+        'companyimg',
+        businessLogo.path,
+        contentType: MediaType(
+          'image',
+          getImageMimeType(
+            businessLogo.path.split('/').last,
           ),
-        );
-        request.files.add(logoFile);
-      }
-
-      if (businessBackground != null) {
-        final bgFile = await http.MultipartFile.fromPath(
-          'companybackgrnd',
-          businessBackground.path,
-          contentType: MediaType(
-            'image',
-            getImageMimeType(
-              businessBackground.path.split('/').last,
-            ),
+        ),
+      );
+      request.files.add(logoFile);
+    
+      final bgFile = await http.MultipartFile.fromPath(
+        'companybackgrnd',
+        businessBackground.path,
+        contentType: MediaType(
+          'image',
+          getImageMimeType(
+            businessBackground.path.split('/').last,
           ),
-        );
-        request.files.add(bgFile);
-      }
-
+        ),
+      );
+      request.files.add(bgFile);
+    
       print("URI con parámetros: $uri");
       print(
         "Archivos adjuntos: ${request.files.map((f) => '${f.field}: ${f.filename}').join(', ')}",
