@@ -865,11 +865,11 @@ class _StorePreviewScreenState
                               .text
                               .isNotEmpty) {
                             setState(() {
-                              print(
-                                "Categorias de la Empresa: $categories",
-                              );
                               categories.add(
                                 categoryController.text,
+                              );
+                              print(
+                                "Categorias de la Empresa: $categories",
                               );
                             });
                             Navigator.pop(context);

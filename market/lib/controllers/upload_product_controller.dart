@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
-//import 'dart:convert';
 import 'package:market/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
@@ -64,8 +63,7 @@ class UploadProductController {
         streamedResponse,
       );
 
-      if (response.statusCode == 200 ||
-          response.statusCode == 201) {
+      if (response.statusCode == 200) {
         print(
           "Producto subido exitosamente: ${response.body}",
         );
