@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/controllers/business_controller.dart';
 import 'package:market/models/business_model.dart';
-import 'package:market/views/business_screens/vendor_screen.dart';
+import 'package:market/views/business_screens/menu_navigation/store_preview_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateBusinessScreen extends StatefulWidget {
   const CreateBusinessScreen({super.key});
@@ -81,8 +82,8 @@ class _CreateBusinessScreenState
       // Esta imagen se utilizará como fondo de empresa
       //File backgroundImage;
       if (businessBackgroundImage == null) {
-        // Puedes usar una imagen de fondo por defecto desde los assets
-        // O puedes mostrar un mensaje pidiendo al usuario que seleccione una imagen de fondo
+        // usar una imagen de fondo por defecto desde los assets
+        // O mostrar un mensaje pidiendo al usuario que seleccione una imagen de fondo
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
@@ -110,13 +111,18 @@ class _CreateBusinessScreenState
         businessBackgroundImage!,
       );
 
+      // Obtener el company_id recién guardado
+      final prefs = await SharedPreferences.getInstance();
+      final companyId = prefs.getString('company_id');
+      print('Empresa creada exitosamente con ID: $companyId');
+      
       // Navegar a VendorScreen solo si la creación fue exitosa
       if (mounted) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder:
-                (context) => VendorScreen(
+                (context) => StorePreviewScreen(
                   businessName: businessName,
                   businessLogo: businessLogo,
                 ),
@@ -235,7 +241,6 @@ class _CreateBusinessScreenState
               padding: const EdgeInsets.all(15.0),
               child: Center(
                 child: SingleChildScrollView(
-                  
                   child: Form(
                     key: _formKey,
                     child: Container(

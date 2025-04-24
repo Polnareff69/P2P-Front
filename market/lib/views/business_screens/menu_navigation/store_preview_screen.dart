@@ -9,7 +9,6 @@ import 'package:market/controllers/upload_product_controller.dart';
 import 'package:market/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class StorePreviewScreen extends StatefulWidget {
   final String businessName;
   final File? businessLogo;
@@ -52,12 +51,33 @@ class _StorePreviewScreenState
       final prefs = await SharedPreferences.getInstance();
       final companyId = prefs.getString('company_id');
 
+      print(
+        'Intentando cargar productos para companyId: $companyId',
+      );
+
       if (companyId == null) {
         throw Exception('No hay ID de empresa almacenado');
       }
 
+      // Depurar el contenido completo de SharedPreferences para verificar
+      print('Contenido de SharedPreferences:');
+      prefs.getKeys().forEach((key) {
+        print('$key: ${prefs.get(key)}');
+      });
+
       final loadedProducts = await _productController
           .getCompanyProducts(companyId);
+
+      print(
+        'Productos obtenidos del servidor: ${loadedProducts.length}',
+      );
+
+      // Depurar los productos cargados
+      for (var product in loadedProducts) {
+        print(
+          'Producto: ${product.Name}, Precio: ${product.Price}',
+        );
+      }
 
       setState(() {
         products = loadedProducts;

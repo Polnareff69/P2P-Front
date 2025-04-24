@@ -25,8 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   String name = '';
   String password = '';
-  //String email = '';
-  //String role = '';
   bool isLoading = false;
 
   Future<void> loginUser() async {

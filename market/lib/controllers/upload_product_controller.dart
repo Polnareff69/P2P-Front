@@ -11,11 +11,13 @@ class UploadProductController {
     String companyId,
   ) async {
     try {
+      print('Solicitando productos para companyId: $companyId');
       final response = await http.get(
         Uri.parse(
           'http://10.0.2.2:8000/company/products/$companyId',
         ),
       );
+      print('URL de solicitud: $response');
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonResponse = json.decode(

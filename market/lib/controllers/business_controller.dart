@@ -52,7 +52,7 @@ class BusinessController {
         ),
       );
       request.files.add(logoFile);
-    
+
       final bgFile = await http.MultipartFile.fromPath(
         'companybackgrnd',
         businessBackground.path,
@@ -64,7 +64,7 @@ class BusinessController {
         ),
       );
       request.files.add(bgFile);
-    
+
       print("URI con parámetros: $uri");
       print(
         "Archivos adjuntos: ${request.files.map((f) => '${f.field}: ${f.filename}').join(', ')}",
