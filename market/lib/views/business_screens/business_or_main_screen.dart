@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/views/business_screens/create_business_screen.dart';
-import 'package:market/views/main_screen/businesses.dart';
+import 'package:market/views/main_screen/home_screen.dart';
 import 'dart:math' as math;
 
 class BusinessOrMainScreen extends StatelessWidget {
@@ -375,7 +375,7 @@ class BusinessOrMainScreen extends StatelessWidget {
                             MaterialPageRoute(
                               builder:
                                   (context) =>
-                                      const BusinessesScreen(),
+                                      const HomeScreen(),
                             ),
                           );
                         },

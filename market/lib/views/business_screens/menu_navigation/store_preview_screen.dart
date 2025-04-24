@@ -1212,6 +1212,7 @@ class _StorePreviewScreenState
     if (products.isEmpty) {
       return Column(
         children: [
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Text(
@@ -1412,13 +1413,15 @@ class _StorePreviewScreenState
         });
       },
       child: Container(
+        width: 69, // Ancho del botón
+        height: 57, // Alto del botón
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: Colors.grey[300]!),
+          color: Colors.white70,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: Color(0xFF121212)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black,
+              color: Colors.black54,
               blurRadius: 4,
               offset: Offset(1, 2),
             ),
@@ -1429,8 +1432,8 @@ class _StorePreviewScreenState
           children: [
             Icon(
               Icons.add,
-              size: 30,
-              color: Colors.black54,
+              size: 35,
+              color: Color(0xFF121212),
             ),
           ],
         ),

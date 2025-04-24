@@ -343,9 +343,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             child: Center(
                               child: Icon(
-                                Icons.business,
+                                Icons.business_rounded,
                                 size: 40,
-                                color: Colors.white70,
+                                color: Color(0xFF121212),
                               ),
                             ),
                           );
@@ -362,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               gradient: LinearGradient(
                                 colors: [
                                   Colors.purple.shade800
-                                      .withOpacity(0.7),
+                                      .withOpacity(0.5),
                                   Colors
                                       .deepPurple
                                       .shade900,
@@ -402,9 +402,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         child: Center(
                           child: Icon(
-                            Icons.business,
-                            size: 40,
-                            color: Colors.white70,
+                            Icons.business_rounded,
+                            size: 50,
+                            color: Colors.white,
                           ),
                         ),
                       ),
@@ -420,8 +420,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Colors.black.withOpacity(0.3),
-                    Colors.black.withOpacity(0.7),
+                    Colors.black.withOpacity(0.1),
+                    Colors.black.withOpacity(0.5),
                   ],
                 ),
               ),
@@ -441,7 +441,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text(
                     company.name ?? 'Sin nombre',
                     style: GoogleFonts.nunito(
-                      fontSize: 18,
+                      fontSize: 19,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       shadows: [
@@ -467,7 +467,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text(
                         company.description!,
                         style: GoogleFonts.nunito(
-                          fontSize: 12,
+                          fontSize: 14,
                           color: Colors.white.withOpacity(
                             0.9,
                           ),
