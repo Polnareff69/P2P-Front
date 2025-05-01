@@ -36,23 +36,24 @@ class _UserScreenState extends State<UserScreen> {
               //mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildHeader(),
-                _buildMenu(), 
+                _buildMenu(),
                 // Espacio adicional en la parte inferior
                 SizedBox(height: 80),
               ],
             ),
           ),
           // Menu-Button
-        Positioned(
-          bottom: 30,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: FloatingMenuButton(
-              logoAssetPath: 'assets/images/UMarketLogoNoBackground.png',
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: FloatingMenuButton(
+                logoAssetPath:
+                    'assets/images/UMarketLogoNoBackground.png',
+              ),
             ),
           ),
-        ),
         ],
       ),
     );
