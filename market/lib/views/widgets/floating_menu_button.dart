@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:market/views/main_screen/home_screen.dart';
 
 // Una clase global para manejar las opciones de menú en toda la aplicación
 class AppMenuManager {
@@ -25,7 +26,12 @@ class AppMenuManager {
         icon: Icons.home_rounded,
         title: 'Negocios',
         onTap: () {
-          Navigator.of(context).pushNamed('/home');
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeScreen(),
+            ),
+          );
         },
       ),
       MenuOption(
@@ -81,10 +87,8 @@ class FloatingMenuButton extends StatefulWidget {
   final Color? optionColor;
   final Color? textColor;
   final IconData? buttonIcon;
-  final String?
-  logoAssetPath; // Nueva propiedad para el logo personalizado
+  final String? logoAssetPath;
 
-  // Valores predeterminados para mantener consistencia en todas las pantallas
   const FloatingMenuButton({
     Key? key,
     this.menuOptions,
@@ -110,14 +114,13 @@ class _FloatingMenuButtonState
   // Constantes de estilo para mantener consistencia
   final Color _defaultButtonColor = Color(
     0xFF121212,
-  ).withOpacity(0.8); // Morado
+  ).withOpacity(0.8);
   final Color _defaultMenuBackgroundColor = const Color(
     0xFF121212,
-  ); // Gris oscuro
+  );
   final Color _defaultOptionColor =
-      Colors.deepPurpleAccent.shade700; // Morado
+      Colors.deepPurpleAccent.shade700;
   final Color _defaultTextColor = Colors.white;
-  final IconData _defaultButtonIcon = Icons.menu;
 
   @override
   void initState() {
@@ -145,16 +148,10 @@ class _FloatingMenuButtonState
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // Obtener opciones del gestor global o usar las proporcionadas
+  void _showMenu(BuildContext context) {
     final options =
         widget.menuOptions ??
         AppMenuManager.getMenuOptions(context);
-
-    // Usar los colores predeterminados o los proporcionados
-    final buttonColor =
-        widget.buttonColor ?? _defaultButtonColor;
     final menuBackgroundColor =
         widget.menuBackgroundColor ??
         _defaultMenuBackgroundColor;
@@ -162,162 +159,133 @@ class _FloatingMenuButtonState
         widget.optionColor ?? _defaultOptionColor;
     final textColor = widget.textColor ?? _defaultTextColor;
 
-    return SizedBox.expand(
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          // Overlay semi-transparent background when menu is open
-          if (_isMenuOpen)
-            Positioned.fill(
-              child: GestureDetector(
-                onTap: _toggleMenu,
-                child: Container(color: Colors.black54),
-              ),
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          height: MediaQuery.of(context).size.height * 0.35,
+          decoration: BoxDecoration(
+            color: menuBackgroundColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
             ),
-
-          // The menu
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              height:
-                  _isMenuOpen
-                      ? MediaQuery.of(context).size.height *
-                          0.42
-                      : 0,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: menuBackgroundColor,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.5),
-                    blurRadius: 15,
-                    spreadRadius: 2,
-                    offset: Offset(0, -3),
-                  ),
-                ],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.deepPurpleAccent.shade700
+                    .withOpacity(0.5),
+                blurRadius: 15,
+                spreadRadius: 2,
+                offset: Offset(0, -3),
               ),
-              child:
-                  _isMenuOpen
-                      ? Column(
-                        children: [
-                          const SizedBox(height: 15),
-                          Container(
-                            width: 40,
-                            height: 5,
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius:
-                                  BorderRadius.circular(10),
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Expanded(
-                            child: GridView.builder(
-                              padding:
-                                  const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                  ),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: 15,
-                                    mainAxisSpacing: 15,
-                                    childAspectRatio: 1,
-                                  ),
-                              itemCount: options.length,
-                              itemBuilder: (
-                                context,
-                                index,
-                              ) {
-                                final option =
-                                    options[index];
-                                return _buildMenuItem(
-                                  option,
-                                  optionColor,
-                                  textColor,
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      )
-                      : null,
-            ),
+            ],
           ),
+          child: Column(
+            children: [
+              const SizedBox(height: 15),
+              Container(
+                width: 40,
+                height: 5,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                child: GridView.builder(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 15,
+                        childAspectRatio: 1,
+                      ),
+                  itemCount: options.length,
+                  itemBuilder: (context, index) {
+                    final option = options[index];
+                    return _buildMenuItem(
+                      context,
+                      option,
+                      optionColor,
+                      textColor,
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
-          // The main floating button with enhanced shadow
-          Positioned(
-            bottom: 20,
-            child: Container(
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.deepPurpleAccent.shade700,
-                    blurRadius: 10,
-                    spreadRadius: 2,
-                  ),
-                  BoxShadow(
-                    color: Color(0xFF121212),
-                    blurRadius: 8,
-                    spreadRadius: 1,
-                  ),
-                ],
-              ),
-              child: FloatingActionButton(
-                onPressed: _toggleMenu,
-                backgroundColor: buttonColor,
-                elevation:
-                    0, // Eliminamos la elevación predeterminada porque usamos nuestra propia sombra
-                child:
-                    widget.logoAssetPath != null
-                        ? CircleAvatar(
-                          backgroundColor:
-                              Colors.transparent,
-                          child: Padding(
-                            padding: const EdgeInsets.all(
-                              8.0,
-                            ),
-                            child: Image.asset(
-                              widget.logoAssetPath!,
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        )
-                        : AnimatedIcon(
-                          icon: AnimatedIcons.menu_close,
-                          progress: _animationController,
-                          color: Colors.white,
-                        ),
-              ),
-            ),
+  @override
+  Widget build(BuildContext context) {
+    final buttonColor =
+        widget.buttonColor ?? _defaultButtonColor;
+
+    // Ya no usamos SizedBox.expand() sino solo el botón flotante
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.deepPurpleAccent.shade700,
+            blurRadius: 10,
+            spreadRadius: 2,
+          ),
+          BoxShadow(
+            color: Color(0xFF121212),
+            blurRadius: 8,
+            spreadRadius: 1,
           ),
         ],
+      ),
+      child: FloatingActionButton(
+        onPressed: () => _showMenu(context),
+        backgroundColor: buttonColor,
+        elevation: 0,
+        child:
+            widget.logoAssetPath != null
+                ? CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      widget.logoAssetPath!,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                )
+                : AnimatedIcon(
+                  icon: AnimatedIcons.menu_close,
+                  progress: _animationController,
+                  color: Colors.white,
+                ),
       ),
     );
   }
 
   Widget _buildMenuItem(
+    BuildContext context,
     MenuOption option,
     Color optionColor,
     Color textColor,
   ) {
     return InkWell(
       onTap: () {
-        _toggleMenu();
+        Navigator.pop(context);
         option.onTap();
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Contenedor con sombra para el botón de opción
           Container(
             width: 85,
             height: 85,
@@ -336,18 +304,17 @@ class _FloatingMenuButtonState
                   color: Colors.black,
                   blurRadius: 2,
                   spreadRadius: 0,
-                  offset: Offset(2, 4),
+                  offset: Offset(2, 3),
                 ),
               ],
             ),
             child: Icon(
               option.icon,
-              color: Colors.black,
+              color: Color(0xFF121212),
               size: 50,
             ),
           ),
           const SizedBox(height: 8),
-          // Texto con sombra
           Text(
             option.title,
             textAlign: TextAlign.center,

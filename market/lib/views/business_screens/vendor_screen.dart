@@ -4,6 +4,7 @@ import 'package:market/views/business_screens/menu_navigation/store_preview_scre
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:market/views/widgets/custom_back_button.dart';
+import 'package:market/views/widgets/floating_menu_button.dart'; // menu
 
 class VendorScreen extends StatefulWidget {
   final String businessName; // Nombre de la empresa
@@ -39,15 +40,35 @@ class _VendorScreenState extends State<VendorScreen> {
     return Scaffold(
       //fondo de color oscuro
       backgroundColor: Color(0xFF121212),
-      body: SingleChildScrollView(
-        child: Column(
-          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildHeader(),
-            _buildUploadButton(context),
-            _buildMenu(),
-          ],
-        ),
+      body: Stack(
+        children: [
+          // Contenido principal (ScrollView)
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                _buildHeader(),
+                _buildUploadButton(context),
+                _buildMenu(),
+                // Espacio adicional en la parte inferior para evitar que el contenido
+                // quede oculto detrás del FloatingMenuButton
+                SizedBox(height: 80),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 30,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: FloatingMenuButton(
+                logoAssetPath:
+                    'assets/images/UMarketLogoNoBackground.png',
+              ),
+            ),
+          ),
+
+          // FloatingMenuButton en la parte inferior
+        ],
       ),
     );
   }

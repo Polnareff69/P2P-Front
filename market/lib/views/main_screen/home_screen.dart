@@ -163,9 +163,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           //boton del menu
-          FloatingMenuButton(
-            logoAssetPath:
-                'assets/images/UMarketLogoNoBackground.png',
+          Positioned(
+            bottom: 30,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: FloatingMenuButton(
+                logoAssetPath:
+                    'assets/images/UMarketLogoNoBackground.png',
+              ),
+            ),
           ),
         ],
       ),
