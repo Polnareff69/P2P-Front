@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:market/views/widgets/floating_menu_button.dart'; // Ajusta la ruta según tu estructura de proyecto
 
 class UserScreen extends StatefulWidget {
   final String userName; // Nombre de la empresa
@@ -28,11 +29,31 @@ class _UserScreenState extends State<UserScreen> {
     return Scaffold(
       //fondo de color oscuro
       backgroundColor: Color(0xFF121212),
-      body: SingleChildScrollView(
-        child: Column(
-          //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [_buildHeader(), _buildMenu()],
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildHeader(),
+                _buildMenu(), 
+                // Espacio adicional en la parte inferior
+                SizedBox(height: 80),
+              ],
+            ),
+          ),
+          // Menu-Button
+        Positioned(
+          bottom: 30,
+          left: 0,
+          right: 0,
+          child: Center(
+            child: FloatingMenuButton(
+              logoAssetPath: 'assets/images/UMarketLogoNoBackground.png',
+            ),
+          ),
         ),
+        ],
       ),
     );
   }

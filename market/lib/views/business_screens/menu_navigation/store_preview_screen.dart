@@ -8,6 +8,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart'; //seleccionar col
 import 'package:market/controllers/upload_product_controller.dart';
 import 'package:market/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:market/views/widgets/floating_menu_button.dart'; // Ajusta la ruta según tu estructura de proyecto
 
 class StorePreviewScreen extends StatefulWidget {
   final String businessName;
@@ -114,129 +115,153 @@ class _StorePreviewScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF121212),
-      body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            _buildHeader(),
-            const SizedBox(height: 22),
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                _buildHeader(),
+                const SizedBox(height: 22),
 
-            // Título con fondo transparente y borde morado
-            Container(
-              padding: EdgeInsets.symmetric(
-                vertical: 5,
-                horizontal: 10,
-              ),
-              margin: EdgeInsets.only(bottom: 1),
-              decoration: BoxDecoration(
-                // Fondo transparente con efecto glaseado
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.purpleAccent.withOpacity(0.1),
-                    Colors.deepPurpleAccent.withOpacity(
-                      0.15,
+                // Título con fondo transparente y borde morado
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 5,
+                    horizontal: 10,
+                  ),
+                  margin: EdgeInsets.only(bottom: 1),
+                  decoration: BoxDecoration(
+                    // Fondo transparente con efecto glaseado
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.purpleAccent.withOpacity(
+                          0.1,
+                        ),
+                        Colors.deepPurpleAccent.withOpacity(
+                          0.15,
+                        ),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                // Borde delineado en morado
-                border: Border.all(
-                  color: Colors.purple.shade400,
-                  width: 1.2,
-                ),
-                borderRadius: BorderRadius.circular(15),
-                // Efecto de brillo con sombra sutil
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.purple.shade700
-                        .withOpacity(0.25),
-                    blurRadius: 8,
-                    spreadRadius: 0,
-                    offset: Offset(0, 2),
+                    // Borde delineado en morado
+                    border: Border.all(
+                      color: Colors.purple.shade400,
+                      width: 1.2,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                    // Efecto de brillo con sombra sutil
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.purple.shade700
+                            .withOpacity(0.25),
+                        blurRadius: 8,
+                        spreadRadius: 0,
+                        offset: Offset(0, 2),
+                      ),
+                      // Brillo interior
+                      BoxShadow(
+                        color: Colors.purple.shade300
+                            .withOpacity(0.1),
+                        blurRadius: 6,
+                        spreadRadius: -1,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
                   ),
-                  // Brillo interior
-                  BoxShadow(
-                    color: Colors.purple.shade300
-                        .withOpacity(0.1),
-                    blurRadius: 6,
-                    spreadRadius: -1,
-                    offset: Offset(0, 0),
+                  child: Text(
+                    "Categorías",
+                    style: GoogleFonts.nunito(
+                      fontSize: 19,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                ],
-              ),
-              child: Text(
-                "Categorías",
-                style: GoogleFonts.nunito(
-                  fontSize: 19,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
                 ),
-                textAlign: TextAlign.center,
+                const SizedBox(height: 7),
+                _buildCategoryButtons(),
+                const SizedBox(height: 13),
+
+                // Título con fondo transparente y borde morado
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 7,
+                    horizontal: 12,
+                  ),
+                  margin: EdgeInsets.only(bottom: 8),
+                  decoration: BoxDecoration(
+                    // Fondo transparente con efecto glaseado
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.purpleAccent.withOpacity(
+                          0.1,
+                        ),
+                        Colors.deepPurpleAccent.withOpacity(
+                          0.15,
+                        ),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    // Borde delineado en morado
+                    border: Border.all(
+                      color: Colors.purple.shade400,
+                      width: 1.2,
+                    ),
+                    borderRadius: BorderRadius.circular(15),
+                    // Efecto de brillo con sombra sutil
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.purple.shade700
+                            .withOpacity(0.25),
+                        blurRadius: 8,
+                        spreadRadius: 0,
+                        offset: Offset(0, 2),
+                      ),
+                      // Brillo interior
+                      BoxShadow(
+                        color: Colors.purple.shade300
+                            .withOpacity(0.1),
+                        blurRadius: 6,
+                        spreadRadius: -1,
+                        offset: Offset(0, 0),
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    "Mis Productos",
+                    style: GoogleFonts.nunito(
+                      fontSize: 19,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                _buildProductGrid(),
+
+                SizedBox(height: 80),
+              ],
+            ),
+          ),
+
+          //Menu
+          Positioned(
+            bottom: 30,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: FloatingMenuButton(
+                logoAssetPath:
+                    'assets/images/UMarketLogoNoBackground.png',
               ),
             ),
-            const SizedBox(height: 7),
-            _buildCategoryButtons(),
-            const SizedBox(height: 13),
-
-            // Título con fondo transparente y borde morado
-            Container(
-              padding: EdgeInsets.symmetric(
-                vertical: 7,
-                horizontal: 12,
-              ),
-              margin: EdgeInsets.only(bottom: 8),
-              decoration: BoxDecoration(
-                // Fondo transparente con efecto glaseado
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.purpleAccent.withOpacity(0.1),
-                    Colors.deepPurpleAccent.withOpacity(
-                      0.15,
-                    ),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                // Borde delineado en morado
-                border: Border.all(
-                  color: Colors.purple.shade400,
-                  width: 1.2,
-                ),
-                borderRadius: BorderRadius.circular(15),
-                // Efecto de brillo con sombra sutil
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.purple.shade700
-                        .withOpacity(0.25),
-                    blurRadius: 8,
-                    spreadRadius: 0,
-                    offset: Offset(0, 2),
-                  ),
-                  // Brillo interior
-                  BoxShadow(
-                    color: Colors.purple.shade300
-                        .withOpacity(0.1),
-                    blurRadius: 6,
-                    spreadRadius: -1,
-                    offset: Offset(0, 0),
-                  ),
-                ],
-              ),
-              child: Text(
-                "Mis Productos",
-                style: GoogleFonts.nunito(
-                  fontSize: 19,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            _buildProductGrid(),
-          ],
-        ),
+          ),
+        ],
       ),
+
       /*
       floatingActionButton: FloatingActionButton(
         onPressed: _showCustomizeHeaderOptions,

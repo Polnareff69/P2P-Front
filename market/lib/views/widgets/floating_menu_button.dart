@@ -106,11 +106,7 @@ class FloatingMenuButton extends StatefulWidget {
 }
 
 class _FloatingMenuButtonState
-    extends State<FloatingMenuButton>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  bool _isMenuOpen = false;
-
+    extends State<FloatingMenuButton> {
   // Constantes de estilo para mantener consistencia
   final Color _defaultButtonColor = Color(
     0xFF121212,
@@ -121,32 +117,6 @@ class _FloatingMenuButtonState
   final Color _defaultOptionColor =
       Colors.deepPurpleAccent.shade700;
   final Color _defaultTextColor = Colors.white;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 300),
-    );
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
-  void _toggleMenu() {
-    setState(() {
-      _isMenuOpen = !_isMenuOpen;
-      if (_isMenuOpen) {
-        _animationController.forward();
-      } else {
-        _animationController.reverse();
-      }
-    });
-  }
 
   void _showMenu(BuildContext context) {
     final options =
@@ -230,7 +200,6 @@ class _FloatingMenuButtonState
     final buttonColor =
         widget.buttonColor ?? _defaultButtonColor;
 
-    // Ya no usamos SizedBox.expand() sino solo el botón flotante
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
@@ -263,11 +232,7 @@ class _FloatingMenuButtonState
                     ),
                   ),
                 )
-                : AnimatedIcon(
-                  icon: AnimatedIcons.menu_close,
-                  progress: _animationController,
-                  color: Colors.white,
-                ),
+                : Icon(Icons.menu, color: Colors.white),
       ),
     );
   }
