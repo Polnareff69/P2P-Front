@@ -3,7 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:market/controllers/company_controller.dart';
 import 'package:market/models/company_model.dart';
 import 'package:market/views/business_screens/menu_navigation/store_preview_screen.dart';
-import 'dart:io';
+//import 'dart:io';
+import 'package:market/views/widgets/floating_menu_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -53,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF121212),
+      backgroundColor: const Color(0xFF121212),
       extendBodyBehindAppBar: true,
 
       // AppBar con fondo transparente
@@ -159,6 +160,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     : errorMessage != null
                     ? _buildErrorView()
                     : _buildCompanyGrid(),
+          ),
+
+          //boton del menu
+          FloatingMenuButton(
+            logoAssetPath:
+                'assets/images/UMarketLogoNoBackground.png',
           ),
         ],
       ),

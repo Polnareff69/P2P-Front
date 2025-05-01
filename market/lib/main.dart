@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.deepPurple,
         ),
       ),
-      home: const WelcomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
