@@ -218,7 +218,7 @@ class _ProductDetailScreenState
                         Text(
                           'Descripción',
                           style: GoogleFonts.nunito(
-                            fontSize: 20,
+                            fontSize: 20.5,
                             fontWeight: FontWeight.w800,
                             color: Colors.purpleAccent,
                           ),
@@ -241,10 +241,11 @@ class _ProductDetailScreenState
                             widget.product.Description ??
                                 'Sin descripción',
                             style: GoogleFonts.nunito(
-                              fontSize: 18,
+                              fontSize: 17.5,
+                              fontWeight: FontWeight.w600,
                               color: Colors.white
                                   .withOpacity(0.9),
-                              height: 1.5,
+                              height: 2,
                             ),
                           ),
                         ),
@@ -355,7 +356,7 @@ class _ProductDetailScreenState
         Text(
           'Cantidad:',
           style: GoogleFonts.nunito(
-            fontSize: 20,
+            fontSize: 20.5,
             fontWeight: FontWeight.w700,
             color: Colors.white,
           ),
