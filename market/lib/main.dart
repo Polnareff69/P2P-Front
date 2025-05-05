@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:market/views/business_screens/vendor_screen.dart';
+//import 'package:market/views/business_screens/vendor_screen.dart';
 //import 'package:market/views/main_screen/home_screen.dart';
 import 'package:market/views/authentication_screens/welcome_screen.dart';
-import 'package:market/views/main_screen/home_screen.dart';
+//import 'package:market/views/main_screen/home_screen.dart';
 
 void main() {
   runApp(const MyApp());

@@ -8,7 +8,8 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart'; //seleccionar col
 import 'package:market/controllers/upload_product_controller.dart';
 import 'package:market/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:market/views/widgets/floating_menu_button.dart'; // Ajusta la ruta según tu estructura de proyecto
+import 'package:market/views/widgets/floating_menu_button.dart';
+import 'package:market/views/business_screens/product_detail_screen.dart';
 
 class StorePreviewScreen extends StatefulWidget {
   final String businessName;
@@ -1290,125 +1291,139 @@ class _StorePreviewScreenState
   }
 
   Widget _buildRealProductItem(Product product) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.grey[900],
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black,
-            blurRadius: 4,
-            offset: Offset(1, 2),
+    return GestureDetector(
+      onTap: () {
+        // Navegar a la pantalla de detalle del producto
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder:
+                (context) =>
+                    ProductDetailScreen(product: product),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          // Imagen del producto
-          Expanded(
-            flex: 3,
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-              ),
-              child:
-                  product.productImg != null
-                      ? Image.network(
-                        'http://10.0.2.2:8000/ProductImg?fileLocation=${Uri.encodeComponent(product.productImg!)}',
-                        fit: BoxFit.cover,
-                        errorBuilder: (
-                          context,
-                          error,
-                          stackTrace,
-                        ) {
-                          print(
-                            'Error al cargar imagen: $error',
-                          );
-                          return Container(
-                            color: Colors.grey[800],
-                            child: Icon(
-                              Icons.image_not_supported,
-                              color: Colors.white70,
-                              size: 50,
-                            ),
-                          );
-                        },
-                        loadingBuilder: (
-                          context,
-                          child,
-                          loadingProgress,
-                        ) {
-                          if (loadingProgress == null)
-                            return child;
-                          return Container(
-                            color: Colors.grey[800],
-                            child: Center(
-                              child:
-                                  CircularProgressIndicator(
-                                    color:
-                                        Colors.purpleAccent,
-                                  ),
-                            ),
-                          );
-                        },
-                      )
-                      : Container(
-                        color: Colors.grey[800],
-                        child: Icon(
-                          Icons.image,
-                          color: Colors.white70,
-                          size: 50,
+        );
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[900],
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 4,
+              offset: Offset(1, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Imagen del producto
+            Expanded(
+              flex: 3,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                ),
+                child:
+                    product.productImg != null
+                        ? Image.network(
+                          'http://10.0.2.2:8000/ProductImg?fileLocation=${Uri.encodeComponent(product.productImg!)}',
+                          fit: BoxFit.cover,
+                          errorBuilder: (
+                            context,
+                            error,
+                            stackTrace,
+                          ) {
+                            print(
+                              'Error al cargar imagen: $error',
+                            );
+                            return Container(
+                              color: Colors.grey[800],
+                              child: Icon(
+                                Icons.image_not_supported,
+                                color: Colors.white70,
+                                size: 50,
+                              ),
+                            );
+                          },
+                          loadingBuilder: (
+                            context,
+                            child,
+                            loadingProgress,
+                          ) {
+                            if (loadingProgress == null)
+                              return child;
+                            return Container(
+                              color: Colors.grey[800],
+                              child: Center(
+                                child:
+                                    CircularProgressIndicator(
+                                      color:
+                                          Colors
+                                              .purpleAccent,
+                                    ),
+                              ),
+                            );
+                          },
+                        )
+                        : Container(
+                          color: Colors.grey[800],
+                          child: Icon(
+                            Icons.image,
+                            color: Colors.white70,
+                            size: 50,
+                          ),
                         ),
-                      ),
-            ),
-          ),
-
-          // Detalles del producto
-          Expanded(
-            flex: 2,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment:
-                    CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    product.Name ?? 'Sin nombre',
-                    style: GoogleFonts.nunito(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    '\$${product.Price ?? '0'}',
-                    style: GoogleFonts.nunito(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
-                      color: Colors.greenAccent,
-                    ),
-                  ),
-                  SizedBox(height: 4),
-                  Text(
-                    product.Description ??
-                        'Sin descripción',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white70,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
               ),
             ),
-          ),
-        ],
+
+            // Detalles del producto
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product.Name ?? 'Sin nombre',
+                      style: GoogleFonts.nunito(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      '\$${product.Price ?? '0'}',
+                      style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.greenAccent,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      product.Description ??
+                          'Sin descripción',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.white70,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
