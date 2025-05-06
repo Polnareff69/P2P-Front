@@ -1320,7 +1320,7 @@ class _StorePreviewScreenState
           children: [
             // Imagen del producto
             Expanded(
-              flex: 3,
+              flex: 4,
               child: ClipRRect(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15),
@@ -1383,7 +1383,7 @@ class _StorePreviewScreenState
             Expanded(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(11.0),
                 child: Column(
                   crossAxisAlignment:
                       CrossAxisAlignment.start,
@@ -1391,7 +1391,7 @@ class _StorePreviewScreenState
                     Text(
                       product.Name ?? 'Sin nombre',
                       style: GoogleFonts.nunito(
-                        fontSize: 16,
+                        fontSize: 17,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -1402,13 +1402,13 @@ class _StorePreviewScreenState
                     Text(
                       '\$${product.Price ?? '0'}',
                       style: GoogleFonts.nunito(
-                        fontSize: 14,
+                        fontSize: 15,
                         fontWeight: FontWeight.w800,
                         color: Colors.greenAccent,
                       ),
                     ),
                     SizedBox(height: 4),
-                    Text(
+                    /*Text(
                       product.Description ??
                           'Sin descripción',
                       style: TextStyle(
@@ -1417,7 +1417,7 @@ class _StorePreviewScreenState
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                    ),
+                    ), */
                   ],
                 ),
               ),

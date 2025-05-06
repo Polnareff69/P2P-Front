@@ -80,58 +80,60 @@ class _ProductDetailScreenState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          padding: EdgeInsets.symmetric(
-            vertical: 7,
-            horizontal: 12,
-          ),
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            bottom: 15,
-            top: 25,
-          ),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Colors.purpleAccent.withOpacity(0.1),
-                Colors.deepPurpleAccent.withOpacity(0.15),
+        Center(
+          child: Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 7,
+              horizontal: 12,
+            ),
+            margin: EdgeInsets.only(
+              left: 20,
+              right: 20,
+              bottom: 15,
+              top: 25,
+            ),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Colors.purpleAccent.withOpacity(0.1),
+                  Colors.deepPurpleAccent.withOpacity(0.15),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              border: Border.all(
+                color: Colors.purple.shade400,
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.purple.shade700.withOpacity(
+                    0.25,
+                  ),
+                  blurRadius: 8,
+                  spreadRadius: 0,
+                  offset: Offset(0, 2),
+                ),
+                BoxShadow(
+                  color: Colors.purple.shade300.withOpacity(
+                    0.1,
+                  ),
+                  blurRadius: 6,
+                  spreadRadius: -1,
+                  offset: Offset(0, 0),
+                ),
               ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
             ),
-            border: Border.all(
-              color: Colors.purple.shade400,
-              width: 1.2,
-            ),
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.purple.shade700.withOpacity(
-                  0.25,
-                ),
-                blurRadius: 8,
-                spreadRadius: 0,
-                offset: Offset(0, 2),
+            child: Text(
+              "Otros Productos",
+              style: GoogleFonts.nunito(
+                fontSize: 19,
+                fontWeight: FontWeight.w900,
+                color: Colors.white,
               ),
-              BoxShadow(
-                color: Colors.purple.shade300.withOpacity(
-                  0.1,
-                ),
-                blurRadius: 6,
-                spreadRadius: -1,
-                offset: Offset(0, 0),
-              ),
-            ],
-          ),
-          child: Text(
-            "Otros Productos",
-            style: GoogleFonts.nunito(
-              fontSize: 19,
-              fontWeight: FontWeight.w900,
-              color: Colors.white,
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
           ),
         ),
 
@@ -187,7 +189,7 @@ class _ProductDetailScreenState
         );
       },
       child: Container(
-        width: 160,
+        width: 170,
         margin: EdgeInsets.symmetric(
           horizontal: 8,
           vertical: 5,
@@ -208,7 +210,7 @@ class _ProductDetailScreenState
           children: [
             // Imagen del producto
             Expanded(
-              flex: 5,
+              flex: 6,
               child: ClipRRect(
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15),
@@ -279,7 +281,7 @@ class _ProductDetailScreenState
                     Text(
                       product.Name ?? 'Sin nombre',
                       style: GoogleFonts.nunito(
-                        fontSize: 14,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -289,7 +291,7 @@ class _ProductDetailScreenState
                     Text(
                       '\$${product.Price ?? '0'}',
                       style: GoogleFonts.nunito(
-                        fontSize: 13,
+                        fontSize: 14,
                         fontWeight: FontWeight.w800,
                         color: Colors.greenAccent,
                       ),
