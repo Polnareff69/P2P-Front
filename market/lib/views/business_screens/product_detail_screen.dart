@@ -201,7 +201,7 @@ class _ProductDetailScreenState
             BoxShadow(
               color: Colors.black,
               blurRadius: 4,
-              offset: Offset(1, 2),
+              offset: Offset(1, 3),
             ),
           ],
         ),
@@ -312,6 +312,43 @@ class _ProductDetailScreenState
       backgroundColor: Color(0xFF121212),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        title: ShaderMask(
+          shaderCallback:
+              (bounds) => LinearGradient(
+                colors: [
+                  Colors.deepPurpleAccent.shade700,
+                  Colors.deepPurpleAccent.shade700,
+
+                  //Colors.white60,
+                  Colors.purpleAccent,
+                  Colors.deepPurpleAccent.shade700,
+                  Colors.purple,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ).createShader(bounds),
+          child: Text(
+            "Detalles",
+            style: GoogleFonts.lilitaOne(
+              fontSize: 45,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                  color: Colors.deepPurple.withOpacity(0.8),
+                  offset: const Offset(1, 3),
+                  blurRadius: 10,
+                ),
+                Shadow(
+                  color: Colors.black,
+                  offset: const Offset(2, 4),
+                  blurRadius: 15,
+                ),
+              ],
+            ),
+          ),
+        ),
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
@@ -431,7 +468,7 @@ class _ProductDetailScreenState
                                 widget.product.Name ??
                                     'Sin nombre',
                                 style: GoogleFonts.nunito(
-                                  fontSize: 30,
+                                  fontSize: 33,
                                   fontWeight:
                                       FontWeight.w900,
                                   color: Colors.white,
@@ -492,7 +529,8 @@ class _ProductDetailScreenState
                           ],
                         ),
 
-                        SizedBox(height: 15),
+                        //Divider(),
+                        const SizedBox(height: 15),
 
                         // Selector de cantidad
                         _buildQuantitySelector(),
