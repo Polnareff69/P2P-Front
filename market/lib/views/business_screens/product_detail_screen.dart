@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:market/controllers/upload_product_controller.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final Product product;
@@ -20,6 +21,288 @@ class _ProductDetailScreenState
     extends State<ProductDetailScreen> {
   int selectedImageIndex = 0;
   int quantity = 1;
+
+  // Controller para obtener productos
+  final UploadProductController _productController =
+      UploadProductController();
+
+  // Lista para almacenar otros productos
+  List<Product> otherProducts = [];
+  bool loadingProducts = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadOtherProducts();
+  }
+
+  // Método para cargar otros productos
+  Future<void> _loadOtherProducts() async {
+    setState(() {
+      loadingProducts = true;
+    });
+
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final companyId = prefs.getString('company_id');
+
+      if (companyId == null) {
+        throw Exception('No hay ID de empresa almacenado');
+      }
+
+      // Cargar todos los productos de la empresa
+      final products = await _productController
+          .getCompanyProducts(companyId);
+
+      // Filtrar para excluir el producto actual basado en nombre y precio
+      // ya que no tenemos productId
+      setState(() {
+        otherProducts =
+            products
+                .where(
+                  (p) =>
+                      p.Name != widget.product.Name ||
+                      p.Price != widget.product.Price,
+                )
+                .toList();
+        loadingProducts = false;
+      });
+    } catch (e) {
+      print('Error al cargar otros productos: $e');
+      setState(() {
+        loadingProducts = false;
+      });
+    }
+  }
+
+  // Añade este método para construir la sección de productos relacionados
+  Widget _buildRelatedProducts() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(
+            vertical: 7,
+            horizontal: 12,
+          ),
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            bottom: 15,
+            top: 25,
+          ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.purpleAccent.withOpacity(0.1),
+                Colors.deepPurpleAccent.withOpacity(0.15),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            border: Border.all(
+              color: Colors.purple.shade400,
+              width: 1.2,
+            ),
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.purple.shade700.withOpacity(
+                  0.25,
+                ),
+                blurRadius: 8,
+                spreadRadius: 0,
+                offset: Offset(0, 2),
+              ),
+              BoxShadow(
+                color: Colors.purple.shade300.withOpacity(
+                  0.1,
+                ),
+                blurRadius: 6,
+                spreadRadius: -1,
+                offset: Offset(0, 0),
+              ),
+            ],
+          ),
+          child: Text(
+            "Otros Productos",
+            style: GoogleFonts.nunito(
+              fontSize: 19,
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+
+        // Lista horizontal de productos
+        Container(
+          height: 210,
+          child:
+              loadingProducts
+                  ? Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.purpleAccent,
+                    ),
+                  )
+                  : otherProducts.isEmpty
+                  ? Center(
+                    child: Text(
+                      "No hay más productos disponibles",
+                      style: GoogleFonts.nunito(
+                        color: Colors.white70,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                  : ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: otherProducts.length,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 15,
+                    ),
+                    itemBuilder: (context, index) {
+                      return _buildRelatedProductItem(
+                        otherProducts[index],
+                      );
+                    },
+                  ),
+        ),
+      ],
+    );
+  }
+
+  // Método para construir cada ítem de producto relacionado
+  Widget _buildRelatedProductItem(Product product) {
+    return GestureDetector(
+      onTap: () {
+        // Navegar a la pantalla de detalle de este producto
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder:
+                (context) =>
+                    ProductDetailScreen(product: product),
+          ),
+        );
+      },
+      child: Container(
+        width: 160,
+        margin: EdgeInsets.symmetric(
+          horizontal: 8,
+          vertical: 5,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.grey[900],
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 4,
+              offset: Offset(1, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Imagen del producto
+            Expanded(
+              flex: 5,
+              child: ClipRRect(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                ),
+                child:
+                    product.productImg != null
+                        ? Image.network(
+                          'http://10.0.2.2:8000/ProductImg?fileLocation=${Uri.encodeComponent(product.productImg!)}',
+                          fit: BoxFit.cover,
+                          errorBuilder: (
+                            context,
+                            error,
+                            stackTrace,
+                          ) {
+                            return Container(
+                              color: Colors.grey[800],
+                              child: Icon(
+                                Icons.image_not_supported,
+                                color: Colors.white70,
+                                size: 30,
+                              ),
+                            );
+                          },
+                          loadingBuilder: (
+                            context,
+                            child,
+                            loadingProgress,
+                          ) {
+                            if (loadingProgress == null)
+                              return child;
+                            return Container(
+                              color: Colors.grey[800],
+                              child: Center(
+                                child:
+                                    CircularProgressIndicator(
+                                      color:
+                                          Colors
+                                              .purpleAccent,
+                                      strokeWidth: 2.0,
+                                    ),
+                              ),
+                            );
+                          },
+                        )
+                        : Container(
+                          color: Colors.grey[800],
+                          child: Icon(
+                            Icons.image,
+                            color: Colors.white70,
+                            size: 30,
+                          ),
+                        ),
+              ),
+            ),
+
+            // Detalles del producto
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      product.Name ?? 'Sin nombre',
+                      style: GoogleFonts.nunito(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      '\$${product.Price ?? '0'}',
+                      style: GoogleFonts.nunito(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.greenAccent,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -259,6 +542,10 @@ class _ProductDetailScreenState
                       ],
                     ),
                   ),
+                  // Sección de productos relacionados
+                  _buildRelatedProducts(),
+
+                  SizedBox(height: 30),
                 ],
               ),
             ),
