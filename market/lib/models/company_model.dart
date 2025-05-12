@@ -23,7 +23,7 @@ class Company {
       name: json['Name'] ?? 'Sin nombre',
       description: json['description'] ?? '',
       companyBackground: json['companybackgrnd'],
-      companyImg: json['companyImg'],
+      companyImg: json['companyimg'],
       userId: json['UserId'] ?? '',
       phoneNumber: json['phonenumber'],
     );

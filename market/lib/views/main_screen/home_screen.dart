@@ -42,6 +42,17 @@ class _HomeScreenState extends State<HomeScreen> {
       });
 
       print('Empresas cargadas: ${companies.length}');
+
+      // debug para ver cuántas empresas tienen imagen
+      int empresasConImagen =
+          companies
+              .where(
+                (c) =>
+                    c.companyImg != null &&
+                    c.companyImg!.isNotEmpty,
+              )
+              .length;
+      print('Empresas con imagen: $empresasConImagen');
     } catch (e) {
       print('Error al obtener empresas: $e');
       setState(() {
@@ -308,6 +319,26 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildCompanyCard(Company company) {
+    print('Construyendo tarjeta para: ${company.name}');
+    print('Ruta de imagen original: ${company.companyImg}');
+    String? imageUrl;
+
+    if (company.companyImg != null &&
+        company.companyImg!.isNotEmpty) {
+      // Normalizar la ruta reemplazando \\ por /
+      String normalizedPath = company.companyImg!
+          .replaceAll('\\\\', '/')
+          .replaceAll('\\', '/');
+
+      print('Ruta normalizada: $normalizedPath');
+
+      imageUrl =
+          'http://10.0.2.2:8000/ProductImg?fileLocation=${Uri.encodeComponent(normalizedPath)}';
+      print('URL final: $imageUrl');
+    } else {
+      print('La empresa no tiene imagen asociada');
+    }
+
     return GestureDetector(
       onTap: () => _selectCompany(company),
       child: Container(
@@ -328,10 +359,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child:
-                  company.companyImg != null &&
-                          company.companyImg!.isNotEmpty
+                  imageUrl != null
                       ? Image.network(
-                        'http://10.0.2.2:8000/companyImg?fileLocation=${Uri.encodeComponent(company.companyImg!)}',
+                        imageUrl, // Usar la URL normalizada
                         fit: BoxFit.cover,
                         errorBuilder: (
                           context,
@@ -425,7 +455,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             // Capa oscura degradada para mejorar la legibilidad del texto
-            // Va de transparente en la parte superior a más oscuro en la parte inferior
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),

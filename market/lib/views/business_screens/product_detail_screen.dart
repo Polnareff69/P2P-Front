@@ -396,6 +396,7 @@ class _ProductDetailScreenState
           ),
         ],
       ),
+
       body: Stack(
         children: [
           // Fondo con degradado
@@ -411,7 +412,6 @@ class _ProductDetailScreenState
               ),
             ),
           ),*/
-
           // Contenido principal
           SafeArea(
             child: SingleChildScrollView(
