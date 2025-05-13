@@ -10,6 +10,7 @@ import 'package:market/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:market/views/widgets/floating_menu_button.dart';
 import 'package:market/views/business_screens/product_detail_screen.dart';
+import 'package:market/config/app_config.dart'; // aca esta la peticion para ver productos
 
 class StorePreviewScreen extends StatefulWidget {
   final String businessName;
@@ -1329,7 +1330,7 @@ class _StorePreviewScreenState
                 child:
                     product.productImg != null
                         ? Image.network(
-                          'http://10.0.2.2:8000/ProductImg?fileLocation=${Uri.encodeComponent(product.productImg!)}',
+                          '${AppConfig.getProductImageUrl()}?fileLocation=${Uri.encodeComponent(product.productImg!)}',
                           fit: BoxFit.cover,
                           errorBuilder: (
                             context,

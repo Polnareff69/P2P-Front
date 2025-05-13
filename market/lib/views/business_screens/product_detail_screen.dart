@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:market/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:market/controllers/upload_product_controller.dart';
+import 'package:market/config/app_config.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final Product product;
@@ -219,7 +220,7 @@ class _ProductDetailScreenState
                 child:
                     product.productImg != null
                         ? Image.network(
-                          'http://10.0.2.2:8000/ProductImg?fileLocation=${Uri.encodeComponent(product.productImg!)}',
+                          '${AppConfig.getProductImageUrl()}?fileLocation=${Uri.encodeComponent(product.productImg!)}',
                           fit: BoxFit.cover,
                           errorBuilder: (
                             context,
@@ -618,7 +619,7 @@ class _ProductDetailScreenState
         child:
             widget.product.productImg != null
                 ? Image.network(
-                  'http://10.0.2.2:8000/ProductImg?fileLocation=${Uri.encodeComponent(widget.product.productImg!)}',
+                  '${AppConfig.getProductImageUrl()}?fileLocation=${Uri.encodeComponent(widget.product.productImg!)}',
                   fit: BoxFit.cover,
                   errorBuilder: (
                     context,

@@ -4,6 +4,8 @@ import 'package:market/models/business_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 import 'dart:convert';
+import 'package:market/config/app_config.dart'; // configuracion de peticiones
+
 
 class BusinessController {
   Future<void> createBusiness(
@@ -11,7 +13,10 @@ class BusinessController {
     File businessLogo,
     File businessBackground,
   ) async {
+    //pruebas en local
+    /*
     const String baseUrl = 'http://10.0.2.2:8000/company';
+    */
 
     // Recuperar el token de SharedPreferences
     final prefs = await SharedPreferences.getInstance();
@@ -29,9 +34,7 @@ class BusinessController {
     };
 
     // Crear la URI con los parámetros de consulta
-    final uri = Uri.parse(
-      baseUrl,
-    ).replace(queryParameters: queryParams);
+    final uri = Uri.parse(AppConfig.createCompanyUrl).replace(queryParameters: queryParams);
 
     try {
       // Crear un objeto multipart request

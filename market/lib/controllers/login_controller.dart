@@ -1,13 +1,17 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:market/models/user_model.dart';
+import 'package:market/config/app_config.dart'; // configuracion de peticiones
 
 class LoginController {
   Future<String?> loginUser(User user) async {
+    // pruebas en local
+    /*
     const String apiUrl = 'http://10.0.2.2:8000/token';
+    */
 
     final response = await http.post(
-      Uri.parse(apiUrl),
+      Uri.parse(AppConfig.loginUrl),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(user.toJson()),
     );

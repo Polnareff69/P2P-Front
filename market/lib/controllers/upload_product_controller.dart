@@ -4,6 +4,7 @@ import 'package:market/models/product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http_parser/http_parser.dart';
 import 'dart:convert';
+import 'package:market/config/app_config.dart'; // configuracion de peticiones
 
 class UploadProductController {
   //funcion para obtener productos de una empresa
@@ -14,7 +15,7 @@ class UploadProductController {
       print('Solicitando productos para companyId: $companyId');
       final response = await http.get(
         Uri.parse(
-          'http://10.0.2.2:8000/company/products/$companyId',
+          AppConfig.getCompanyProductsUrl(companyId),
         ),
       );
       print('URL de solicitud: $response');
@@ -60,11 +61,14 @@ class UploadProductController {
       'Description': product.Description ?? '',
       'Price': product.Price ?? '',
     };
-
+    
+    // pruebas en local
+    /*
     final baseUrl =
         'http://10.0.2.2:8000/product/$companyId';
+    */
     final uri = Uri.parse(
-      baseUrl,
+      AppConfig.uploadProductUrl(companyId),
     ).replace(queryParameters: queryParams);
 
     try {

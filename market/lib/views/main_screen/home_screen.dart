@@ -5,6 +5,7 @@ import 'package:market/models/company_model.dart';
 import 'package:market/views/business_screens/menu_navigation/store_preview_screen.dart';
 //import 'dart:io';
 import 'package:market/views/widgets/floating_menu_button.dart';
+import 'package:market/config/app_config.dart'; // aca esta la peticion para ver productos
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -332,8 +333,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
       print('Ruta normalizada: $normalizedPath');
 
+      // img servidas desde aws
       imageUrl =
-          'http://10.0.2.2:8000/ProductImg?fileLocation=${Uri.encodeComponent(normalizedPath)}';
+          '${AppConfig.getProductImageUrl()}?fileLocation=${Uri.encodeComponent(normalizedPath)}';
       print('URL final: $imageUrl');
     } else {
       print('La empresa no tiene imagen asociada');

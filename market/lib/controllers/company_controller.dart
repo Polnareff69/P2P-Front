@@ -2,10 +2,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/company_model.dart';
+import 'package:market/config/app_config.dart'; // configuracion de peticiones
 
 class CompanyController {
-  // URL base de la API
+  // URL base de la API (LOCAL)
+  /*
   final String baseUrl = 'http://10.0.2.2:8000';
+  */
 
   // Método para obtener todas las empresas
   Future<List<Company>> getAllCompanies() async {
@@ -15,7 +18,7 @@ class CompanyController {
       final token = prefs.getString('auth_token');
 
       final response = await http.get(
-        Uri.parse('$baseUrl/compnay/all'),
+        Uri.parse(AppConfig.getAllCompaniesUrl),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
