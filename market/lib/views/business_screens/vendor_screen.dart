@@ -5,6 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:market/views/widgets/custom_back_button.dart';
 import 'package:market/views/widgets/floating_menu_button.dart'; // menu
+import 'package:market/views/widgets/logout_button.dart';
+import 'package:flutter/foundation.dart'; // Para kDebugMode
 
 class VendorScreen extends StatefulWidget {
   final String businessName; // Nombre de la empresa
@@ -172,6 +174,39 @@ class _VendorScreenState extends State<VendorScreen> {
               ),
               onPressed: () {
                 // Este botón se usará para otras funcionalidades en el futuro
+              },
+            ),
+          ),
+        ),
+
+        Positioned(
+          top: 60,
+          right: 3,
+          child: Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.3),
+                  blurRadius: 4,
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: LogoutIconButton(
+              onLogoutStart: () {
+                if (kDebugMode)
+                  print(
+                    '| Iniciando logout desde VendorScreen |',
+                  );
+              },
+              onLogoutComplete: () {
+                if (kDebugMode)
+                  print(
+                    '| Logout completado desde VendorScreen |',
+                  );
               },
             ),
           ),

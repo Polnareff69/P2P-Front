@@ -4,6 +4,10 @@ import 'package:market/controllers/register_controller.dart';
 import 'package:market/models/user_register_model.dart';
 import 'package:market/views/business_screens/business_or_main_screen.dart';
 import 'package:market/views/authentication_screens/login_screen.dart';
+import 'package:market/services/auth_service.dart';
+import 'package:flutter/foundation.dart';
+import 'package:market/views/business_screens/vendor_screen.dart';
+import 'package:market/views/client_screen/user_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -22,7 +26,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String name = '';
   String email = '';
   String password = '';
-  //String role = 'user';
   bool isLoading = false;
 
   Future<void> registerUser() async {
@@ -36,19 +39,56 @@ class _RegisterScreenState extends State<RegisterScreen> {
         email: email,
         password: password,
       );
-      await _registerController.registerUser(user);
 
-      // Create Business or see the Market
+      final success = await _registerController
+          .registerUser(user);
+
+      if (success) {
+        // ✨ Usar AuthService para obtener información del usuario
+        final role = AuthService.instance.currentRole;
+        final username =
+            AuthService.instance.currentUsername;
+
+        if (kDebugMode) {
+          print('✅ Registro exitoso:');
+          print('   Usuario: $username');
+          print('   Rol: $role');
+          AuthService.instance.printCurrentState();
+        }
+
+        // Mostrar mensaje de éxito
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              "¡Bienvenido $username! Tu cuenta se ha creado exitosamente.",
+            ),
+            backgroundColor: Colors.green,
+            duration: const Duration(seconds: 3),
+          ),
+        );
+
+        // Navegar a BusinessOrMainScreen para que el usuario elija su rol
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => BusinessOrMainScreen(),
         ),
       );
+      
+      } else {
+        // Error en el registro
+        throw Exception(
+          "Error al crear la cuenta. Verifica los datos e intenta nuevamente.",
+        );
+      }
     } catch (e) {
-      print("Error en el registro: $e");
+      print("❌ Error en el registro: $e");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error al registrarse: $e")),
+        SnackBar(
+          content: Text("Error al registrarse: $e"),
+          backgroundColor: Colors.red,
+          duration: const Duration(seconds: 4),
+        ),
       );
     } finally {
       setState(() {
@@ -444,11 +484,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (_formKey.currentState!
                                   .validate()) {
                                 registerUser();
-                                print("Username = $name");
-                                print("Email = $email");
-                                print(
-                                  "Password = $password",
-                                );
+                                if (kDebugMode) {
+                                  print("Username = $name");
+                                  print("Email = $email");
+                                  print(
+                                    "Password = $password",
+                                  );
+                                }
                               } else {
                                 print("Ha fallado");
                               }

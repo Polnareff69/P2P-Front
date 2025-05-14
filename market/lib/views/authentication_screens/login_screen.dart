@@ -8,7 +8,8 @@ import 'package:market/views/widgets/remember_me_checkbox.dart';
 //To use models and controllers
 import 'package:market/controllers/login_controller.dart';
 import 'package:market/models/user_model.dart';
-import 'package:jwt_decoder/jwt_decoder.dart'; //JWT DECODIFICADOR
+import 'package:market/services/auth_service.dart';
+import 'package:flutter/foundation.dart'; 
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,75 +22,79 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>();
   final LoginController _authController = LoginController();
-  String _token = "No recibido aún";
 
   String name = '';
   String password = '';
   bool isLoading = false;
 
   Future<void> loginUser() async {
-    setState(() {
-      isLoading = true;
-    });
+  setState(() {
+    isLoading = true;
+  });
 
-    try {
-      final user = User(name: name, password: password);
-      _token =
-          await _authController.loginUser(user) ??
-          "Token no recibido aun";
-      print("Token recibido: $_token");
-
-      if (_token != "Token no recibido aun") {
-        //decodificamos el token JWT
-        Map<String, dynamic> decodedToken =
-            JwtDecoder.decode(_token);
-        print("Token decodificado: $decodedToken");
-
-        //extraemos la info del token
-        String role = decodedToken['Role'] ?? '';
-        String email = decodedToken['email'] ?? '';
-        String username = decodedToken['sub'] ?? '';
-
-        print("Rol del usuario: $role");
-        print("Email del usuario: $email");
-        print("Nombre de usuario: $username");
-
-        // redirigimos a perfiles segun el ROL
-        if (role.toLowerCase() == 'seller') {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder:
-                  (context) => VendorScreen(
-                    businessName: username,
-                    businessLogo: null,
-                  ),
-            ),
-          );
-        } else {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder:
-                  (context) =>
-                      UserScreen(userName: username),
-            ),
-          );
-        }
-      } else {
-        throw Exception("No se recibio un token valido.");
+  try {
+    final user = User(name: name, password: password);
+    final success = await _authController.loginUser(user);
+    
+    if (success) {
+      // ✨ Usar AuthService para obtener información del usuario
+      final role = AuthService.instance.currentRole;
+      final username = AuthService.instance.currentUsername;
+      
+      if (kDebugMode) {
+        print('✅ Login exitoso:');
+        print('   Usuario: $username');
+        print('   Rol: $role');
+        AuthService.instance.printCurrentState();
       }
-    } catch (e) {
-      print("Error en el login: $e");
+      
+      // Mostrar mensaje de éxito
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error al logearse: $e")),
+        SnackBar(
+          content: Text("¡Bienvenido $username!"),
+          backgroundColor: Colors.green,
+        ),
       );
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
+      
+      // Navegar según el rol usando AuthService
+      if (AuthService.instance.isSeller) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => VendorScreen(
+              businessName: username!,
+              businessLogo: null,
+            ),
+          ),
+        );
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UserScreen(
+              userName: username!,
+            ),
+          ),
+        );
+      }
+    } else {
+      // Error en el login
+      throw Exception("Credenciales incorrectas o error del servidor");
     }
+  } catch (e) {
+    print("❌ Error en el login: $e");
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Error al logearse: $e"),
+        backgroundColor: Colors.red,
+      ),
+    );
+  } finally {
+    setState(() {
+      isLoading = false;
+    });
   }
+}
 
   @override
   Widget build(BuildContext context) {
