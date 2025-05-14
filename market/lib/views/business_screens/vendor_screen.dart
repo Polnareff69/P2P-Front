@@ -69,7 +69,7 @@ class _VendorScreenState extends State<VendorScreen> {
     return Scaffold(
       key: _scaffoldKey,
       //fondo de color oscuro
-      backgroundColor: Color(0xFF121212),
+      backgroundColor: const Color(0xFF121212),
       body: Stack(
         children: [
           // Contenido principal (ScrollView)

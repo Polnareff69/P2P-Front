@@ -6,7 +6,7 @@ import 'package:market/services/auth_service.dart';
 import 'package:market/views/authentication_screens/welcome_screen.dart';
 
 class SettingsMenu extends StatelessWidget {
-  final GlobalKey<ScaffoldState>? scaffoldKey; // ✨ NUEVO PARÁMETRO
+  final GlobalKey<ScaffoldState>? scaffoldKey; // ✨ key
   final VoidCallback? onLogoutStart;
   final VoidCallback? onLogoutComplete;
   final VoidCallback? onEditProfile;
@@ -15,7 +15,7 @@ class SettingsMenu extends StatelessWidget {
 
   const SettingsMenu({
     Key? key,
-    this.scaffoldKey, // ✨ NUEVO PARÁMETRO
+    this.scaffoldKey, // ✨ key
     this.onLogoutStart,
     this.onLogoutComplete,
     this.onEditProfile,
@@ -38,103 +38,117 @@ class SettingsMenu extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.7),
-              blurRadius: 15,
-              offset: Offset(-5, 0),
+              color: const Color(0xFF121212),
+              blurRadius: 4,
+              offset: Offset(-11, 0),
             ),
             BoxShadow(
-              color: Colors.purple.withOpacity(0.3),
-              blurRadius: 20,
+              color: const Color.fromARGB(255, 54, 2, 78),
               offset: Offset(-10, 0),
+              blurRadius: 5,
             ),
           ],
         ),
-        child: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header del menú con diseño mejorado
-              _buildHeader(context),
-              
-              // Línea decorativa
-              Container(
-                height: 2,
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Colors.transparent,
-                      Colors.purple.shade400,
-                      Colors.transparent,
-                    ],
-                  ),
+
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header del menú con diseño mejorado
+            _buildHeader(context),
+
+            // Línea decorativa
+            Container(
+              height: 2,
+              margin: EdgeInsets.symmetric(horizontal: 0),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Colors.purple.shade500,
+                    Colors.purple.shade900,
+                    Colors.purple.shade900,
+                    Colors.purple.shade500,
+                  ],
                 ),
               ),
-              
-              // Menú items
-              Expanded(
+            ),
+
+            // Menú items
+            Expanded(
+              child: SafeArea(
+                top:
+                    false, // Solo aplicar SafeArea a los lados y abajo
                 child: ListView(
-                  padding: EdgeInsets.symmetric(vertical: 12),
+                  padding: EdgeInsets.symmetric(
+                    vertical: 12,
+                  ),
                   children: [
                     _buildCustomMenuItem(
-                      icon: Icons.edit_rounded,
+                      imagePath: 'assets/icons/edit.png',
                       title: 'Editar Perfil',
                       subtitle: 'Personalizar información',
-                      color: Colors.purple,
+                      color: Colors.purple.shade500,
+
                       onTap: onEditProfile,
                     ),
                     _buildCustomMenuItem(
                       icon: Icons.palette_rounded,
                       title: 'Cambiar Tema',
                       subtitle: 'Personalizar apariencia',
-                      color: Colors.blue,
+                      color: Colors.purple.shade900,
+
                       onTap: onChangeTheme,
                     ),
                     _buildCustomMenuItem(
                       icon: Icons.notifications_rounded,
                       title: 'Notificaciones',
                       subtitle: 'Configurar alertas',
-                      color: Colors.orange,
+                      color: Colors.purple,
+
                       onTap: onNotifications,
                     ),
                     _buildCustomMenuItem(
                       icon: Icons.security_rounded,
                       title: 'Privacidad',
                       subtitle: 'Configurar privacidad',
-                      color: Colors.green,
+                      color:
+                          Colors.deepPurpleAccent.shade400,
                       onTap: () {
-                        if (kDebugMode) print('Privacidad presionado');
+                        if (kDebugMode)
+                          print('Privacidad presionado');
                       },
                     ),
                     _buildCustomMenuItem(
-                      icon: Icons.help_rounded,
+                      imagePath: 'assets/icons/help.png',
+
                       title: 'Ayuda',
                       subtitle: 'Centro de ayuda',
-                      color: Colors.teal,
+                      color: Colors.purple.shade500,
                       onTap: () {
-                        if (kDebugMode) print('Ayuda presionado');
+                        if (kDebugMode)
+                          print('Ayuda presionado');
                       },
                     ),
                     _buildCustomMenuItem(
-                      icon: Icons.info_rounded,
+                      icon: Icons.info,
                       title: 'Acerca de',
                       subtitle: 'Información de la app',
-                      color: Colors.indigo,
+                      color: Colors.deepPurple.shade700,
                       onTap: () {
-                        if (kDebugMode) print('Acerca de presionado');
+                        if (kDebugMode)
+                          print('Acerca de presionado');
                       },
                     ),
-                    
+
                     // Separador decorativo
                     _buildSeparator(),
-                    
+
                     // Botón de logout
                     _buildLogoutMenuItem(context),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -142,13 +156,18 @@ class SettingsMenu extends StatelessWidget {
 
   Widget _buildHeader(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(20, 15, 15, 15),
+      padding: EdgeInsets.fromLTRB(
+        20,
+        MediaQuery.of(context).padding.top + 8,
+        15,
+        15,
+      ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Colors.purple.shade700,
             Colors.purple.shade900,
-            Colors.black,
+            Colors.purple.shade500,
+            Colors.purple.shade900,
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -158,8 +177,8 @@ class SettingsMenu extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.purple.withOpacity(0.3),
-            blurRadius: 10,
+            color: Colors.purple.shade500.withOpacity(0.3),
+            blurRadius: 20,
             offset: Offset(0, 5),
           ),
         ],
@@ -169,13 +188,15 @@ class SettingsMenu extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.1),
+              color: const Color(
+                0xFF121212,
+              ).withOpacity(0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               Icons.settings_rounded,
-              color: Colors.white,
-              size: 28,
+              color: const Color(0xFF121212),
+              size: 33,
             ),
           ),
           SizedBox(width: 15),
@@ -186,14 +207,22 @@ class SettingsMenu extends StatelessWidget {
                 Text(
                   'Configuración',
                   style: GoogleFonts.nunito(
-                    fontSize: 24,
+                    fontSize: 25,
                     fontWeight: FontWeight.w900,
                     color: Colors.white,
                     shadows: [
                       Shadow(
-                        color: Colors.black.withOpacity(0.5),
-                        offset: Offset(1, 1),
-                        blurRadius: 3,
+                        color: Colors.deepPurple
+                            .withOpacity(0.9),
+                        offset: const Offset(1, 3),
+                        blurRadius: 10,
+                      ),
+                      Shadow(
+                        color: Colors.black.withOpacity(
+                          0.5,
+                        ),
+                        offset: const Offset(2, 4),
+                        blurRadius: 4,
                       ),
                     ],
                   ),
@@ -203,7 +232,7 @@ class SettingsMenu extends StatelessWidget {
                   style: GoogleFonts.nunito(
                     fontSize: 14,
                     color: Colors.white70,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
@@ -218,7 +247,7 @@ class SettingsMenu extends StatelessWidget {
                 padding: EdgeInsets.all(8),
                 child: Icon(
                   Icons.close_rounded,
-                  color: Colors.white,
+                  color: const Color(0xFF121212),
                   size: 28,
                 ),
               ),
@@ -230,7 +259,8 @@ class SettingsMenu extends StatelessWidget {
   }
 
   Widget _buildCustomMenuItem({
-    required IconData icon,
+    IconData? icon, //  Hacer opcional
+    String? imagePath, //  Agregar parámetro para imagen
     required String title,
     required String subtitle,
     required Color color,
@@ -242,14 +272,17 @@ class SettingsMenu extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(15),
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+          margin: EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 6,
+          ),
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.05),
             borderRadius: BorderRadius.circular(15),
             border: Border.all(
               color: Colors.white.withOpacity(0.1),
-              width: 1,
+              width: 1.5,
             ),
           ),
           child: Row(
@@ -272,16 +305,13 @@ class SettingsMenu extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: Icon(
-                  icon,
-                  color: Colors.white,
-                  size: 24,
-                ),
+                child: _buildIconOrImage(icon, imagePath),
               ),
               SizedBox(width: 16),
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
                   children: [
                     Text(
                       title,
@@ -313,6 +343,38 @@ class SettingsMenu extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // ✨ Método helper para manejar icono o imagen
+  Widget _buildIconOrImage(
+    IconData? icon,
+    String? imagePath,
+  ) {
+    if (imagePath != null) {
+      // Si hay imagen, mostrar la imagen
+      return Image.asset(
+        imagePath,
+        width: 26.5,
+        height: 26.5,
+        // Opcional: cambiar color de la imagen
+        color: Color(0xFF121212),
+        fit: BoxFit.contain,
+      );
+    } else if (icon != null) {
+      // Si hay icono, mostrar el icono
+      return Icon(
+        icon,
+        color: Color(0xFF121212),
+        size: 26.5,
+      );
+    } else {
+      // Fallback: mostrar un icono por defecto
+      return Icon(
+        Icons.settings,
+        color: Color(0xFF121212),
+        size: 26.5,
+      );
+    }
   }
 
   Widget _buildSeparator() {
@@ -347,6 +409,7 @@ class SettingsMenu extends StatelessWidget {
             style: TextStyle(
               color: Colors.red.withOpacity(0.7),
               letterSpacing: 8,
+              fontSize: 18,
             ),
           ),
         ],
@@ -359,111 +422,142 @@ class SettingsMenu extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () async {
-          if (kDebugMode) print('🚪 Logout iniciado desde SettingsMenu');
-          
+          if (kDebugMode)
+            print('🚪 Logout iniciado desde SettingsMenu');
+
           // ✨ USAR EL CONTEXT DEL SCAFFOLD SI ESTÁ DISPONIBLE
-          final BuildContext contextToUse = scaffoldKey?.currentContext ?? context;
-          
+          final BuildContext contextToUse =
+              scaffoldKey?.currentContext ?? context;
+
           // Obtener NavigatorState y ScaffoldMessenger ANTES de cerrar el menú
-          final navigator = Navigator.of(contextToUse, rootNavigator: true);
-          final scaffold = ScaffoldMessenger.of(contextToUse);
-          
+          final navigator = Navigator.of(
+            contextToUse,
+            rootNavigator: true,
+          );
+          final scaffold = ScaffoldMessenger.of(
+            contextToUse,
+          );
+
           // Cerrar el menú
           Navigator.pop(context);
-          
+
           // Mostrar diálogo de confirmación
-          bool shouldLogout = await showDialog<bool>(
-            context: contextToUse, // ✨ USAR EL CONTEXT VÁLIDO
-            builder: (BuildContext dialogContext) {
-              return AlertDialog(
-                title: const Text('Confirmar Logout'),
-                content: const Text('¿Estás seguro de que deseas cerrar sesión?'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(dialogContext).pop(false),
-                    child: const Text('Cancelar'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => Navigator.of(dialogContext).pop(true),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
+          bool shouldLogout =
+              await showDialog<bool>(
+                context:
+                    contextToUse, // ✨ USAR EL CONTEXT VÁLIDO
+                builder: (BuildContext dialogContext) {
+                  return AlertDialog(
+                    title: const Text('Confirmar Logout'),
+                    content: const Text(
+                      '¿Estás seguro de que deseas cerrar sesión?',
                     ),
-                    child: const Text('Cerrar Sesión'),
-                  ),
-                ],
-              );
-            },
-          ) ?? false;
+                    actions: [
+                      TextButton(
+                        onPressed:
+                            () => Navigator.of(
+                              dialogContext,
+                            ).pop(false),
+                        child: const Text('Cancelar'),
+                      ),
+                      ElevatedButton(
+                        onPressed:
+                            () => Navigator.of(
+                              dialogContext,
+                            ).pop(true),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                        ),
+                        child: const Text('Cerrar Sesión'),
+                      ),
+                    ],
+                  );
+                },
+              ) ??
+              false;
 
           if (shouldLogout) {
             // Ejecutar callback antes del logout
             onLogoutStart?.call();
-            
+
             // Obtener información del usuario ANTES del logout
-            final username = AuthService.instance.currentUsername;
-            final wasLoggedIn = AuthService.instance.isLoggedIn;
-            
+            final username =
+                AuthService.instance.currentUsername;
+            final wasLoggedIn =
+                AuthService.instance.isLoggedIn;
+
             if (kDebugMode) {
               print('🔍 Estado antes del logout:');
               AuthService.instance.printCurrentState();
             }
-            
+
             // Mostrar loading
             showDialog(
-              context: contextToUse, // ✨ USAR EL CONTEXT VÁLIDO
+              context:
+                  contextToUse, // ✨ USAR EL CONTEXT VÁLIDO
               barrierDismissible: false,
-              builder: (loadingContext) => const Center(
-                child: CircularProgressIndicator(),
-              ),
+              builder:
+                  (loadingContext) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
             );
-            
+
             try {
               // Hacer logout solo si está logueado
               if (wasLoggedIn) {
                 await AuthService.instance.logout();
-                
+
                 if (kDebugMode) {
                   print('🔍 Estado después del logout:');
                   AuthService.instance.printCurrentState();
                 }
               }
-              
+
               // Cerrar loading
               Navigator.of(contextToUse).pop();
-              
+
               // Mostrar mensaje de éxito
               scaffold.showSnackBar(
                 SnackBar(
-                  content: Text('¡Adiós ${username ?? 'Usuario'}! Has cerrado sesión exitosamente.'),
+                  content: Text(
+                    '¡Adiós ${username ?? 'Usuario'}! Has cerrado sesión exitosamente.',
+                  ),
                   backgroundColor: Colors.green,
                   duration: const Duration(seconds: 2),
                 ),
               );
-              
+
               // NAVEGACIÓN CON EL NAVIGATOR OBTENIDO ANTES
-              if (kDebugMode) print('🔍 Navegando a WelcomeScreen...');
-              
+              if (kDebugMode)
+                print('🔍 Navegando a WelcomeScreen...');
+
               // Usar el navigator que obtuvimos
               navigator.pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+                MaterialPageRoute(
+                  builder:
+                      (context) => const WelcomeScreen(),
+                ),
                 (route) => false,
               );
-              
-              if (kDebugMode) print('✅ Navegación completada');
-              
+
+              if (kDebugMode)
+                print('✅ Navegación completada');
+
               // Callback final
               onLogoutComplete?.call();
-              
             } catch (e) {
               // Cerrar loading en caso de error
               Navigator.of(contextToUse).pop();
-              
-              if (kDebugMode) print('❌ Error en logout: $e');
-              
+
+              if (kDebugMode)
+                print('❌ Error en logout: $e');
+
               scaffold.showSnackBar(
                 SnackBar(
-                  content: Text('Error al cerrar sesión: $e'),
+                  content: Text(
+                    'Error al cerrar sesión: $e',
+                  ),
                   backgroundColor: Colors.red,
                 ),
               );
@@ -472,7 +566,10 @@ class SettingsMenu extends StatelessWidget {
         },
         borderRadius: BorderRadius.circular(15),
         child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          margin: EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
           padding: EdgeInsets.all(18),
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -497,7 +594,7 @@ class SettingsMenu extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                padding: EdgeInsets.all(12),
+                padding: EdgeInsets.all(13),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -515,27 +612,28 @@ class SettingsMenu extends StatelessWidget {
                   ],
                 ),
                 child: Icon(
-                  Icons.logout_rounded,
-                  color: Colors.white,
-                  size: 24,
+                  Icons.logout,
+                  color: const Color(0xFF121212),
+                  size: 27,
                 ),
               ),
               SizedBox(width: 16),
               Expanded(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Cerrar Sesión',
+                      ' Cerrar Sesión',
                       style: GoogleFonts.nunito(
-                        fontSize: 18,
+                        fontSize: 19,
                         fontWeight: FontWeight.w900,
-                        color: Colors.red.shade300,
+                        color: Colors.red.shade400,
                       ),
                     ),
-                    SizedBox(height: 2),
+
                     Text(
-                      'Salir de tu cuenta',
+                      '   Salir de tu cuenta',
                       style: GoogleFonts.nunito(
                         fontSize: 14,
                         color: Colors.red.shade200,
@@ -543,18 +641,6 @@ class SettingsMenu extends StatelessWidget {
                       ),
                     ),
                   ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  Icons.exit_to_app_rounded,
-                  color: Colors.red.shade300,
-                  size: 20,
                 ),
               ),
             ],
@@ -568,7 +654,8 @@ class SettingsMenu extends StatelessWidget {
 // Función helper mejorada para mostrar el menú
 void showSettingsMenu(
   BuildContext context, {
-  GlobalKey<ScaffoldState>? scaffoldKey, // ✨ PARÁMETRO PARA EL KEY
+  GlobalKey<ScaffoldState>?
+  scaffoldKey, // ✨ PARÁMETRO PARA EL KEY
   VoidCallback? onLogoutStart,
   VoidCallback? onLogoutComplete,
   VoidCallback? onEditProfile,
@@ -599,7 +686,10 @@ void showSettingsMenu(
         alignment: Alignment.centerRight,
         child: SlideTransition(
           position: slideAnimation.drive(
-            Tween(begin: const Offset(1, 0), end: Offset.zero),
+            Tween(
+              begin: const Offset(1, 0),
+              end: Offset.zero,
+            ),
           ),
           child: ScaleTransition(
             scale: scaleAnimation.drive(
@@ -610,7 +700,8 @@ void showSettingsMenu(
                 Tween(begin: 0.0, end: 1.0),
               ),
               child: SettingsMenu(
-                scaffoldKey: scaffoldKey, // ✨ PASAR EL KEY AL WIDGET
+                scaffoldKey:
+                    scaffoldKey, // ✨ PASAR EL KEY AL WIDGET
                 onLogoutStart: onLogoutStart,
                 onLogoutComplete: onLogoutComplete,
                 onEditProfile: onEditProfile,
