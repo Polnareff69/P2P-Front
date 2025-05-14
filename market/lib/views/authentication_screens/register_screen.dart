@@ -6,8 +6,6 @@ import 'package:market/views/business_screens/business_or_main_screen.dart';
 import 'package:market/views/authentication_screens/login_screen.dart';
 import 'package:market/services/auth_service.dart';
 import 'package:flutter/foundation.dart';
-import 'package:market/views/business_screens/vendor_screen.dart';
-import 'package:market/views/client_screen/user_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -74,7 +72,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           builder: (context) => BusinessOrMainScreen(),
         ),
       );
-      
+
       } else {
         // Error en el registro
         throw Exception(

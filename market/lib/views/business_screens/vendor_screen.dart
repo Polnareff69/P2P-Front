@@ -5,8 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:market/views/widgets/custom_back_button.dart';
 import 'package:market/views/widgets/floating_menu_button.dart'; // menu
-import 'package:market/views/widgets/logout_button.dart';
 import 'package:flutter/foundation.dart'; // Para kDebugMode
+import 'package:market/views/widgets/settings_menu.dart';
+import 'package:market/services/auth_service.dart';
+import 'package:market/views/authentication_screens/welcome_screen.dart';
 
 class VendorScreen extends StatefulWidget {
   final String businessName; // Nombre de la empresa
@@ -28,6 +30,9 @@ class _VendorScreenState extends State<VendorScreen> {
   File? profileImage;
   final ImagePicker _picker = ImagePicker();
 
+  // ✨ GlobalKey para mantener context válido
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -35,11 +40,34 @@ class _VendorScreenState extends State<VendorScreen> {
     if (widget.businessLogo != null) {
       profileImage = widget.businessLogo;
     }
+
+    // VERIFICAR ESTADO DE AUTENTICACIÓN AL INICIALIZAR
+    _checkAuthStatus();
+  }
+
+  // Método para verificar estado de autenticación
+  void _checkAuthStatus() {
+    if (kDebugMode) {
+      print('🔍 VendorScreen - Verificando estado de autenticación...');
+      AuthService.instance.printCurrentState();
+    }
+    
+    // Si no está logueado, navegar a WelcomeScreen
+    if (!AuthService.instance.isLoggedIn) {
+      if (kDebugMode) print('⚠️ VendorScreen - Usuario no logueado, navegando a Welcome...');
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+          (route) => false,
+        );
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       //fondo de color oscuro
       backgroundColor: Color(0xFF121212),
       body: Stack(
@@ -173,40 +201,31 @@ class _VendorScreenState extends State<VendorScreen> {
                 shadows: [Shadow(color: Colors.black)],
               ),
               onPressed: () {
-                // Este botón se usará para otras funcionalidades en el futuro
-              },
-            ),
-          ),
-        ),
-
-        Positioned(
-          top: 60,
-          right: 3,
-          child: Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 4,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: LogoutIconButton(
-              onLogoutStart: () {
-                if (kDebugMode)
-                  print(
-                    '| Iniciando logout desde VendorScreen |',
-                  );
-              },
-              onLogoutComplete: () {
-                if (kDebugMode)
-                  print(
-                    '| Logout completado desde VendorScreen |',
-                  );
+                // 🎯 MOSTRAR EL MENÚ DE CONFIGURACIONES CON GLOBALKEY
+                showSettingsMenu(
+                  context,
+                  scaffoldKey: _scaffoldKey, // ✨ PASAR EL KEY
+                  onLogoutStart: () {
+                    if (kDebugMode)
+                      print(
+                        'Iniciando logout desde Settings Menu en VendorScreen',
+                      );
+                  },
+                  onLogoutComplete: () {
+                    if (kDebugMode)
+                      print(
+                        'Logout completado desde Settings Menu en VendorScreen',
+                      );
+                  },
+                  onEditProfile: () {
+                    // 🔄 CONECTAR CON TU FUNCIÓN EXISTENTE DE EDITAR PERFIL
+                    if (kDebugMode)
+                      print(
+                        'Editando perfil desde Settings Menu',
+                      );
+                    _showEditProfileOptions();
+                  },
+                );
               },
             ),
           ),

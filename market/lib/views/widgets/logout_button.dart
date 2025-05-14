@@ -30,7 +30,10 @@ class LogoutButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: color ?? Colors.red,
         foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 12,
+        ),
       ),
     );
   }
@@ -48,34 +51,47 @@ class LogoutButton extends StatelessWidget {
     }
   }
 
-  Future<bool> _showLogoutDialog(BuildContext context) async {
+  Future<bool> _showLogoutDialog(
+    BuildContext context,
+  ) async {
     return await showDialog<bool>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Confirmar Logout'),
-          content: const Text('¿Estás seguro de que deseas cerrar sesión?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Cancelar'),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Confirmar Logout'),
+              content: const Text(
+                '¿Estás seguro de que deseas cerrar sesión?',
               ),
-              child: const Text('Cerrar Sesión'),
-            ),
-          ],
-        );
-      },
-    ) ?? false;
+              actions: [
+                TextButton(
+                  onPressed:
+                      () =>
+                          Navigator.of(context).pop(false),
+                  child: const Text('Cancelar'),
+                ),
+                ElevatedButton(
+                  onPressed:
+                      () => Navigator.of(context).pop(true),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('Cerrar Sesión'),
+                ),
+              ],
+            );
+          },
+        ) ??
+        false;
   }
 
   Future<void> _performLogout(BuildContext context) async {
     try {
+      if (kDebugMode)
+        print(
+          '🔍 INICIO _performLogout - Context válido: ${context.mounted}',
+        );
+
       // Callback antes del logout
       onLogoutStart?.call();
 
@@ -94,42 +110,73 @@ class LogoutButton extends StatelessWidget {
 
       // Obtener información del usuario antes del logout
       final username = AuthService.instance.currentUsername;
+      final isLoggedIn = AuthService.instance.isLoggedIn;
 
       if (kDebugMode) {
-        print('🚪 Iniciando logout para usuario: $username');
+        print(
+          '🚪 Iniciando logout para usuario: $username',
+        );
+        print('🔍 ¿Está logueado? $isLoggedIn');
         AuthService.instance.printCurrentState();
       }
 
-      // Realizar logout
-      await AuthService.instance.logout();
+      // SOLO hacer logout si realmente está logueado
+      if (isLoggedIn) {
+        // Realizar logout
+        await AuthService.instance.logout();
 
-      if (kDebugMode) {
-        print('✅ Logout completado exitosamente');
-        AuthService.instance.printCurrentState();
+        if (kDebugMode) {
+          print('✅ Logout completado exitosamente');
+          AuthService.instance.printCurrentState();
+        }
+      } else {
+        if (kDebugMode)
+          print(
+            '⚠️ El usuario ya no está logueado, solo navegando...',
+          );
       }
 
       // Cerrar indicador de carga
       if (context.mounted) {
         Navigator.of(context).pop();
+        if (kDebugMode)
+          print('🔍 Indicador de carga cerrado');
       }
 
       // Mostrar mensaje de éxito
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('¡Adiós $username! Has cerrado sesión exitosamente.'),
+            content: Text(
+              '¡Adiós ${username ?? 'Usuario'}! Has cerrado sesión exitosamente.',
+            ),
             backgroundColor: Colors.green,
             duration: const Duration(seconds: 2),
           ),
         );
+        if (kDebugMode) print('🔍 SnackBar mostrado');
       }
 
-      // Navegar a pantalla de bienvenida y limpiar stack de navegación
+      // FORZAR NAVEGACIÓN AL WELCOME SCREEN
+      if (kDebugMode)
+        print('🔍 Intentando navegar a WelcomeScreen...');
+
       if (context.mounted) {
-        Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+        // Usar Navigator desde el context más alto posible
+        Navigator.of(
+          context,
+          rootNavigator: true,
+        ).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const WelcomeScreen(),
+          ),
           (Route<dynamic> route) => false,
         );
+        if (kDebugMode)
+          print('✅ Navegación a WelcomeScreen exitosa');
+      } else {
+        if (kDebugMode)
+          print('❌ Context no mounted, no se pudo navegar');
       }
 
       // Callback después del logout
@@ -153,6 +200,22 @@ class LogoutButton extends StatelessWidget {
         );
       }
     }
+  }
+
+  // 🎯 MÉTODO ESTÁTICO PÚBLICO DENTRO DE LA CLASE
+  static Future<void> performLogout(
+    BuildContext context, {
+    bool showConfirmDialog = true,
+    VoidCallback? onLogoutStart,
+    VoidCallback? onLogoutComplete,
+  }) async {
+    final logoutButton = LogoutButton(
+      showConfirmDialog: showConfirmDialog,
+      onLogoutStart: onLogoutStart,
+      onLogoutComplete: onLogoutComplete,
+    );
+
+    await logoutButton._handleLogout(context);
   }
 }
 
