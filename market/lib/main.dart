@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:market/views/authentication_screens/welcome_screen.dart';
-import 'package:market/utils/constants.dart';
+
 import 'package:market/services/auth_service.dart';
 import 'package:market/config/app_config.dart';
 import 'package:flutter/foundation.dart'; //kDebug

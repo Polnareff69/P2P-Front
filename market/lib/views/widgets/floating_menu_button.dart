@@ -1,26 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/views/main_screen/home_screen.dart';
+import 'package:market/helpers/navigation_helper.dart';
+import 'package:flutter/foundation.dart';
 
 // Una clase global para manejar las opciones de menú en toda la aplicación
 class AppMenuManager {
   // Singleton para acceder desde cualquier parte de la app
-  static final AppMenuManager _instance =
-      AppMenuManager._internal();
+  static final AppMenuManager _instance = AppMenuManager._internal();
   factory AppMenuManager() => _instance;
   AppMenuManager._internal();
 
   // Lista estática con todas las opciones del menú
-  static List<MenuOption> getMenuOptions(
-    BuildContext context,
-  ) {
+  static List<MenuOption> getMenuOptions(BuildContext context) {
     return [
+      // 🟢 NUEVA OPCIÓN: Mi Perfil (depende del rol)
       MenuOption(
-        icon: Icons.person,
+        icon: Icons.account_circle_rounded,
         title: 'Mi Perfil',
-        onTap: () {
-          Navigator.of(context).pushNamed('/profile');
-        },
+        onTap: () => NavigationHelper.navigateToProfile(context),
       ),
       MenuOption(
         icon: Icons.home_rounded,
@@ -52,9 +50,7 @@ class AppMenuManager {
         icon: Icons.map_rounded,
         title: 'Mapa',
         onTap: () {
-          Navigator.of(
-            context,
-          ).pushNamed('/university_map');
+          Navigator.of(context).pushNamed('/university_map');
         },
       ),
       MenuOption(
@@ -80,6 +76,7 @@ class MenuOption {
   });
 }
 
+// Widget del FloatingMenuButton actualizado
 class FloatingMenuButton extends StatefulWidget {
   final List<MenuOption>? menuOptions;
   final Color? buttonColor;
@@ -101,32 +98,20 @@ class FloatingMenuButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<FloatingMenuButton> createState() =>
-      _FloatingMenuButtonState();
+  State<FloatingMenuButton> createState() => _FloatingMenuButtonState();
 }
 
-class _FloatingMenuButtonState
-    extends State<FloatingMenuButton> {
+class _FloatingMenuButtonState extends State<FloatingMenuButton> {
   // Constantes de estilo para mantener consistencia
-  final Color _defaultButtonColor = Color(
-    0xFF121212,
-  ).withOpacity(0.8);
-  final Color _defaultMenuBackgroundColor = const Color(
-    0xFF121212,
-  );
-  final Color _defaultOptionColor =
-      Colors.deepPurpleAccent.shade700;
+  final Color _defaultButtonColor = Color(0xFF121212).withOpacity(0.8);
+  final Color _defaultMenuBackgroundColor = const Color(0xFF121212);
+  final Color _defaultOptionColor = Colors.deepPurpleAccent.shade700;
   final Color _defaultTextColor = Colors.white;
 
   void _showMenu(BuildContext context) {
-    final options =
-        widget.menuOptions ??
-        AppMenuManager.getMenuOptions(context);
-    final menuBackgroundColor =
-        widget.menuBackgroundColor ??
-        _defaultMenuBackgroundColor;
-    final optionColor =
-        widget.optionColor ?? _defaultOptionColor;
+    final options = widget.menuOptions ?? AppMenuManager.getMenuOptions(context);
+    final menuBackgroundColor = widget.menuBackgroundColor ?? _defaultMenuBackgroundColor;
+    final optionColor = widget.optionColor ?? _defaultOptionColor;
     final textColor = widget.textColor ?? _defaultTextColor;
 
     showModalBottomSheet(
@@ -135,7 +120,7 @@ class _FloatingMenuButtonState
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.35,
+          height: MediaQuery.of(context).size.height * 0.40, // Aumentado ligeramente
           decoration: BoxDecoration(
             color: menuBackgroundColor,
             borderRadius: const BorderRadius.only(
@@ -144,8 +129,7 @@ class _FloatingMenuButtonState
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.deepPurpleAccent.shade700
-                    .withOpacity(0.5),
+                color: Colors.deepPurpleAccent.shade700.withOpacity(0.5),
                 blurRadius: 15,
                 spreadRadius: 2,
                 offset: Offset(0, -3),
@@ -164,18 +148,25 @@ class _FloatingMenuButtonState
                 ),
               ),
               const SizedBox(height: 20),
+              // Título del menú
+              Text(
+                'Menú Principal',
+                style: GoogleFonts.nunito(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 15),
               Expanded(
                 child: GridView.builder(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 15,
+                    childAspectRatio: 1,
                   ),
-                  gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 15,
-                        mainAxisSpacing: 15,
-                        childAspectRatio: 1,
-                      ),
                   itemCount: options.length,
                   itemBuilder: (context, index) {
                     final option = options[index];
@@ -197,8 +188,7 @@ class _FloatingMenuButtonState
 
   @override
   Widget build(BuildContext context) {
-    final buttonColor =
-        widget.buttonColor ?? _defaultButtonColor;
+    final buttonColor = widget.buttonColor ?? _defaultButtonColor;
 
     return Container(
       decoration: BoxDecoration(
@@ -220,19 +210,18 @@ class _FloatingMenuButtonState
         onPressed: () => _showMenu(context),
         backgroundColor: buttonColor,
         elevation: 0,
-        child:
-            widget.logoAssetPath != null
-                ? CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
-                      widget.logoAssetPath!,
-                      fit: BoxFit.contain,
-                    ),
+        child: widget.logoAssetPath != null
+            ? CircleAvatar(
+                backgroundColor: Colors.transparent,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    widget.logoAssetPath!,
+                    fit: BoxFit.contain,
                   ),
-                )
-                : Icon(Icons.menu, color: Colors.white),
+                ),
+              )
+            : Icon(Icons.menu, color: Colors.white),
       ),
     );
   }
@@ -294,9 +283,7 @@ class _FloatingMenuButtonState
                   blurRadius: 2,
                 ),
                 Shadow(
-                  color: Colors.purpleAccent.withOpacity(
-                    0.5,
-                  ),
+                  color: Colors.purpleAccent.withOpacity(0.5),
                   offset: Offset(0, 0),
                   blurRadius: 8,
                 ),

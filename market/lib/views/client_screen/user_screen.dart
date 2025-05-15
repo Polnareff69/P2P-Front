@@ -4,6 +4,9 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:market/views/widgets/floating_menu_button.dart'; // Ajusta la ruta según tu estructura de proyecto
 
+import 'package:market/guards/auth_guard.dart';
+
+
 class UserScreen extends StatefulWidget {
   final String userName; // Nombre de la empresa
   //final File? businessLogo; // Logo de la empresa
@@ -26,35 +29,39 @@ class _UserScreenState extends State<UserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      //fondo de color oscuro
-      backgroundColor: Color(0xFF121212),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildHeader(),
-                _buildMenu(),
-                // Espacio adicional en la parte inferior
-                SizedBox(height: 80),
-              ],
-            ),
-          ),
-          // Menu-Button
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: FloatingMenuButton(
-                logoAssetPath:
-                    'assets/images/UMarketLogoNoBackground.png',
+    return AuthGuardWrapper(
+      requireAuth: true,
+      allowedRoles: ['user'],
+      child: Scaffold(
+        //fondo de color oscuro
+        backgroundColor: Color(0xFF121212),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildHeader(),
+                  _buildMenu(),
+                  // Espacio adicional en la parte inferior
+                  SizedBox(height: 80),
+                ],
               ),
             ),
-          ),
-        ],
+            // Menu-Button
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: FloatingMenuButton(
+                  logoAssetPath:
+                      'assets/images/UMarketLogoNoBackground.png',
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

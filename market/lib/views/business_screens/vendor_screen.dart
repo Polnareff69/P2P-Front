@@ -14,6 +14,9 @@ import 'package:market/controllers/company_controller.dart';
 import 'package:market/models/company_model.dart';
 import 'package:market/config/app_config.dart';
 
+import 'package:market/guards/auth_guard.dart';
+
+
 class VendorScreen extends StatefulWidget {
   final String? businessName; // Nombre de la empresa
   final File? businessLogo; // Logo de la empresa
@@ -140,92 +143,98 @@ class _VendorScreenState extends State<VendorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      backgroundColor: const Color(0xFF121212),
-      body: Stack(
-        children: [
-          // 🔄 MOSTRAR LOADING O ERROR
-          if (isLoadingCompany)
-            const Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(
-                    color: Colors.purple,
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    'Cargando información de tu empresa...',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-            )
-          else if (companyError != null)
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.business_center,
-                    color: Colors.red,
-                    size: 64,
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    'Error al cargar empresa:',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
+    return AuthGuardWrapper(
+      requireAuth: true,
+      allowedRoles: ['seller'],
+      child: Scaffold(
+        key: _scaffoldKey,
+        backgroundColor: const Color(0xFF121212),
+        body: Stack(
+          children: [
+            // 🔄 MOSTRAR LOADING O ERROR
+            if (isLoadingCompany)
+              const Center(
+                child: Column(
+                  mainAxisAlignment:
+                      MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      color: Colors.purple,
                     ),
-                  ),
-                  Text(
-                    companyError!,
-                    style: TextStyle(
+                    SizedBox(height: 16),
+                    Text(
+                      'Cargando información de tu empresa...',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ],
+                ),
+              )
+            else if (companyError != null)
+              Center(
+                child: Column(
+                  mainAxisAlignment:
+                      MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.business_center,
                       color: Colors.red,
-                      fontSize: 14,
+                      size: 64,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: _loadCompanyData,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.purple,
-                      foregroundColor: Colors.white,
+                    SizedBox(height: 16),
+                    Text(
+                      'Error al cargar empresa:',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
                     ),
-                    child: Text('Reintentar'),
-                  ),
-                ],
+                    Text(
+                      companyError!,
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: _loadCompanyData,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.purple,
+                        foregroundColor: Colors.white,
+                      ),
+                      child: Text('Reintentar'),
+                    ),
+                  ],
+                ),
+              )
+            else
+              // Contenido principal
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _buildHeader(),
+                    _buildUploadButton(context),
+                    _buildMenu(),
+                    SizedBox(height: 80),
+                  ],
+                ),
               ),
-            )
-          else
-            // Contenido principal
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  _buildHeader(),
-                  _buildUploadButton(context),
-                  _buildMenu(),
-                  SizedBox(height: 80),
-                ],
-              ),
-            ),
 
-          // Menu flotante
-          Positioned(
-            bottom: 30,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: FloatingMenuButton(
-                logoAssetPath:
-                    'assets/images/UMarketLogoNoBackground.png',
+            // Menu flotante
+            Positioned(
+              bottom: 30,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: FloatingMenuButton(
+                  logoAssetPath:
+                      'assets/images/UMarketLogoNoBackground.png',
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
