@@ -11,6 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:market/views/widgets/floating_menu_button.dart';
 import 'package:market/views/business_screens/product_detail_screen.dart';
 import 'package:market/config/app_config.dart'; // aca esta la peticion para ver productos
+import 'package:market/services/auth_service.dart';
+import 'package:flutter/foundation.dart';
 
 class StorePreviewScreen extends StatefulWidget {
   final String businessName;
@@ -41,7 +43,48 @@ class _StorePreviewScreenState
   @override
   void initState() {
     super.initState();
+    _ensureSellerRole();
     _loadProducts();
+  }
+
+  // 🔧 WORKAROUND: Asegurar que el usuario tenga rol de seller
+  Future<void> _ensureSellerRole() async {
+    try {
+      if (kDebugMode) {
+        print('🔍 StorePreviewScreen - Verificando rol');
+        AuthService.instance.printCurrentState();
+      }
+
+      // Esperar a que AuthService esté completamente inicializado
+      if (!AuthService.instance.isInitialized) {
+        await AuthService.instance.initialize();
+      }
+
+      // Si está en StorePreviewScreen pero no es seller, intentar corregir
+      if (!AuthService.instance.isSeller) {
+        if (kDebugMode)
+          print('⚠️ No es seller en StorePreviewScreen');
+
+        // Intentar recargar datos primero
+        await AuthService.instance.reloadUserData();
+
+        // Si aún no es seller después de recargar, forzar actualización
+        if (!AuthService.instance.isSeller) {
+          if (kDebugMode)
+            print('🔧 Forzando rol a seller...');
+          await AuthService.instance.updateUserRole(
+            'seller',
+          );
+        }
+      }
+
+      if (kDebugMode) {
+        print('✅ Verificación completada');
+        AuthService.instance.printCurrentState();
+      }
+    } catch (e) {
+      if (kDebugMode) print('❌ Error verificando rol: $e');
+    }
   }
 
   // Método para cargar los productos

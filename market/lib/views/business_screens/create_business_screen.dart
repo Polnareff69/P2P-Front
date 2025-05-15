@@ -6,6 +6,8 @@ import 'package:market/views/business_screens/menu_navigation/store_preview_scre
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/foundation.dart';
+import 'package:market/services/auth_service.dart';
 
 class CreateBusinessScreen extends StatefulWidget {
   const CreateBusinessScreen({super.key});
@@ -91,10 +93,16 @@ class _CreateBusinessScreenState
             ),
           ),
         );
+
         setState(() {
           isLoading = false;
         });
         return;
+      }
+
+      if (kDebugMode) {
+        print('🔍 ANTES de crear empresa:');
+        AuthService.instance.printCurrentState();
       }
 
       // Crear la empresa
@@ -111,11 +119,65 @@ class _CreateBusinessScreenState
         businessBackgroundImage!,
       );
 
+      // 🔍 DEBUG: Verificar estado después de crear empresa
+      if (kDebugMode) {
+        print('🔍 DESPUÉS de crear empresa:');
+        AuthService.instance.printCurrentState();
+      }
+
+      // 🚀 ASEGURAR que el rol esté actualizado
+      if (!AuthService.instance.isSeller) {
+        if (kDebugMode)
+          print(
+            '⚠️ Rol no actualizado, forzando actualización...',
+          );
+
+        // Esperar un momento y recargar
+        await Future.delayed(Duration(milliseconds: 500));
+        await AuthService.instance.reloadUserData();
+
+        // Si aún no es seller, forzar la actualización
+        if (!AuthService.instance.isSeller) {
+          if (kDebugMode)
+            print('🔧 Forzando rol a seller...');
+          await AuthService.instance.updateUserRole(
+            'seller',
+          );
+        }
+      }
+
+      // Verificación final
+      if (kDebugMode) {
+        print('🔍 VERIFICACIÓN FINAL:');
+        AuthService.instance.printCurrentState();
+      }
+
       // Obtener el company_id recién guardado
       final prefs = await SharedPreferences.getInstance();
       final companyId = prefs.getString('company_id');
-      print('Empresa creada exitosamente con ID: $companyId');
-      
+      print(
+        'Empresa creada exitosamente con ID: $companyId',
+      );
+
+      // Mostrar mensaje de éxito
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '¡Felicidades! Tu empresa ha sido creada exitosamente. Ahora eres un emprendedor.',
+              style: GoogleFonts.nunito(
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: Colors.green.shade700,
+            duration: Duration(seconds: 3),
+          ),
+        );
+      }
+
+      // Esperar un momento para que se vea el mensaje
+      await Future.delayed(Duration(milliseconds: 1500));
+
       // Navegar a VendorScreen solo si la creación fue exitosa
       if (mounted) {
         Navigator.pushReplacement(
@@ -131,13 +193,12 @@ class _CreateBusinessScreenState
       }
     } catch (e) {
       // Manejar errores y mostrar un mensaje al usuario
-      print(
-        "Error al crear empresa: $e",
-      ); // Mensaje de depuración
+      if (kDebugMode) print('❌ Error al crear empresa: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text("Error al crear empresa: $e"),
+            content: Text('Error al crear empresa: $e'),
+            backgroundColor: Colors.red,
           ),
         );
       }

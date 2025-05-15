@@ -375,20 +375,23 @@ class CompanyController {
           '🔍 Obteniendo CompanyId del seller actual...',
         );
 
-      // Obtener información del usuario actual
-      final userInfo = await getCurrentUserInfo();
-      if (userInfo == null) {
-        throw Exception(
-          'No se pudo obtener información del usuario actual',
-        );
+      // 🚀 CAMBIO PRINCIPAL: Leer rol desde SharedPreferences en lugar del token
+      final prefs = await SharedPreferences.getInstance();
+      final currentRole = prefs.getString('user_role');
+
+      if (kDebugMode) {
+        print('👤 Verificando rol del usuario:');
+        print('   Rol en SharedPreferences: $currentRole');
       }
 
-      final currentRole = userInfo['Role'] as String?;
-      if (currentRole != 'seller') {
+      if (currentRole?.toLowerCase() != 'seller') {
         throw Exception(
           'El usuario actual no es un seller (Role: $currentRole)',
         );
       }
+
+      if (kDebugMode)
+        print('✅ Usuario verificado como seller');
 
       // Obtener empresas filtradas del usuario
       final companies = await getUserCompanies();
