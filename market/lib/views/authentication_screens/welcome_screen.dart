@@ -92,8 +92,6 @@ class WelcomeScreen extends StatelessWidget {
                                 Colors.purple,
 
                                 Colors.purple,
-                                Colors.white,
-
                                 Colors.deepPurple,
                                 Colors.deepPurple,
                               ],
@@ -132,11 +130,11 @@ class WelcomeScreen extends StatelessWidget {
                   },
                 ),
 
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
                 // LOGO
                 Container(
-                  width: 250,
-                  height: 250,
+                  width: 320,
+                  height: 320,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     boxShadow: [
@@ -152,7 +150,7 @@ class WelcomeScreen extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(75),
                     child: Image.asset(
-                      'assets/images/UMarketBlack.png', // Asegúrate que esta imagen exista
+                      'assets/images/NuevoLogo.png', // Asegúrate que esta imagen exista
                       fit: BoxFit.cover,
                       errorBuilder: (
                         context,
@@ -174,7 +172,7 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 95),
+                const SizedBox(height: 70),
 
                 // Botones con animación
                 TweenAnimationBuilder<double>(

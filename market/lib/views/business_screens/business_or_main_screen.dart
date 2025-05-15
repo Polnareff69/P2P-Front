@@ -42,11 +42,11 @@ class BusinessOrMainScreen extends StatelessWidget {
           shaderCallback:
               (bounds) => LinearGradient(
                 colors: [
-                  Colors.purpleAccent,
                   Colors.purple,
 
-                  Colors.white60,
-                  Colors.purpleAccent,
+                  Colors.purple,
+                  Colors.deepPurple,
+                  Colors.deepPurple,
                   Colors.purple,
                 ],
                 begin: Alignment.topLeft,
@@ -98,7 +98,7 @@ class BusinessOrMainScreen extends StatelessWidget {
       body: Stack(
         children: [
           // Fondo con imagen
-          Container(
+          /*Container(
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
@@ -113,7 +113,7 @@ class BusinessOrMainScreen extends StatelessWidget {
                 ),
               ),
             ),
-          ),
+          ),*/
 
           // Gradiente para mejorar legibilidad
           Container(
@@ -153,8 +153,6 @@ class BusinessOrMainScreen extends StatelessWidget {
                   crossAxisAlignment:
                       CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 20),
-
                     // Logo con efecto de elevación y animación
                     TweenAnimationBuilder<double>(
                       tween: Tween<double>(
@@ -179,15 +177,15 @@ class BusinessOrMainScreen extends StatelessWidget {
                               ],
                             ),
                             child: Image.asset(
-                              'assets/images/UMarketBlack.png',
-                              height: 200,
+                              'assets/images/NuevoLogo.png',
+                              height: 250,
                             ),
                           ),
                         );
                       },
                     ),
 
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 10),
 
                     // Encabezado con animación sutil
                     TweenAnimationBuilder<double>(
@@ -295,7 +293,7 @@ class BusinessOrMainScreen extends StatelessWidget {
                       ),
                     ),
 
-                    const SizedBox(height: 35),
+                    const SizedBox(height: 25),
 
                     // Botones mejorados con animación
                     TweenAnimationBuilder<double>(
