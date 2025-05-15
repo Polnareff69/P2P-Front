@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:market/views/widgets/logout_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:market/services/auth_service.dart';
 import 'package:market/views/authentication_screens/welcome_screen.dart';

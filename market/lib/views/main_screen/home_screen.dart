@@ -333,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       print('Ruta normalizada: $normalizedPath');
 
-      // img servidas desde aws
+      // img servidas desde aws o local
       imageUrl =
           '${AppConfig.getProductImageUrl()}?fileLocation=${Uri.encodeComponent(normalizedPath)}';
       print('URL final: $imageUrl');

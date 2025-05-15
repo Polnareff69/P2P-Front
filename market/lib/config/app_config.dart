@@ -41,6 +41,9 @@ class AppConfig {
   static String get loginUrl => '$_baseUrl/token';
   static String get createCompanyUrl => '$_baseUrl/company';
   static String get getAllCompaniesUrl => '$_baseUrl/compnay/all';
+
+  // ✨ NUEVO: URL para obtener empresa por ID
+  static String getCompanyByIdUrl(String companyId) => '$_baseUrl/company/$companyId';
   
   static String getCompanyProductsUrl(String companyId) => '$_baseUrl/company/products/$companyId';
   static String uploadProductUrl(String companyId) => '$_baseUrl/product/$companyId';

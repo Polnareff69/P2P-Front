@@ -10,14 +10,18 @@ import 'package:market/views/widgets/settings_menu.dart';
 import 'package:market/services/auth_service.dart';
 import 'package:market/views/authentication_screens/welcome_screen.dart';
 
+import 'package:market/controllers/company_controller.dart';
+import 'package:market/models/company_model.dart';
+import 'package:market/config/app_config.dart';
+
 class VendorScreen extends StatefulWidget {
-  final String businessName; // Nombre de la empresa
+  final String? businessName; // Nombre de la empresa
   final File? businessLogo; // Logo de la empresa
 
   const VendorScreen({
     super.key,
-    required this.businessName,
-    required this.businessLogo,
+    this.businessName,
+    this.businessLogo,
   });
 
   @override
@@ -30,34 +34,104 @@ class _VendorScreenState extends State<VendorScreen> {
   File? profileImage;
   final ImagePicker _picker = ImagePicker();
 
+  // ✨ NUEVO ESTADO PARA MANEJO DE EMPRESA
+  final CompanyController _companyController =
+      CompanyController();
+  CompanyDetails? companyDetails;
+  bool isLoadingCompany = true;
+  String? companyError;
+
   // ✨ GlobalKey para mantener context válido
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey =
+      GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+    // VERIFICAR ESTADO DE AUTENTICACIÓN AL INICIALIZAR
+    _checkAuthStatus();
+
+    // ✨ CARGAR DATOS DE LA EMPRESA
+    _loadCompanyData();
+
     // Inicializa profileImage con businessLogo si está disponible
     if (widget.businessLogo != null) {
       profileImage = widget.businessLogo;
     }
+  }
 
-    // VERIFICAR ESTADO DE AUTENTICACIÓN AL INICIALIZAR
-    _checkAuthStatus();
+  // ✨ NUEVO: Método para cargar datos de la empresa
+  Future<void> _loadCompanyData() async {
+    try {
+      setState(() {
+        isLoadingCompany = true;
+        companyError = null;
+      });
+
+      if (kDebugMode)
+        print(
+          '🏢 VendorScreen - Cargando datos de empresa...',
+        );
+
+      // Primero obtener el company ID del seller actual
+      String? companyId =
+          await _companyController
+              .getCurrentSellerCompanyId();
+
+      if (companyId != null) {
+        // Obtener los detalles completos de la empresa
+        CompanyDetails? details = await _companyController
+            .getCompanyById(companyId);
+
+        if (details != null) {
+          setState(() {
+            companyDetails = details;
+            isLoadingCompany = false;
+          });
+
+          if (kDebugMode) {
+            print('✅ Empresa cargada: ${details.name}');
+            print('✅ Dueño: ${details.owner.name}');
+          }
+        } else {
+          throw Exception(
+            'No se pudieron obtener los detalles de la empresa',
+          );
+        }
+      } else {
+        throw Exception(
+          'No se encontró ID de empresa para este seller',
+        );
+      }
+    } catch (e) {
+      if (kDebugMode) print('❌ Error cargando empresa: $e');
+      setState(() {
+        companyError = e.toString();
+        isLoadingCompany = false;
+      });
+    }
   }
 
   // Método para verificar estado de autenticación
   void _checkAuthStatus() {
     if (kDebugMode) {
-      print('🔍 VendorScreen - Verificando estado de autenticación...');
+      print(
+        '🔍 VendorScreen - Verificando estado de autenticación...',
+      );
       AuthService.instance.printCurrentState();
     }
-    
+
     // Si no está logueado, navegar a WelcomeScreen
     if (!AuthService.instance.isLoggedIn) {
-      if (kDebugMode) print('⚠️ VendorScreen - Usuario no logueado, navegando a Welcome...');
+      if (kDebugMode)
+        print(
+          '⚠️ VendorScreen - Usuario no logueado, navegando a Welcome...',
+        );
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+          MaterialPageRoute(
+            builder: (context) => const WelcomeScreen(),
+          ),
           (route) => false,
         );
       });
@@ -68,24 +142,78 @@ class _VendorScreenState extends State<VendorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      //fondo de color oscuro
       backgroundColor: const Color(0xFF121212),
       body: Stack(
         children: [
-          // Contenido principal (ScrollView)
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                _buildHeader(),
-                _buildUploadButton(context),
-                _buildMenu(),
-                // Espacio adicional en la parte inferior para evitar que el contenido
-                // quede oculto detrás del FloatingMenuButton
-                SizedBox(height: 80),
-              ],
+          // 🔄 MOSTRAR LOADING O ERROR
+          if (isLoadingCompany)
+            const Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    color: Colors.purple,
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Cargando información de tu empresa...',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+            )
+          else if (companyError != null)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.business_center,
+                    color: Colors.red,
+                    size: 64,
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Error al cargar empresa:',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    companyError!,
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 14,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: _loadCompanyData,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.purple,
+                      foregroundColor: Colors.white,
+                    ),
+                    child: Text('Reintentar'),
+                  ),
+                ],
+              ),
+            )
+          else
+            // Contenido principal
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  _buildHeader(),
+                  _buildUploadButton(context),
+                  _buildMenu(),
+                  SizedBox(height: 80),
+                ],
+              ),
             ),
-          ),
-          //Menu
+
+          // Menu flotante
           Positioned(
             bottom: 30,
             left: 0,
@@ -97,23 +225,20 @@ class _VendorScreenState extends State<VendorScreen> {
               ),
             ),
           ),
-
-          // FloatingMenuButton en la parte inferior
         ],
       ),
     );
   }
 
-  // Header con foto de perfil y ganancias
+  // ✨ HEADER ACTUALIZADO CON DATOS DINÁMICOS
   Widget _buildHeader() {
     return Stack(
       alignment: Alignment.center,
       children: [
-        // Fondo del header (personalizable o gradiente por defecto)
+        // Fondo del header (imagen de fondo de la empresa o gradiente)
         Container(
           height: 396,
           decoration: BoxDecoration(
-            // shadow
             boxShadow: [
               BoxShadow(
                 color: Colors.black,
@@ -121,19 +246,24 @@ class _VendorScreenState extends State<VendorScreen> {
                 offset: Offset(1, 4.5),
               ),
             ],
-
-            // Imagen de fondo o gradiente por defecto
+            // Usar imagen de fondo de la empresa si está disponible
             image:
-                headerBackgroundImage != null
+                companyDetails?.companyBackground != null &&
+                        companyDetails!
+                            .companyBackground!
+                            .isNotEmpty
                     ? DecorationImage(
-                      image: FileImage(
-                        headerBackgroundImage!,
+                      image: NetworkImage(
+                        '${AppConfig.getProductImageUrl()}?fileLocation=${Uri.encodeComponent(companyDetails!.companyBackground!)}',
                       ),
                       fit: BoxFit.cover,
                     )
                     : null,
             gradient:
-                headerBackgroundImage == null
+                companyDetails?.companyBackground == null ||
+                        companyDetails!
+                            .companyBackground!
+                            .isEmpty
                     ? LinearGradient(
                       colors: [
                         Colors.purple.shade500,
@@ -148,10 +278,12 @@ class _VendorScreenState extends State<VendorScreen> {
               bottomRight: Radius.circular(44),
             ),
           ),
-
-          // Overlay oscuro si hay imagen de fondo para mejorar la legibilidad
+          // Overlay oscuro si hay imagen de fondo
           child:
-              headerBackgroundImage != null
+              (companyDetails?.companyBackground != null &&
+                      companyDetails!
+                          .companyBackground!
+                          .isNotEmpty)
                   ? Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
@@ -170,7 +302,8 @@ class _VendorScreenState extends State<VendorScreen> {
                   )
                   : null,
         ),
-        // NUEVO: Botón para volver atrás usando el widget CustomBackButton
+
+        // Botón para volver atrás
         Positioned(
           top: 42,
           left: 15,
@@ -179,7 +312,6 @@ class _VendorScreenState extends State<VendorScreen> {
               horizontal: 8,
               vertical: 4,
             ),
-            // Usamos el widget personalizado
             child: BackIcon(
               iconColor: Colors.black,
               size: 25,
@@ -188,7 +320,7 @@ class _VendorScreenState extends State<VendorScreen> {
           ),
         ),
 
-        // Botón para personalizar header (en la esquina superior derecha)
+        // Botón de configuración
         Positioned(
           top: 30,
           right: 3,
@@ -201,10 +333,9 @@ class _VendorScreenState extends State<VendorScreen> {
                 shadows: [Shadow(color: Colors.black)],
               ),
               onPressed: () {
-                // 🎯 MOSTRAR EL MENÚ DE CONFIGURACIONES CON GLOBALKEY
                 showSettingsMenu(
                   context,
-                  scaffoldKey: _scaffoldKey, // ✨ PASAR EL KEY
+                  scaffoldKey: _scaffoldKey,
                   onLogoutStart: () {
                     if (kDebugMode)
                       print(
@@ -218,12 +349,11 @@ class _VendorScreenState extends State<VendorScreen> {
                       );
                   },
                   onEditProfile: () {
-                    // 🔄 CONECTAR CON TU FUNCIÓN EXISTENTE DE EDITAR PERFIL
                     if (kDebugMode)
                       print(
                         'Editando perfil desde Settings Menu',
                       );
-                    _showEditProfileOptions();
+                    // Aquí podrías implementar edición de perfil de empresa
                   },
                 );
               },
@@ -231,10 +361,11 @@ class _VendorScreenState extends State<VendorScreen> {
           ),
         ),
 
+        // Contenido del header con datos dinámicos
         Column(
           children: [
             const SizedBox(height: 50),
-            // Contenedor de la foto de perfil
+            // Foto de perfil de la empresa
             Container(
               width: 150,
               height: 150,
@@ -248,22 +379,24 @@ class _VendorScreenState extends State<VendorScreen> {
               child: CircleAvatar(
                 radius: 73,
                 backgroundImage:
-                    profileImage != null
-                        ? FileImage(profileImage!)
-                        : (widget.businessLogo != null
-                            ? FileImage(
-                              widget.businessLogo!,
+                    companyDetails?.companyImg != null &&
+                            companyDetails!
+                                .companyImg!
+                                .isNotEmpty
+                        ? NetworkImage(
+                          '${AppConfig.getProductImageUrl()}?fileLocation=${Uri.encodeComponent(companyDetails!.companyImg!)}',
+                        )
+                        : const AssetImage(
+                              'assets/images/ejecutivo.jpg',
                             )
-                            : AssetImage(
-                                  'assets/images/ejecutivo.jpg',
-                                )
-                                as ImageProvider),
+                            as ImageProvider,
               ),
             ),
-
             const SizedBox(height: 5),
+
+            // Nombre de la empresa
             Text(
-              widget.businessName,
+              companyDetails?.name ?? 'Cargando...',
               style: GoogleFonts.nunito(
                 fontSize: 23,
                 fontWeight: FontWeight.w900,
@@ -277,8 +410,10 @@ class _VendorScreenState extends State<VendorScreen> {
                 ],
               ),
             ),
+
+            // Nombre del dueño
             Text(
-              "By Alejo_AM ★",
+              "By ${companyDetails?.owner.name ?? '...'} ★",
               style: GoogleFonts.nunito(
                 fontSize: 16,
                 color: Colors.white70,
@@ -287,6 +422,8 @@ class _VendorScreenState extends State<VendorScreen> {
               ),
             ),
             const SizedBox(height: 20),
+
+            // Título de ganancias
             Text(
               "Mis Ganancias",
               style: GoogleFonts.nunito(
@@ -310,6 +447,8 @@ class _VendorScreenState extends State<VendorScreen> {
                 ],
               ),
             ),
+
+            // Cantidad de ganancias (esto sería dinámico en el futuro)
             Text(
               "\$42.000.000",
               style: GoogleFonts.nunitoSans(
@@ -452,10 +591,11 @@ class _VendorScreenState extends State<VendorScreen> {
                 MaterialPageRoute(
                   builder:
                       (context) => StorePreviewScreen(
-                        businessName: widget.businessName,
+                        businessName:
+                            companyDetails!.name ??
+                            'Mi Empresa',
                         businessLogo:
-                            profileImage ??
-                            widget.businessLogo,
+                            null, // Manejamos con URL ahora
                       ),
                 ),
               );
