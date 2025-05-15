@@ -238,12 +238,13 @@ class BusinessOrMainScreen extends StatelessWidget {
                                   vertical: 6,
                                 ),
                             decoration: BoxDecoration(
-                              color: Colors.blue
-                                  .withOpacity(0.15),
+                              color: Colors.purple
+                                  .withOpacity(0.2),
                               borderRadius:
                                   BorderRadius.circular(20),
                               border: Border.all(
-                                color: Colors.blueAccent
+                                color: Colors
+                                    .deepPurpleAccent
                                     .withOpacity(0.3),
                                 width: 1,
                               ),
