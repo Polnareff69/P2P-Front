@@ -500,9 +500,63 @@ class SettingsMenu extends StatelessWidget {
                     contextToUse, // ✨ USAR EL CONTEXT VÁLIDO
                 builder: (BuildContext dialogContext) {
                   return AlertDialog(
-                    title: const Text('Confirmar Logout'),
-                    content: const Text(
-                      '¿Estás seguro de que deseas cerrar sesión?',
+                    backgroundColor: Color(0xFF121212),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        20,
+                      ),
+                      side: BorderSide(
+                        color: const Color.fromARGB(
+                          255,
+                          78,
+                          6,
+                          1,
+                        ),
+                        width: 2,
+                      ),
+                    ),
+
+                    title: Row(
+                      mainAxisAlignment:
+                          MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.exit_to_app,
+                          color: Colors.red,
+                          size: 26,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          'Cerrar Sesión',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                            shadows: [
+                              Shadow(
+                                color: Colors.red
+                                    .withOpacity(0.4),
+                                offset: const Offset(1, 2),
+                                blurRadius: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(height: 10),
+                        Text(
+                          '¿Estás seguro de que deseas cerrar sesión?',
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                     actions: [
                       TextButton(
@@ -510,7 +564,12 @@ class SettingsMenu extends StatelessWidget {
                             () => Navigator.of(
                               dialogContext,
                             ).pop(false),
-                        child: const Text('Cancelar'),
+                        child: const Text(
+                          'Cancelar',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
                       ),
                       ElevatedButton(
                         onPressed:
@@ -518,8 +577,22 @@ class SettingsMenu extends StatelessWidget {
                               dialogContext,
                             ).pop(true),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
+                          backgroundColor:
+                              const Color.fromARGB(
+                                255,
+                                78,
+                                6,
+                                1,
+                              ),
                           foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.circular(12),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 12,
+                          ),
                         ),
                         child: const Text('Cerrar Sesión'),
                       ),

@@ -516,7 +516,7 @@ class NavigationHelper {
                         () => Navigator.of(
                           dialogContext,
                         ).pop(false),
-                    child: Text(
+                    child: const Text(
                       'Cancelar',
                       style: TextStyle(color: Colors.grey),
                     ),
@@ -544,7 +544,7 @@ class NavigationHelper {
                         vertical: 12,
                       ),
                     ),
-                    child: Text('Cerrar Sesión'),
+                    child: const Text('Cerrar Sesión'),
                   ),
                 ],
               );
