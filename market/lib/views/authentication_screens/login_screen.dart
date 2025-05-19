@@ -9,7 +9,7 @@ import 'package:market/views/widgets/remember_me_checkbox.dart';
 import 'package:market/controllers/login_controller.dart';
 import 'package:market/models/user_model.dart';
 import 'package:market/services/auth_service.dart';
-import 'package:flutter/foundation.dart'; 
+import 'package:flutter/foundation.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,75 +26,80 @@ class _LoginScreenState extends State<LoginScreen> {
   String name = '';
   String password = '';
   bool isLoading = false;
+  bool _obscurePassword = true;
 
   Future<void> loginUser() async {
-  setState(() {
-    isLoading = true;
-  });
+    setState(() {
+      isLoading = true;
+    });
 
-  try {
-    final user = User(name: name, password: password);
-    final success = await _authController.loginUser(user);
-    
-    if (success) {
-      // ✨ Usar AuthService para obtener información del usuario
-      final role = AuthService.instance.currentRole;
-      final username = AuthService.instance.currentUsername;
-      
-      if (kDebugMode) {
-        print('✅ Login exitoso:');
-        print('   Usuario: $username');
-        print('   Rol: $role');
-        AuthService.instance.printCurrentState();
+    try {
+      final user = User(name: name, password: password);
+      final success = await _authController.loginUser(user);
+
+      if (success) {
+        // ✨ Usar AuthService para obtener información del usuario
+        final role = AuthService.instance.currentRole;
+        final username =
+            AuthService.instance.currentUsername;
+
+        if (kDebugMode) {
+          print('✅ Login exitoso:');
+          print('   Usuario: $username');
+          print('   Rol: $role');
+          AuthService.instance.printCurrentState();
+        }
+
+        // Mostrar mensaje de éxito
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("¡Bienvenido $username!"),
+            backgroundColor: Colors.green,
+          ),
+        );
+
+        // Navegar según el rol usando AuthService
+        if (AuthService.instance.isSeller) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (context) => VendorScreen(
+                    businessName: username!,
+                    businessLogo: null,
+                  ),
+            ),
+          );
+        } else {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder:
+                  (context) =>
+                      UserScreen(userName: username!),
+            ),
+          );
+        }
+      } else {
+        // Error en el login
+        throw Exception(
+          "Credenciales incorrectas o error del servidor",
+        );
       }
-      
-      // Mostrar mensaje de éxito
+    } catch (e) {
+      print("❌ Error en el login: $e");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("¡Bienvenido $username!"),
-          backgroundColor: Colors.green,
+          content: Text("Error al logearse: $e"),
+          backgroundColor: Colors.red,
         ),
       );
-      
-      // Navegar según el rol usando AuthService
-      if (AuthService.instance.isSeller) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => VendorScreen(
-              businessName: username!,
-              businessLogo: null,
-            ),
-          ),
-        );
-      } else {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => UserScreen(
-              userName: username!,
-            ),
-          ),
-        );
-      }
-    } else {
-      // Error en el login
-      throw Exception("Credenciales incorrectas o error del servidor");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
-  } catch (e) {
-    print("❌ Error en el login: $e");
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Error al logearse: $e"),
-        backgroundColor: Colors.red,
-      ),
-    );
-  } finally {
-    setState(() {
-      isLoading = false;
-    });
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -309,7 +314,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       //Input of the user password
                       TextFormField(
-                        obscureText: false,
+                        obscureText: _obscurePassword,
                         //grab the info of the user
                         onChanged: (value) {
                           password = value;
@@ -379,14 +384,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               height: 20,
                             ),
                           ),
-                          suffixIcon: Icon(
-                            Icons.visibility,
-                            color: const Color.fromARGB(
-                              255,
-                              75,
-                              75,
-                              75,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Cambiar el icono según el estado
+                              _obscurePassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                             ),
+                            onPressed: () {
+                              // Cambiar el estado de visibilidad cuando se hace clic
+                              setState(() {
+                                _obscurePassword =
+                                    !_obscurePassword;
+                              });
+                            },
                           ),
                         ),
                       ),

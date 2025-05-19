@@ -25,6 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String email = '';
   String password = '';
   bool isLoading = false;
+  bool _obscurePassword = true;
 
   Future<void> registerUser() async {
     setState(() {
@@ -66,13 +67,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         );
 
         // Navegar a BusinessOrMainScreen para que el usuario elija su rol
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => BusinessOrMainScreen(),
-        ),
-      );
-
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BusinessOrMainScreen(),
+          ),
+        );
       } else {
         // Error en el registro
         throw Exception(
@@ -397,7 +397,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       //Input of the user password
                       TextFormField(
-                        obscureText: true,
+                        obscureText: _obscurePassword,
                         //grab the user's password
                         onChanged: (value) {
                           password = value;
@@ -467,8 +467,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 20,
                             ),
                           ),
-                          suffixIcon: Icon(
-                            Icons.visibility,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Cambiar el icono según el estado
+                              _obscurePassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              // Cambiar el estado de visibilidad cuando se hace clic
+                              setState(() {
+                                _obscurePassword =
+                                    !_obscurePassword;
+                              });
+                            },
                           ),
                         ),
                       ),
