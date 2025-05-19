@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/views/business_screens/create_business_screen.dart';
 import 'package:market/views/main_screen/home_screen.dart';
+import 'package:market/views/widgets/animated_pulsing_logo.dart';
+
 import 'dart:math' as math;
 
 class BusinessOrMainScreen extends StatelessWidget {
@@ -153,36 +155,16 @@ class BusinessOrMainScreen extends StatelessWidget {
                   crossAxisAlignment:
                       CrossAxisAlignment.center,
                   children: [
-                    // Logo con efecto de elevación y animación
-                    TweenAnimationBuilder<double>(
-                      tween: Tween<double>(
-                        begin: 0.9,
-                        end: 1.0,
+                    // Logo con efecto palpitante
+                    AnimatedPulsingLogo(
+                      logoAssetPath:
+                          'assets/images/NuevoLogo.png',
+                      size: 250,
+                      glowColor: Colors.transparent,
+                      pulseDuration: const Duration(
+                        seconds: 4,
                       ),
-                      duration: const Duration(seconds: 2),
-                      curve: Curves.easeInOut,
-                      builder: (context, value, child) {
-                        return Transform.scale(
-                          scale: value,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black45
-                                      .withOpacity(0.3),
-                                  blurRadius: 20,
-                                  spreadRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: Image.asset(
-                              'assets/images/NuevoLogo.png',
-                              height: 250,
-                            ),
-                          ),
-                        );
-                      },
+                      pulseScale: 1.05,
                     ),
 
                     const SizedBox(height: 10),
