@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'login_screen.dart';
 import 'register_screen.dart';
 import 'dart:math' as math;
+import 'package:market/views/widgets/animated_pulsing_logo.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -94,6 +95,7 @@ class WelcomeScreen extends StatelessWidget {
                                 Colors.purple,
                                 Colors.deepPurple,
                                 Colors.deepPurple,
+                                Colors.deepPurple,
                               ],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
@@ -132,45 +134,14 @@ class WelcomeScreen extends StatelessWidget {
 
                 const SizedBox(height: 30),
                 // LOGO
-                Container(
-                  width: 320,
-                  height: 320,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.purple.shade800
-                            .withOpacity(0.4),
-                        blurRadius: 70,
-                        spreadRadius: 1,
-                        offset: Offset(0, 0),
-                      ),
-                    ],
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(75),
-                    child: Image.asset(
-                      'assets/images/NuevoLogo.png', // Asegúrate que esta imagen exista
-                      fit: BoxFit.cover,
-                      errorBuilder: (
-                        context,
-                        error,
-                        stackTrace,
-                      ) {
-                        // Fallback si la imagen no se encuentra
-                        return Container(
-                          color: Colors.purple.withOpacity(
-                            0.2,
-                          ),
-                          child: Icon(
-                            Icons.image,
-                            size: 60,
-                            color: Colors.white,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                AnimatedPulsingLogo(
+                  logoAssetPath:
+                      'assets/images/NuevoLogo.png',
+                  size: 320,
+                  glowColor: Colors.purple.shade800,
+                  pulseDuration: const Duration(seconds: 4),
+                  pulseScale:
+                      1.08, // Reducido para que sea más sutil
                 ),
                 const SizedBox(height: 70),
 

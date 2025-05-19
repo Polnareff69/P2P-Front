@@ -6,7 +6,7 @@ class AppConfig {
   static const bool _isDebugMode = kDebugMode;
 
   //  **CAMBIAR ESTO PARA FORZAR PRODUCCIÓN EN DEBUG**
-  static const bool _forceProduction = true;
+  static const bool _forceProduction = false;
 
   //  **DETECTAR AUTOMÁTICAMENTE EL ENTORNO**
   static bool get _isProduction {
