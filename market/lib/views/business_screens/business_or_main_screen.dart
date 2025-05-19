@@ -45,10 +45,11 @@ class BusinessOrMainScreen extends StatelessWidget {
               (bounds) => LinearGradient(
                 colors: [
                   Colors.purple,
-
                   Colors.purple,
                   Colors.deepPurple,
+                  Colors.purple,
                   Colors.deepPurple,
+                  Colors.purple,
                   Colors.purple,
                 ],
                 begin: Alignment.topLeft,

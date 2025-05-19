@@ -16,7 +16,6 @@ import 'package:market/config/app_config.dart';
 
 import 'package:market/guards/auth_guard.dart';
 
-
 class VendorScreen extends StatefulWidget {
   final String? businessName; // Nombre de la empresa
   final File? businessLogo; // Logo de la empresa
@@ -976,7 +975,7 @@ class _VendorScreenState extends State<VendorScreen> {
                 ),
 
                 child: Text(
-                  "Menú For Gamers ®",
+                  "Menú de ${companyDetails?.name ?? 'Mi Menú'} ★",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.nunito(
                     fontSize: 19,

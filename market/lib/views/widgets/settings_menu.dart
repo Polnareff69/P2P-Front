@@ -85,7 +85,7 @@ class SettingsMenu extends StatelessWidget {
                       imagePath: 'assets/icons/edit.png',
                       title: 'Editar Perfil',
                       subtitle: 'Personalizar información',
-                      color: Colors.purple.shade500,
+                      color: Colors.purple.shade800,
 
                       onTap: onEditProfile,
                     ),
@@ -101,7 +101,7 @@ class SettingsMenu extends StatelessWidget {
                       icon: Icons.notifications_rounded,
                       title: 'Notificaciones',
                       subtitle: 'Configurar alertas',
-                      color: Colors.purple,
+                      color: Colors.purple.shade800,
 
                       onTap: onNotifications,
                     ),
@@ -109,8 +109,7 @@ class SettingsMenu extends StatelessWidget {
                       icon: Icons.security_rounded,
                       title: 'Privacidad',
                       subtitle: 'Configurar privacidad',
-                      color:
-                          Colors.deepPurpleAccent.shade400,
+                      color: Colors.purple.shade900,
                       onTap: () {
                         if (kDebugMode)
                           print('Privacidad presionado');
@@ -121,7 +120,7 @@ class SettingsMenu extends StatelessWidget {
 
                       title: 'Ayuda',
                       subtitle: 'Centro de ayuda',
-                      color: Colors.purple.shade500,
+                      color: Colors.purple.shade800,
                       onTap: () {
                         if (kDebugMode)
                           print('Ayuda presionado');
@@ -131,7 +130,7 @@ class SettingsMenu extends StatelessWidget {
                       icon: Icons.info,
                       title: 'Acerca de',
                       subtitle: 'Información de la app',
-                      color: Colors.deepPurple.shade700,
+                      color: Colors.purple.shade900,
                       onTap: () {
                         if (kDebugMode)
                           print('Acerca de presionado');
@@ -258,17 +257,51 @@ class SettingsMenu extends StatelessWidget {
   }
 
   Widget _buildCustomMenuItem({
-    IconData? icon, //  Hacer opcional
-    String? imagePath, //  Agregar parámetro para imagen
+    IconData? icon,
+    String? imagePath,
     required String title,
     required String subtitle,
-    required Color color,
+    required Color
+    color, // Mantenemos este parámetro para las variaciones
     required VoidCallback? onTap,
   }) {
+    // Definimos colores de gradiente basados en el color proporcionado
+    Color startColor;
+    Color endColor;
+
+    // Calculamos colores de gradiente basados en el color base
+    if (color == Colors.purple.shade500) {
+      startColor = Colors.purple.shade400;
+      endColor = Colors.purple.shade800;
+    } else if (color == Colors.purple.shade900) {
+      startColor = Colors.purple.shade700;
+      endColor = Colors.deepPurple.shade900;
+    } else if (color == Colors.deepPurple) {
+      startColor = Colors.deepPurple.shade400;
+      endColor = Colors.deepPurple.shade900;
+    } else if (color == Colors.deepPurpleAccent.shade400) {
+      startColor = Colors.deepPurpleAccent.shade100;
+      endColor = Colors.deepPurpleAccent.shade700;
+    } else {
+      // Caso por defecto para cualquier otro color
+      startColor = color.withOpacity(0.7);
+      endColor = color;
+    }
+
+    // Crear un callback por defecto si onTap es nulo
+    final VoidCallback effectiveOnTap =
+        onTap ??
+        () {
+          if (kDebugMode)
+            print(
+              'Botón "$title" presionado (sin acción definida)',
+            );
+        };
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: onTap,
+        onTap: effectiveOnTap,
         borderRadius: BorderRadius.circular(15),
         child: Container(
           margin: EdgeInsets.symmetric(
@@ -283,24 +316,32 @@ class SettingsMenu extends StatelessWidget {
               color: Colors.white.withOpacity(0.1),
               width: 1.5,
             ),
+            // Agregamos una sombra sutil similar a vendor_screen
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                blurRadius: 4,
+                offset: Offset(1, 2),
+              ),
+            ],
           ),
           child: Row(
             children: [
+              // Contenedor del icono con estilo similar a vendor_screen
               Container(
                 padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [
-                      color.withOpacity(0.7),
-                      color.withOpacity(0.9),
-                    ],
+                    colors: [startColor, endColor],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: color.withOpacity(0.3),
-                      blurRadius: 8,
-                      offset: Offset(0, 2),
+                      color: Colors.black.withOpacity(0.3),
+                      blurRadius: 4,
+                      offset: Offset(1, 2),
                     ),
                   ],
                 ),
@@ -318,6 +359,16 @@ class SettingsMenu extends StatelessWidget {
                         fontSize: 17,
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
+                        // Agregamos sombras similares a vendor_screen
+                        shadows: [
+                          Shadow(
+                            color: endColor.withOpacity(
+                              0.5,
+                            ),
+                            offset: const Offset(0, 1),
+                            blurRadius: 5,
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(height: 2),
@@ -334,7 +385,9 @@ class SettingsMenu extends StatelessWidget {
               ),
               Icon(
                 Icons.arrow_forward_ios_rounded,
-                color: Colors.white30,
+                color: startColor.withOpacity(
+                  0.7,
+                ), // Color del icono relacionado con el gradiente
                 size: 18,
               ),
             ],
@@ -573,7 +626,7 @@ class SettingsMenu extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.red.withOpacity(0.15),
+                Colors.black.withOpacity(0.1),
                 Colors.red.withOpacity(0.25),
               ],
             ),
