@@ -664,9 +664,9 @@ class SettingsMenu extends StatelessWidget {
                   ],
                 ),
                 child: Icon(
-                  Icons.logout,
+                  Icons.exit_to_app,
                   color: const Color(0xFF121212),
-                  size: 27,
+                  size: 29.5,
                 ),
               ),
               SizedBox(width: 16),

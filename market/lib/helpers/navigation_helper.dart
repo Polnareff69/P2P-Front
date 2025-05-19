@@ -458,16 +458,23 @@ class NavigationHelper {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                   side: BorderSide(
-                    color: Colors.red.shade300,
+                    color: const Color.fromARGB(
+                      255,
+                      78,
+                      6,
+                      1,
+                    ),
                     width: 2,
                   ),
                 ),
                 title: Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.exit_to_app,
                       color: Colors.red,
-                      size: 24,
+                      size: 26,
                     ),
                     SizedBox(width: 8),
                     Text(
@@ -475,7 +482,16 @@ class NavigationHelper {
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: 24,
+                        shadows: [
+                          Shadow(
+                            color: Colors.red.withOpacity(
+                              0.4,
+                            ),
+                            offset: const Offset(1, 2),
+                            blurRadius: 10,
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -483,12 +499,7 @@ class NavigationHelper {
                 content: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      Icons.logout,
-                      size: 60,
-                      color: Colors.red.shade300,
-                    ),
-                    SizedBox(height: 16),
+                    SizedBox(height: 10),
                     Text(
                       '¿Estás seguro de que deseas cerrar sesión?',
                       style: TextStyle(
@@ -516,7 +527,12 @@ class NavigationHelper {
                           dialogContext,
                         ).pop(true),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
+                      backgroundColor: const Color.fromARGB(
+                        255,
+                        78,
+                        6,
+                        1,
+                      ),
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
