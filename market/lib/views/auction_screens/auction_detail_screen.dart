@@ -434,6 +434,21 @@ class _AuctionDetailScreenState
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Colors.deepPurple
+                            .withOpacity(0.9),
+                        offset: const Offset(1, 2),
+                        blurRadius: 10,
+                      ),
+                      Shadow(
+                        color: Colors.black.withOpacity(
+                          0.6,
+                        ),
+                        offset: const Offset(2, 3),
+                        blurRadius: 4,
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 12),
@@ -449,6 +464,21 @@ class _AuctionDetailScreenState
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.purpleAccent,
+                    shadows: [
+                      Shadow(
+                        color: Colors.deepPurple
+                            .withOpacity(0.8),
+                        offset: const Offset(1, 2),
+                        blurRadius: 10,
+                      ),
+                      Shadow(
+                        color: Colors.black.withOpacity(
+                          0.6,
+                        ),
+                        offset: const Offset(2, 3),
+                        blurRadius: 4,
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(height: 8),
@@ -457,6 +487,21 @@ class _AuctionDetailScreenState
                   style: GoogleFonts.nunito(
                     fontSize: 16,
                     color: Colors.white70,
+                    shadows: [
+                      Shadow(
+                        color: Colors.deepPurple
+                            .withOpacity(0.8),
+                        offset: const Offset(1, 2),
+                        blurRadius: 10,
+                      ),
+                      Shadow(
+                        color: Colors.black.withOpacity(
+                          0.6,
+                        ),
+                        offset: const Offset(2, 3),
+                        blurRadius: 4,
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -487,6 +532,20 @@ class _AuctionDetailScreenState
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
+                shadows: [
+                  Shadow(
+                    color: Colors.deepPurple.withOpacity(
+                      0.9,
+                    ),
+                    offset: const Offset(1, 2),
+                    blurRadius: 10,
+                  ),
+                  Shadow(
+                    color: Colors.black.withOpacity(0.6),
+                    offset: const Offset(2, 3),
+                    blurRadius: 4,
+                  ),
+                ],
               ),
             ),
             Divider(
@@ -499,7 +558,7 @@ class _AuctionDetailScreenState
             _buildInfoRow(
               'Precio inicial:',
               updatedAuction!.formattedInitialPrice,
-              iconColor: Colors.orange,
+              iconColor: Colors.deepPurpleAccent,
               icon: Icons.sell,
             ),
             SizedBox(height: 12),
@@ -512,6 +571,20 @@ class _AuctionDetailScreenState
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.greenAccent,
+                shadows: [
+                  Shadow(
+                    color: Colors.deepPurple.withOpacity(
+                      0.8,
+                    ),
+                    offset: const Offset(1, 2),
+                    blurRadius: 10,
+                  ),
+                  Shadow(
+                    color: Colors.black.withOpacity(0.6),
+                    offset: const Offset(2, 3),
+                    blurRadius: 4,
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 12),
@@ -590,7 +663,23 @@ class _AuctionDetailScreenState
       ),
       child: Row(
         children: [
-          Icon(Icons.timer, color: timeColor, size: 24),
+          Icon(
+            Icons.timer,
+            color: timeColor,
+            size: 24,
+            shadows: [
+              Shadow(
+                color: Colors.deepPurple.withOpacity(0.8),
+                offset: const Offset(1, 2),
+                blurRadius: 10,
+              ),
+              Shadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: const Offset(2, 3),
+                blurRadius: 4,
+              ),
+            ],
+          ),
           SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -600,6 +689,20 @@ class _AuctionDetailScreenState
                 style: GoogleFonts.nunito(
                   fontSize: 14,
                   color: Colors.white70,
+                  shadows: [
+                    Shadow(
+                      color: Colors.deepPurple.withOpacity(
+                        0.8,
+                      ),
+                      offset: const Offset(1, 2),
+                      blurRadius: 10,
+                    ),
+                    Shadow(
+                      color: Colors.black.withOpacity(0.6),
+                      offset: const Offset(2, 3),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
               ),
               AnimatedSwitcher(
@@ -611,6 +714,21 @@ class _AuctionDetailScreenState
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: timeColor,
+                    shadows: [
+                      Shadow(
+                        color: Colors.deepPurple
+                            .withOpacity(0.8),
+                        offset: const Offset(1, 2),
+                        blurRadius: 10,
+                      ),
+                      Shadow(
+                        color: Colors.black.withOpacity(
+                          0.6,
+                        ),
+                        offset: const Offset(2, 3),
+                        blurRadius: 4,
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -641,6 +759,20 @@ class _AuctionDetailScreenState
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
+                  shadows: [
+                    Shadow(
+                      color: Colors.deepPurple.withOpacity(
+                        0.8,
+                      ),
+                      offset: const Offset(1, 2),
+                      blurRadius: 10,
+                    ),
+                    Shadow(
+                      color: Colors.black.withOpacity(0.6),
+                      offset: const Offset(2, 3),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
               ),
               Divider(
@@ -657,6 +789,21 @@ class _AuctionDetailScreenState
                         Icons.gavel,
                         size: 48,
                         color: Colors.grey,
+                        shadows: [
+                          Shadow(
+                            color: Colors.deepPurple
+                                .withOpacity(0.8),
+                            offset: const Offset(1, 3),
+                            blurRadius: 10,
+                          ),
+                          Shadow(
+                            color: Colors.black.withOpacity(
+                              0.6,
+                            ),
+                            offset: const Offset(2, 4),
+                            blurRadius: 4,
+                          ),
+                        ],
                       ),
                       SizedBox(height: 16),
                       Text(
@@ -664,6 +811,20 @@ class _AuctionDetailScreenState
                         style: GoogleFonts.nunito(
                           fontSize: 16,
                           color: Colors.grey,
+                          shadows: [
+                            Shadow(
+                              color: Colors.deepPurple
+                                  .withOpacity(0.8),
+                              offset: const Offset(1, 2),
+                              blurRadius: 10,
+                            ),
+                            Shadow(
+                              color: Colors.black
+                                  .withOpacity(0.6),
+                              offset: const Offset(2, 3),
+                              blurRadius: 4,
+                            ),
+                          ],
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -889,6 +1050,20 @@ class _AuctionDetailScreenState
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
+                shadows: [
+                  Shadow(
+                    color: Colors.deepPurple.withOpacity(
+                      0.8,
+                    ),
+                    offset: const Offset(1, 2),
+                    blurRadius: 10,
+                  ),
+                  Shadow(
+                    color: Colors.black.withOpacity(0.6),
+                    offset: const Offset(2, 3),
+                    blurRadius: 4,
+                  ),
+                ],
               ),
             ),
             Divider(
@@ -901,6 +1076,20 @@ class _AuctionDetailScreenState
               style: GoogleFonts.nunito(
                 fontSize: 16,
                 color: Colors.white70,
+                shadows: [
+                  Shadow(
+                    color: Colors.deepPurple.withOpacity(
+                      0.8,
+                    ),
+                    offset: const Offset(1, 3),
+                    blurRadius: 10,
+                  ),
+                  Shadow(
+                    color: Colors.black.withOpacity(0.6),
+                    offset: const Offset(2, 3),
+                    blurRadius: 4,
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 16),
@@ -917,10 +1106,40 @@ class _AuctionDetailScreenState
                       hintText: 'Monto de tu puja',
                       hintStyle: TextStyle(
                         color: Colors.grey,
+                        shadows: [
+                          Shadow(
+                            color: Colors.deepPurple
+                                .withOpacity(0.8),
+                            offset: const Offset(1, 2),
+                            blurRadius: 10,
+                          ),
+                          Shadow(
+                            color: Colors.black.withOpacity(
+                              0.6,
+                            ),
+                            offset: const Offset(2, 3),
+                            blurRadius: 4,
+                          ),
+                        ],
                       ),
                       prefixIcon: Icon(
                         Icons.attach_money,
                         color: Colors.greenAccent,
+                        shadows: [
+                          Shadow(
+                            color: Colors.deepPurple
+                                .withOpacity(0.8),
+                            offset: const Offset(1, 2),
+                            blurRadius: 10,
+                          ),
+                          Shadow(
+                            color: Colors.black.withOpacity(
+                              0.6,
+                            ),
+                            offset: const Offset(2, 3),
+                            blurRadius: 4,
+                          ),
+                        ],
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
@@ -976,6 +1195,17 @@ class _AuctionDetailScreenState
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
+                                shadows: [
+                                  Shadow(
+                                    color: Colors.black
+                                        .withOpacity(0.6),
+                                    offset: const Offset(
+                                      2,
+                                      3,
+                                    ),
+                                    blurRadius: 4,
+                                  ),
+                                ],
                               ),
                             ),
                   ),
@@ -989,6 +1219,20 @@ class _AuctionDetailScreenState
                 fontSize: 12,
                 color: Colors.white54,
                 fontStyle: FontStyle.italic,
+                shadows: [
+                  Shadow(
+                    color: Colors.deepPurple.withOpacity(
+                      0.8,
+                    ),
+                    offset: const Offset(1, 2),
+                    blurRadius: 10,
+                  ),
+                  Shadow(
+                    color: Colors.black.withOpacity(0.6),
+                    offset: const Offset(2, 3),
+                    blurRadius: 4,
+                  ),
+                ],
               ),
             ),
           ],
@@ -1007,13 +1251,41 @@ class _AuctionDetailScreenState
   }) {
     return Row(
       children: [
-        Icon(icon, color: iconColor, size: 20),
+        Icon(
+          icon,
+          color: iconColor,
+          size: 20,
+          shadows: [
+            Shadow(
+              color: Colors.deepPurple.withOpacity(0.8),
+              offset: const Offset(1, 2),
+              blurRadius: 10,
+            ),
+            Shadow(
+              color: Colors.black.withOpacity(0.6),
+              offset: const Offset(2, 3),
+              blurRadius: 4,
+            ),
+          ],
+        ),
         SizedBox(width: 12),
         Text(
           label,
           style: GoogleFonts.nunito(
             fontSize: 16,
             color: Colors.white70,
+            shadows: [
+              Shadow(
+                color: Colors.deepPurple.withOpacity(0.7),
+                offset: const Offset(1, 2),
+                blurRadius: 10,
+              ),
+              Shadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: const Offset(2, 3),
+                blurRadius: 4,
+              ),
+            ],
           ),
         ),
         SizedBox(width: 8),
@@ -1025,6 +1297,20 @@ class _AuctionDetailScreenState
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
+                shadows: [
+                  Shadow(
+                    color: Colors.deepPurple.withOpacity(
+                      0.8,
+                    ),
+                    offset: const Offset(1, 2),
+                    blurRadius: 10,
+                  ),
+                  Shadow(
+                    color: Colors.black.withOpacity(0.6),
+                    offset: const Offset(2, 3),
+                    blurRadius: 4,
+                  ),
+                ],
               ),
         ),
       ],
@@ -1083,6 +1369,13 @@ class _AuctionDetailScreenState
               color: badgeColor,
               fontWeight: FontWeight.bold,
               fontSize: 14,
+              shadows: [
+                Shadow(
+                  color: Colors.black.withOpacity(0.6),
+                  offset: const Offset(1, 2),
+                  blurRadius: 3,
+                ),
+              ],
             ),
           ),
         ],

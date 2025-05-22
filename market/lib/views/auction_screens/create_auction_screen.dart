@@ -1,5 +1,6 @@
 // lib/views/auction_screens/create_auction_screen.dart
 //import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/controllers/auction_controller.dart';
@@ -488,14 +489,24 @@ class _CreateAuctionScreenState
           // Fondo con gradiente
           Positioned.fill(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Color(0xFF121212),
-                    Colors.deepPurple.shade900,
+                    Color(0xFF0F0C29), // azul oscuro
+                    Color(0xFF302B63), // púrpura elegante
+                    Color(0xFF24243E), // gris profundo
                   ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 10,
+                  sigmaY: 10,
+                ),
+                child: Container(
+                  color: Colors.black.withOpacity(0.1),
                 ),
               ),
             ),
@@ -635,8 +646,10 @@ class _CreateAuctionScreenState
                                       20,
                                     ),
                                 border: Border.all(
-                                  color: Colors.white
-                                      .withOpacity(0.3),
+                                  color:
+                                      Colors
+                                          .purple
+                                          .shade800,
                                   width: 3,
                                 ),
                               ),
@@ -650,7 +663,7 @@ class _CreateAuctionScreenState
                                     child: Text(
                                       "Información de la Subasta",
                                       style: GoogleFonts.nunito(
-                                        fontSize: 20,
+                                        fontSize: 24,
                                         fontWeight:
                                             FontWeight.bold,
                                         color: Colors.white,
@@ -675,7 +688,7 @@ class _CreateAuctionScreenState
                                   // ✨ NUEVO: Mostrar empresa actual
                                   if (currentCompanyId !=
                                       null) ...[
-                                    SizedBox(height: 12),
+                                    SizedBox(height: 15),
                                     Container(
                                       padding:
                                           EdgeInsets.symmetric(
@@ -698,6 +711,7 @@ class _CreateAuctionScreenState
                                               .withOpacity(
                                                 0.5,
                                               ),
+                                          width: 2,
                                         ),
                                       ),
                                       child: Row(
@@ -713,7 +727,7 @@ class _CreateAuctionScreenState
                                             width: 8,
                                           ),
                                           Text(
-                                            'Empresa: ${currentCompanyId!.substring(0, 8)}...',
+                                            'ID de mi Negocio (dev debug): ${currentCompanyId!.substring(0, 5)}...',
                                             style: TextStyle(
                                               color:
                                                   Colors
@@ -731,19 +745,30 @@ class _CreateAuctionScreenState
                                   // Selección de producto
                                   Text(
                                     "Producto a subastar:",
-                                    style:
-                                        GoogleFonts.nunito(
-                                          fontSize: 16,
-                                          fontWeight:
-                                              FontWeight
-                                                  .bold,
-                                          color:
-                                              Colors.white,
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 20,
+                                      fontWeight:
+                                          FontWeight.bold,
+                                      color: Colors.white,
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors
+                                              .deepPurple
+                                              .withOpacity(
+                                                0.5,
+                                              ),
+                                          offset: Offset(
+                                            0,
+                                            2,
+                                          ),
+                                          blurRadius: 4,
                                         ),
+                                      ],
+                                    ),
                                   ),
-                                  SizedBox(height: 8),
+                                  SizedBox(height: 22),
                                   _buildProductDropdown(),
-                                  SizedBox(height: 20),
+                                  SizedBox(height: 22),
 
                                   // Precio inicial
                                   _buildTextField(
@@ -751,6 +776,34 @@ class _CreateAuctionScreenState
                                     _initialPriceController,
                                     isNumeric: true,
                                   ),
+                                  SizedBox(height: 10),
+                                  Divider(),
+                                  SizedBox(height: 22),
+                                  // Selección de producto
+                                  Text(
+                                    "Configura el tiempo de tu subasta",
+                                    style: GoogleFonts.nunito(
+                                      fontSize: 20,
+                                      fontWeight:
+                                          FontWeight.bold,
+                                      color: Colors.white,
+                                      shadows: [
+                                        Shadow(
+                                          color: Colors
+                                              .deepPurple
+                                              .withOpacity(
+                                                0.5,
+                                              ),
+                                          offset: Offset(
+                                            0,
+                                            2,
+                                          ),
+                                          blurRadius: 4,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 22),
 
                                   // Fechas
                                   _buildDateField(
@@ -761,6 +814,8 @@ class _CreateAuctionScreenState
                                       true,
                                     ),
                                   ),
+                                  SizedBox(height: 15),
+
                                   _buildDateField(
                                     "Fecha de Fin",
                                     _endDateController,
@@ -799,49 +854,210 @@ class _CreateAuctionScreenState
                                             ],
                                           ),
                                         ),
-                                        child: Center(
-                                          child: Text(
-                                            'Crear Subasta',
-                                            style: GoogleFonts.nunito(
-                                              color:
-                                                  Colors
-                                                      .white,
-                                              fontSize: 25,
-                                              fontWeight:
-                                                  FontWeight
-                                                      .w900,
-                                              shadows: [
-                                                Shadow(
-                                                  color: Colors
-                                                      .deepPurple
-                                                      .withOpacity(
-                                                        0.8,
+                                        child: Stack(
+                                          children: [
+                                            // Efectos decorativos internos
+                                            Positioned(
+                                              left: 278,
+                                              top: 40,
+                                              child: Opacity(
+                                                opacity:
+                                                    0.5,
+                                                child: Container(
+                                                  width: 60,
+                                                  height:
+                                                      60,
+                                                  clipBehavior:
+                                                      Clip.antiAlias,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      width:
+                                                          12,
+                                                      color: const Color.fromARGB(
+                                                        255,
+                                                        38,
+                                                        43,
+                                                        46,
                                                       ),
-                                                  offset:
-                                                      const Offset(
-                                                        1,
-                                                        3,
-                                                      ),
-                                                  blurRadius:
-                                                      10,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          30,
+                                                        ),
+                                                  ),
                                                 ),
-                                                Shadow(
-                                                  color: Colors
-                                                      .black
-                                                      .withOpacity(
-                                                        0.6,
-                                                      ),
-                                                  offset:
-                                                      const Offset(
-                                                        2,
-                                                        4,
-                                                      ),
-                                                  blurRadius:
-                                                      4,
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                          ),
+                                            Positioned(
+                                              left: 262,
+                                              top: 60,
+                                              child: Opacity(
+                                                opacity:
+                                                    0.3,
+                                                child: Container(
+                                                  width: 10,
+                                                  height:
+                                                      10,
+                                                  clipBehavior:
+                                                      Clip.antiAlias,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      width:
+                                                          3,
+                                                    ),
+                                                    color:
+                                                        Colors.black,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          5,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              left: 300,
+                                              top: 60,
+                                              child: Opacity(
+                                                opacity:
+                                                    0.3,
+                                                child: Container(
+                                                  width:
+                                                      6.5,
+                                                  height:
+                                                      6.5,
+                                                  clipBehavior:
+                                                      Clip.antiAlias,
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                        Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          3,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              left: 65,
+                                              top: 10,
+                                              child: Opacity(
+                                                opacity:
+                                                    0.3,
+                                                child: Container(
+                                                  width:
+                                                      8.5,
+                                                  height:
+                                                      8.5,
+                                                  clipBehavior:
+                                                      Clip.antiAlias,
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                        Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          3,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned(
+                                              left: 18,
+                                              top: -18,
+                                              child: Opacity(
+                                                opacity:
+                                                    0.3,
+                                                child: Container(
+                                                  width: 45,
+                                                  height:
+                                                      45,
+                                                  clipBehavior:
+                                                      Clip.antiAlias,
+                                                  decoration: BoxDecoration(
+                                                    color:
+                                                        Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          30,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+
+                                            // Contenido del botón (texto + ícono)
+                                            Center(
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .center,
+                                                children: [
+                                                  Text(
+                                                    'Crear Subasta',
+                                                    style: GoogleFonts.nunito(
+                                                      color:
+                                                          Colors.white,
+                                                      fontSize:
+                                                          25,
+                                                      fontWeight:
+                                                          FontWeight.w900,
+                                                      shadows: [
+                                                        Shadow(
+                                                          color: Colors.deepPurple.withOpacity(
+                                                            0.8,
+                                                          ),
+                                                          offset: const Offset(
+                                                            1,
+                                                            3,
+                                                          ),
+                                                          blurRadius:
+                                                              10,
+                                                        ),
+                                                        Shadow(
+                                                          color: Colors.black.withOpacity(
+                                                            0.6,
+                                                          ),
+                                                          offset: const Offset(
+                                                            2,
+                                                            4,
+                                                          ),
+                                                          blurRadius:
+                                                              4,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width:
+                                                        10,
+                                                  ),
+                                                  Icon(
+                                                    Icons
+                                                        .gavel,
+                                                    color:
+                                                        Colors.white,
+                                                    size:
+                                                        28,
+                                                    shadows: [
+                                                      Shadow(
+                                                        color: Colors.deepPurple.withOpacity(
+                                                          0.8,
+                                                        ),
+                                                        offset: const Offset(
+                                                          1,
+                                                          3,
+                                                        ),
+                                                        blurRadius:
+                                                            10,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -1062,7 +1278,7 @@ class _CreateAuctionScreenState
           onTap: onTap,
           style: TextStyle(
             color: Colors.white,
-            fontSize: 14,
+            fontSize: 15,
           ),
           decoration: InputDecoration(
             labelText: label,
@@ -1081,7 +1297,7 @@ class _CreateAuctionScreenState
                 ),
               ],
               fontWeight: FontWeight.w900,
-              fontSize: 17,
+              fontSize: 18,
             ),
             suffixIcon: Icon(
               Icons.calendar_today,
