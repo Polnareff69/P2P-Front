@@ -243,6 +243,7 @@ class _FloatingMenuButtonState
         ],
       ),
       child: FloatingActionButton(
+        heroTag: 'menuFloatingButton',
         onPressed: () => _showMenu(context),
         backgroundColor: buttonColor,
         elevation: 0,

@@ -432,7 +432,7 @@ class _StorePreviewScreenState
               ),
             ),
             Text(
-              "By Alejo_AM ★",
+              "By Developer ★",
               style: GoogleFonts.nunitoSans(
                 fontSize: 16,
                 color: Colors.white70,

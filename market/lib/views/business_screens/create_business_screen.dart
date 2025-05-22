@@ -4,6 +4,7 @@ import 'package:market/controllers/business_controller.dart';
 import 'package:market/models/business_model.dart';
 import 'package:market/views/business_screens/menu_navigation/store_preview_screen.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:market/views/business_screens/vendor_screen.dart';
 import 'dart:io';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/foundation.dart';
@@ -183,11 +184,7 @@ class _CreateBusinessScreenState
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder:
-                (context) => StorePreviewScreen(
-                  businessName: businessName,
-                  businessLogo: businessLogo,
-                ),
+            builder: (context) => VendorScreen(),
           ),
         );
       }

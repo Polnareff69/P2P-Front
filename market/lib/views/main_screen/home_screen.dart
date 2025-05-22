@@ -94,6 +94,22 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.white,
+            shadows: [
+              Shadow(
+                color: Colors.deepPurpleAccent,
+                offset: Offset(1, 1),
+                blurRadius: 15,
+              ),
+            ],
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         actions: [
           IconButton(
             icon: Icon(

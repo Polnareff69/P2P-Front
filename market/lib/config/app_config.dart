@@ -38,23 +38,40 @@ class AppConfig {
     }
   }
 
-  // 🔗 **TODAS LAS URLs**
+  // 🔗 **LAS URLs**
   static String get registerUrl => '$_baseUrl/register';
   static String get loginUrl => '$_baseUrl/token';
   static String get createCompanyUrl => '$_baseUrl/company';
   static String get getAllCompaniesUrl =>
       '$_baseUrl/compnay/all';
 
-  // ✨ NUEVO: URL para obtener empresa por ID
+  // URL para obtener empresa por ID
   static String getCompanyByIdUrl(String companyId) =>
       '$_baseUrl/company/$companyId';
 
+  // URL base para la API
+  static String getApiUrl() => _baseUrl;
+
+  // URLs para subastas
+  static String get auctionsUrl => '$_baseUrl/auctions';
+  static String getAuctionUrl(String auctionId) =>
+      '$_baseUrl/auction/$auctionId';
+  static String get createAuctionUrl => '$_baseUrl/auction';
+
+  // URLs para pujas
+  static String get bidsUrl => '$_baseUrl/bids';
+  static String get createBidUrl => '$_baseUrl/bid';
+  static String getBidUrl(String bidId) =>
+      '$_baseUrl/bid/$bidId';
+
+  // URLS para productos
   static String getCompanyProductsUrl(String companyId) =>
       '$_baseUrl/company/products/$companyId';
   static String uploadProductUrl(String companyId) =>
       '$_baseUrl/product/$companyId';
   static String getProductImageUrl() =>
       '$_baseUrl/ProductImg';
+  static String get allProductsUrl => '$_baseUrl/product/all';
 
   // 🛠️ **CONFIGURACIONES**
   static const int timeoutSeconds = 10;

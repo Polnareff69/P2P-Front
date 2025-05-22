@@ -1128,4 +1128,5 @@ class _VendorScreenState extends State<VendorScreen> {
       ],
     );
   }
+  
 }

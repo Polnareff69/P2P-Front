@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:market/views/authentication_screens/welcome_screen.dart';
-
+import 'package:market/views/auction_screens/auctions_list_screen.dart';
 import 'package:market/services/auth_service.dart';
 import 'package:market/config/app_config.dart';
 import 'package:flutter/foundation.dart'; //kDebug
@@ -71,6 +71,12 @@ class MyApp extends StatelessWidget {
           systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
       ),
+
+       // Añadir rutas nombradas
+      routes: {
+        '/auctions': (context) => const AuctionsListScreen(),
+        // Agrega más rutas aquí según sea necesario
+      },
       
       // 🏠 PANTALLA INICIAL INTELIGENTE
       home: _getInitialScreen(),
@@ -87,6 +93,7 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+  
   
   // 🎯 DETERMINAR PANTALLA INICIAL BASADA EN AUTENTICACIÓN
   Widget _getInitialScreen() {

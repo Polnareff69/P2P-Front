@@ -1,5 +1,8 @@
 // lib/models/product_model.dart
+import 'package:flutter/foundation.dart';
+
 class Product {
+  String? productid; // ID del producto
   String? Name;
   String? Price;
   String? Description;
@@ -9,6 +12,7 @@ class Product {
   //int? quantity;
 
   Product({
+    this.productid,
     this.Name,
     this.Price,
     this.Description,
@@ -21,6 +25,7 @@ class Product {
   // Convertir el modelo a JSON
   Map<String, dynamic> toJson() {
     return {
+      'productid': productid,
       'Name': Name,
       'Price': Price,
       'Description': Description,
@@ -33,10 +38,21 @@ class Product {
   // Crear un objeto Product desde JSON
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
+      productid: json['productid'],
       Name: json['name'],
       Price: json['price']?.toString(),
       Description: json['description'],
       productImg: json['productimg'],
     );
+  }
+
+  // Método para depuración
+  void printDetails() {
+    if (kDebugMode) {
+      print('Detalles del producto:');
+      print('  ID: $productid');
+      print('  Nombre: $Name');
+      print('  Precio: $Price');
+    }
   }
 }
