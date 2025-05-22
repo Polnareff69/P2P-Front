@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/controllers/auction_controller.dart';
 import 'package:market/controllers/upload_product_controller.dart';
+import 'package:market/controllers/company_controller.dart'; // ✨ AGREGADO
 import 'package:market/models/auction_model.dart';
 import 'package:market/models/product_model.dart';
 import 'package:intl/intl.dart';
@@ -24,6 +25,8 @@ class _CreateAuctionScreenState
       AuctionController();
   final UploadProductController _productController =
       UploadProductController();
+  final CompanyController _companyController =
+      CompanyController(); // ✨ AGREGADO
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>();
 
@@ -35,7 +38,6 @@ class _CreateAuctionScreenState
       TextEditingController();
 
   Map<String, String> _productIdMap = {};
-  bool _isIdMapLoaded = false;
   bool isLoading = true;
   List<Product> products = [];
   Product? selectedProduct;
@@ -44,11 +46,14 @@ class _CreateAuctionScreenState
     const Duration(days: 7),
   );
 
+  // ✨ NUEVAS VARIABLES PARA MANEJO DE EMPRESA
+  String? currentCompanyId;
+  String? companyError;
+
   @override
   void initState() {
     super.initState();
-    _loadProducts();
-    _loadProductIdMap();
+    _initializeScreen(); // ✨ MÉTODO PRINCIPAL DE INICIALIZACIÓN
     _startDateController.text = DateFormat(
       'yyyy-MM-dd',
     ).format(startDate);
@@ -57,84 +62,156 @@ class _CreateAuctionScreenState
     ).format(endDate);
   }
 
-  //  método para cargar el mapa de IDs
-  Future<void> _loadProductIdMap() async {
-    try {
-      setState(() {
-        isLoading =
-            true; // Mostrar loading mientras carga el mapa
-      });
-
-      _productIdMap =
-          await _productController.getAllProductsIdMap();
-
-      setState(() {
-        _isIdMapLoaded = true;
-        isLoading = false;
-      });
-
-      if (kDebugMode) {
-        print(
-          '✅ Mapa de IDs cargado con ${_productIdMap.length} productos',
-        );
-        // Resto del código...
-      }
-    } catch (e) {
-      setState(() {
-        isLoading = false;
-      });
-
-      if (kDebugMode) {
-        print('❌ Error al cargar mapa de IDs: $e');
-      }
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Error al cargar los IDs de productos. Algunas funcionalidades podrían no estar disponibles.',
-          ),
-          backgroundColor: Colors.orange,
-        ),
-      );
-    }
-  }
-
-  Future<void> _loadProducts() async {
+  // ✨ NUEVO: Método principal de inicialización
+  Future<void> _initializeScreen() async {
     setState(() {
       isLoading = true;
+      companyError = null;
     });
 
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final companyId = prefs.getString('company_id');
+      // 1. PRIMERO obtener el company_id correcto del usuario actual
+      await _ensureCorrectCompanyId();
 
-      if (companyId == null) {
-        throw Exception('No hay ID de empresa almacenado');
+      // 2. LUEGO cargar productos y mapa de IDs
+      await Future.wait([
+        _loadProducts(),
+        _loadProductIdMap(),
+      ]);
+    } catch (e) {
+      if (kDebugMode) {
+        print('❌ Error inicializando pantalla: $e');
+      }
+      setState(() {
+        companyError = e.toString();
+        isLoading = false;
+      });
+    }
+  }
+
+  // ✨ NUEVO: Método para asegurar el company_id correcto (igual que VendorScreen)
+  Future<void> _ensureCorrectCompanyId() async {
+    try {
+      if (kDebugMode) {
+        print(
+          '🏢 CreateAuctionScreen - Verificando company_id correcto...',
+        );
+      }
+
+      // Obtener el company_id del usuario actual loggeado
+      String? correctCompanyId =
+          await _companyController
+              .getCurrentSellerCompanyId();
+
+      if (correctCompanyId == null) {
+        throw Exception(
+          'No se pudo obtener el ID de empresa del usuario actual',
+        );
+      }
+
+      // Verificar si el company_id en SharedPreferences es diferente
+      final prefs = await SharedPreferences.getInstance();
+      final storedCompanyId = prefs.getString('company_id');
+
+      if (storedCompanyId != correctCompanyId) {
+        if (kDebugMode) {
+          print('🔄 Company_id incorrecto detectado:');
+          print('   Almacenado: $storedCompanyId');
+          print('   Correcto: $correctCompanyId');
+          print('   Actualizando...');
+        }
+
+        // El método getCurrentSellerCompanyId ya guarda automáticamente el correcto
+      }
+
+      setState(() {
+        currentCompanyId = correctCompanyId;
+      });
+
+      if (kDebugMode) {
+        print('✅ Company_id verificado: $correctCompanyId');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('❌ Error verificando company_id: $e');
+      }
+      throw e;
+    }
+  }
+
+  // ✨ MÉTODO ACTUALIZADO: Usar company_id verificado
+  Future<void> _loadProducts() async {
+    try {
+      if (currentCompanyId == null) {
+        throw Exception('No hay ID de empresa válido');
+      }
+
+      if (kDebugMode) {
+        print(
+          '📦 Cargando productos para empresa: $currentCompanyId',
+        );
       }
 
       final loadedProducts = await _productController
-          .getCompanyProducts(companyId);
+          .getCompanyProducts(currentCompanyId!);
 
       setState(() {
         products = loadedProducts;
         if (products.isNotEmpty) {
           selectedProduct = products.first;
         }
-        isLoading = false;
       });
+
+      if (kDebugMode) {
+        print('✅ Productos cargados: ${products.length}');
+      }
     } catch (e) {
-      print('Error al cargar productos: $e');
+      if (kDebugMode) {
+        print('❌ Error cargando productos: $e');
+      }
+      throw Exception('Error al cargar productos: $e');
+    }
+  }
+
+  // ✨ MÉTODO ACTUALIZADO: Mejor manejo de errores
+  Future<void> _loadProductIdMap() async {
+    try {
+      if (kDebugMode) {
+        print('🗂️ Cargando mapa de IDs de productos...');
+      }
+
+      _productIdMap =
+          await _productController.getAllProductsIdMap();
+
+      if (kDebugMode) {
+        print(
+          '✅ Mapa de IDs cargado: ${_productIdMap.length} productos',
+        );
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('❌ Error cargando mapa de IDs: $e');
+      }
+
+      // No fallar completamente si no se puede cargar el mapa
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Advertencia: Algunas funcionalidades de productos podrían no estar disponibles.',
+          ),
+          backgroundColor: Colors.orange,
+        ),
+      );
+    } finally {
       setState(() {
         isLoading = false;
       });
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error al cargar productos: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
     }
+  }
+
+  // ✨ NUEVO: Método para recargar datos
+  Future<void> _refreshData() async {
+    await _initializeScreen();
   }
 
   Future<void> _selectDate(
@@ -209,6 +286,19 @@ class _CreateAuctionScreenState
         return;
       }
 
+      // ✨ VERIFICACIÓN ADICIONAL: Asegurar que tenemos el company_id correcto
+      if (currentCompanyId == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Error: No se pudo verificar la empresa actual. Intenta nuevamente.',
+            ),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
+
       // Buscar el ID correcto en el mapa
       String productId = '';
 
@@ -259,8 +349,7 @@ class _CreateAuctionScreenState
 
         final auction = Auction(
           id: '',
-          productId:
-              productId, // Usar el ID correcto obtenido
+          productId: productId,
           ownerId: '', // El backend lo obtendrá del token
           startDate: startDate,
           endDate: endDate,
@@ -295,6 +384,7 @@ class _CreateAuctionScreenState
         // Log para depuración
         if (kDebugMode) {
           print('📤 Enviando subasta con:');
+          print('  - Empresa: $currentCompanyId');
           print('  - Producto: ${selectedProduct!.Name}');
           print('  - ID de producto: $productId');
           print('  - Precio inicial: $initialPrice');
@@ -375,6 +465,23 @@ class _CreateAuctionScreenState
             Navigator.pop(context);
           },
         ),
+        // ✨ NUEVO: Botón de refresh
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.refresh,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                  color: Colors.deepPurpleAccent,
+                  offset: Offset(1, 1),
+                  blurRadius: 15,
+                ),
+              ],
+            ),
+            onPressed: _refreshData,
+          ),
+        ],
       ),
       body: Stack(
         children: [
@@ -399,9 +506,121 @@ class _CreateAuctionScreenState
               padding: const EdgeInsets.all(15.0),
               child: Center(
                 child:
+                    // ✨ MANEJO MEJORADO DE ESTADOS DE CARGA Y ERROR
                     isLoading
-                        ? CircularProgressIndicator(
-                          color: Colors.purpleAccent,
+                        ? Column(
+                          mainAxisAlignment:
+                              MainAxisAlignment.center,
+                          children: [
+                            CircularProgressIndicator(
+                              color: Colors.purpleAccent,
+                            ),
+                            SizedBox(height: 16),
+                            Text(
+                              'Verificando empresa y cargando productos...',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 16,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        )
+                        : companyError != null
+                        ? Column(
+                          mainAxisAlignment:
+                              MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.business_center,
+                              color: Colors.red,
+                              size: 64,
+                            ),
+                            SizedBox(height: 16),
+                            Text(
+                              'Error al verificar empresa:',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              companyError!,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 14,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 24),
+                            ElevatedButton(
+                              onPressed: _refreshData,
+                              style:
+                                  ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        Colors.deepPurple,
+                                    foregroundColor:
+                                        Colors.white,
+                                    padding:
+                                        EdgeInsets.symmetric(
+                                          horizontal: 24,
+                                          vertical: 12,
+                                        ),
+                                  ),
+                              child: Text('Reintentar'),
+                            ),
+                          ],
+                        )
+                        : products.isEmpty
+                        ? Column(
+                          mainAxisAlignment:
+                              MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.inventory_2,
+                              color: Colors.orange,
+                              size: 64,
+                            ),
+                            SizedBox(height: 16),
+                            Text(
+                              'No tienes productos disponibles',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'Debes crear productos antes de crear subastas',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 14,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 24),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style:
+                                  ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        Colors.deepPurple,
+                                    foregroundColor:
+                                        Colors.white,
+                                    padding:
+                                        EdgeInsets.symmetric(
+                                          horizontal: 24,
+                                          vertical: 12,
+                                        ),
+                                  ),
+                              child: Text('Volver'),
+                            ),
+                          ],
                         )
                         : SingleChildScrollView(
                           child: Form(
@@ -452,6 +671,61 @@ class _CreateAuctionScreenState
                                       ),
                                     ),
                                   ),
+
+                                  // ✨ NUEVO: Mostrar empresa actual
+                                  if (currentCompanyId !=
+                                      null) ...[
+                                    SizedBox(height: 12),
+                                    Container(
+                                      padding:
+                                          EdgeInsets.symmetric(
+                                            horizontal: 12,
+                                            vertical: 8,
+                                          ),
+                                      decoration: BoxDecoration(
+                                        color: Colors
+                                            .deepPurple
+                                            .withOpacity(
+                                              0.2,
+                                            ),
+                                        borderRadius:
+                                            BorderRadius.circular(
+                                              8,
+                                            ),
+                                        border: Border.all(
+                                          color: Colors
+                                              .deepPurple
+                                              .withOpacity(
+                                                0.5,
+                                              ),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.business,
+                                            color:
+                                                Colors
+                                                    .deepPurpleAccent,
+                                            size: 16,
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            'Empresa: ${currentCompanyId!.substring(0, 8)}...',
+                                            style: TextStyle(
+                                              color:
+                                                  Colors
+                                                      .white70,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+
                                   SizedBox(height: 20),
 
                                   // Selección de producto

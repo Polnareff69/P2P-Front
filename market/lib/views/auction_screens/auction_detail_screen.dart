@@ -13,18 +13,22 @@ class AuctionDetailScreen extends StatefulWidget {
   final Auction auction;
 
   const AuctionDetailScreen({
-    Key? key, 
+    Key? key,
     required this.auction,
   }) : super(key: key);
 
   @override
-  _AuctionDetailScreenState createState() => _AuctionDetailScreenState();
+  _AuctionDetailScreenState createState() =>
+      _AuctionDetailScreenState();
 }
 
-class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
-  final AuctionController _auctionController = AuctionController();
-  final TextEditingController _bidController = TextEditingController();
-  
+class _AuctionDetailScreenState
+    extends State<AuctionDetailScreen> {
+  final AuctionController _auctionController =
+      AuctionController();
+  final TextEditingController _bidController =
+      TextEditingController();
+
   Auction? updatedAuction;
   List<AuctionBid> bids = [];
   bool isLoading = true;
@@ -58,7 +62,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
   // Actualizar el tiempo restante
   void _updateRemainingTime() {
     if (updatedAuction == null) return;
-    
+
     setState(() {
       remainingTime = updatedAuction!.timeRemaining;
     });
@@ -72,14 +76,12 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
 
     try {
       // Cargar detalles actualizados de la subasta
-      final auction = await _auctionController.getAuctionById(
-        widget.auction.id,
-      );
-      
+      final auction = await _auctionController
+          .getAuctionById(widget.auction.id);
+
       // Cargar historial de pujas
-      final bidHistory = await _auctionController.getBidsForAuction(
-        widget.auction.id,
-      );
+      final bidHistory = await _auctionController
+          .getBidsForAuction(widget.auction.id);
 
       setState(() {
         updatedAuction = auction;
@@ -90,11 +92,11 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
       if (kDebugMode) {
         print('Error al cargar detalles de subasta: $e');
       }
-      
+
       setState(() {
         isLoading = false;
       });
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error al cargar detalles: $e'),
@@ -110,7 +112,9 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
     if (_bidController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Por favor, ingresa un monto para la puja'),
+          content: Text(
+            'Por favor, ingresa un monto para la puja',
+          ),
           backgroundColor: Colors.orange,
         ),
       );
@@ -121,11 +125,13 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
     final bidAmount = int.tryParse(
       _bidController.text.replaceAll(RegExp(r'[^0-9]'), ''),
     );
-    
+
     if (bidAmount == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Por favor, ingresa un monto válido'),
+          content: Text(
+            'Por favor, ingresa un monto válido',
+          ),
           backgroundColor: Colors.orange,
         ),
       );
@@ -160,13 +166,13 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
 
       // Enviar la puja
       await _auctionController.placeBid(bid);
-      
+
       // Limpiar campo
       _bidController.clear();
-      
+
       // Recargar información actualizada
       await _loadAuctionDetails();
-      
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('¡Puja realizada con éxito!'),
@@ -231,65 +237,83 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
           },
         ),
       ),
-      body: isLoading
-          ? Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(color: Colors.purpleAccent),
-                  SizedBox(height: 16),
-                  Text(
-                    'Cargando detalles...',
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                ],
-              ),
-            )
-          : RefreshIndicator(
-              onRefresh: _loadAuctionDetails,
-              color: Colors.purpleAccent,
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildProductSection(),
-                      SizedBox(height: 24),
-                      _buildAuctionInfoSection(),
-                      SizedBox(height: 24),
-                      _buildBidsHistorySection(),
-                      SizedBox(height: 24),
-                      _buildBidSection(),
-                      SizedBox(height: 40),
-                    ],
+      body:
+          isLoading
+              ? Center(
+                child: Column(
+                  mainAxisAlignment:
+                      MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      color: Colors.purpleAccent,
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      'Cargando detalles...',
+                      style: TextStyle(
+                        color: Colors.white70,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+              : RefreshIndicator(
+                onRefresh: _loadAuctionDetails,
+                color: Colors.purpleAccent,
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                      children: [
+                        _buildProductSection(),
+                        SizedBox(height: 24),
+                        _buildAuctionInfoSection(),
+                        SizedBox(height: 24),
+                        _buildBidsHistorySection(),
+                        SizedBox(height: 24),
+                        _buildBidSection(),
+                        SizedBox(height: 40),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
     );
   }
 
   // Sección de información del producto
   Widget _buildProductSection() {
-    final productName = updatedAuction?.product != null &&
-            updatedAuction!.product!.containsKey('name') &&
-            updatedAuction!.product!['name'] != null
-        ? updatedAuction!.product!['name']
-        : 'Producto sin nombre';
+    final productName =
+        updatedAuction?.product != null &&
+                updatedAuction!.product!.containsKey(
+                  'name',
+                ) &&
+                updatedAuction!.product!['name'] != null
+            ? updatedAuction!.product!['name']
+            : 'Producto sin nombre';
 
-    final productImg = updatedAuction?.product != null &&
-            updatedAuction!.product!.containsKey('productimg') &&
-            updatedAuction!.product!['productimg'] != null
-        ? updatedAuction!.product!['productimg']
-        : null;
+    final productImg =
+        updatedAuction?.product != null &&
+                updatedAuction!.product!.containsKey(
+                  'productimg',
+                ) &&
+                updatedAuction!.product!['productimg'] !=
+                    null
+            ? updatedAuction!.product!['productimg']
+            : null;
 
-    final productDescription = updatedAuction?.product != null &&
-            updatedAuction!.product!.containsKey('description') &&
-            updatedAuction!.product!['description'] != null
-        ? updatedAuction!.product!['description']
-        : 'Sin descripción';
+    final productDescription =
+        updatedAuction?.product != null &&
+                updatedAuction!.product!.containsKey(
+                  'description',
+                ) &&
+                updatedAuction!.product!['description'] !=
+                    null
+            ? updatedAuction!.product!['description']
+            : 'Sin descripción';
 
     return Card(
       color: Colors.grey[900],
@@ -322,58 +346,78 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                 topLeft: Radius.circular(16),
                 topRight: Radius.circular(16),
               ),
-              child: productImg != null
-                  ? Image.network(
-                      '${AppConfig.getProductImageUrl()}?fileLocation=${Uri.encodeComponent(productImg)}',
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          color: Colors.grey[800],
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.image_not_supported,
-                                  color: Colors.white70,
-                                  size: 50,
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  'Imagen no disponible',
-                                  style: TextStyle(color: Colors.white70),
-                                ),
-                              ],
+              child:
+                  productImg != null
+                      ? Image.network(
+                        '${AppConfig.getProductImageUrl()}?fileLocation=${Uri.encodeComponent(productImg)}',
+                        fit: BoxFit.cover,
+                        errorBuilder: (
+                          context,
+                          error,
+                          stackTrace,
+                        ) {
+                          return Container(
+                            color: Colors.grey[800],
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment
+                                        .center,
+                                children: [
+                                  Icon(
+                                    Icons
+                                        .image_not_supported,
+                                    color: Colors.white70,
+                                    size: 50,
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text(
+                                    'Imagen no disponible',
+                                    style: TextStyle(
+                                      color: Colors.white70,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                      loadingBuilder: (context, child, loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Container(
-                          color: Colors.grey[800],
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.purpleAccent,
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null,
+                          );
+                        },
+                        loadingBuilder: (
+                          context,
+                          child,
+                          loadingProgress,
+                        ) {
+                          if (loadingProgress == null)
+                            return child;
+                          return Container(
+                            color: Colors.grey[800],
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.purpleAccent,
+                                value:
+                                    loadingProgress
+                                                .expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress
+                                                .expectedTotalBytes!
+                                        : null,
+                              ),
                             ),
+                          );
+                        },
+                      )
+                      : Container(
+                        color: Colors.grey[800],
+                        child: Center(
+                          child: Icon(
+                            Icons.image,
+                            color: Colors.white70,
+                            size: 80,
                           ),
-                        );
-                      },
-                    )
-                  : Container(
-                      color: Colors.grey[800],
-                      child: Center(
-                        child: Icon(
-                          Icons.image,
-                          color: Colors.white70,
-                          size: 80,
                         ),
                       ),
-                    ),
             ),
           ),
 
@@ -475,14 +519,18 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
             // Fechas
             _buildInfoRow(
               'Fecha de inicio:',
-              DateFormat('dd/MM/yyyy HH:mm').format(updatedAuction!.startDate),
+              DateFormat(
+                'dd/MM/yyyy HH:mm',
+              ).format(updatedAuction!.startDate),
               iconColor: Colors.blue,
               icon: Icons.calendar_today,
             ),
             SizedBox(height: 12),
             _buildInfoRow(
               'Fecha de fin:',
-              DateFormat('dd/MM/yyyy HH:mm').format(updatedAuction!.endDate),
+              DateFormat(
+                'dd/MM/yyyy HH:mm',
+              ).format(updatedAuction!.endDate),
               iconColor: Colors.red,
               icon: Icons.event_busy,
             ),
@@ -499,12 +547,15 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
   // Widget para mostrar el tiempo restante con animación
   Widget _buildTimeRemainingWidget() {
     Color timeColor;
-    
+
     if (updatedAuction!.hasEnded) {
       timeColor = Colors.red;
     } else if (updatedAuction!.isActive) {
       // Determinar color basado en cuánto tiempo queda
-      final daysLeft = updatedAuction!.endDate.difference(DateTime.now()).inDays;
+      final daysLeft =
+          updatedAuction!.endDate
+              .difference(DateTime.now())
+              .inDays;
       if (daysLeft < 1) {
         timeColor = Colors.red; // Menos de un día
       } else if (daysLeft < 3) {
@@ -518,7 +569,10 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
 
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      padding: EdgeInsets.symmetric(
+        vertical: 12,
+        horizontal: 16,
+      ),
       decoration: BoxDecoration(
         color: Colors.grey[850],
         borderRadius: BorderRadius.circular(12),
@@ -536,11 +590,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.timer,
-            color: timeColor,
-            size: 24,
-          ),
+          Icon(Icons.timer, color: timeColor, size: 24),
           SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -657,10 +707,14 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
               itemCount: bids.length,
               itemBuilder: (context, index) {
                 final bid = bids[index];
-                final username = bid.user != null && bid.user!.containsKey('username')
-                    ? bid.user!['username']
-                    : 'Usuario ${bid.userId.substring(0, 4)}';
-                
+                final username =
+                    bid.user != null &&
+                            bid.user!.containsKey(
+                              'username',
+                            )
+                        ? bid.user!['username']
+                        : 'Usuario ${bid.userId.substring(0, 4)}';
+
                 return Container(
                   margin: EdgeInsets.only(bottom: 8),
                   padding: EdgeInsets.all(10),
@@ -668,22 +722,30 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                     color: Colors.grey[850],
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: index == 0 ? Colors.greenAccent.withOpacity(0.5) : Colors.transparent,
+                      color:
+                          index == 0
+                              ? Colors.greenAccent
+                                  .withOpacity(0.5)
+                              : Colors.transparent,
                       width: 1,
                     ),
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
                           CircleAvatar(
-                            backgroundColor: index == 0 
-                                ? Colors.green 
-                                : Colors.deepPurple,
+                            backgroundColor:
+                                index == 0
+                                    ? Colors.green
+                                    : Colors.deepPurple,
                             radius: 16,
                             child: Icon(
-                              index == 0 ? Icons.emoji_events : Icons.person,
+                              index == 0
+                                  ? Icons.emoji_events
+                                  : Icons.person,
                               color: Colors.white,
                               size: 16,
                             ),
@@ -693,7 +755,10 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                             username,
                             style: GoogleFonts.nunito(
                               fontSize: 16,
-                              fontWeight: index == 0 ? FontWeight.bold : FontWeight.normal,
+                              fontWeight:
+                                  index == 0
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
                               color: Colors.white,
                             ),
                           ),
@@ -704,7 +769,10 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                         style: GoogleFonts.nunito(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: index == 0 ? Colors.greenAccent : Colors.white70,
+                          color:
+                              index == 0
+                                  ? Colors.greenAccent
+                                  : Colors.white70,
                         ),
                       ),
                     ],
@@ -749,8 +817,8 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
               ),
               SizedBox(height: 8),
               Text(
-                bids.isNotEmpty 
-                    ? '¡La puja ganadora fue de ${bids.first.formattedBidAmount}!' 
+                bids.isNotEmpty
+                    ? '¡La puja ganadora fue de ${bids.first.formattedBidAmount}!'
                     : 'No se realizaron pujas en esta subasta.',
                 style: GoogleFonts.nunito(
                   fontSize: 16,
@@ -847,15 +915,29 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                       filled: true,
                       fillColor: Colors.grey[850],
                       hintText: 'Monto de tu puja',
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.attach_money, color: Colors.greenAccent),
+                      hintStyle: TextStyle(
+                        color: Colors.grey,
+                      ),
+                      prefixIcon: Icon(
+                        Icons.attach_money,
+                        color: Colors.greenAccent,
+                      ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.deepPurple.withOpacity(0.5)),
+                        borderRadius: BorderRadius.circular(
+                          12,
+                        ),
+                        borderSide: BorderSide(
+                          color: Colors.deepPurple
+                              .withOpacity(0.5),
+                        ),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Colors.deepPurple),
+                        borderRadius: BorderRadius.circular(
+                          12,
+                        ),
+                        borderSide: BorderSide(
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                   ),
@@ -864,30 +946,38 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
                 SizedBox(
                   height: 56,
                   child: ElevatedButton(
-                    onPressed: isBidLoading ? null : _placeBid,
+                    onPressed:
+                        isBidLoading ? null : _placeBid,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepPurple,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(
+                          12,
+                        ),
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                      ),
                     ),
-                    child: isBidLoading
-                        ? SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
+                    child:
+                        isBidLoading
+                            ? SizedBox(
+                              width: 20,
+                              height: 20,
+                              child:
+                                  CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                            )
+                            : Text(
+                              'Pujar',
+                              style: GoogleFonts.nunito(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
-                          )
-                        : Text(
-                            'Pujar',
-                            style: GoogleFonts.nunito(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
                   ),
                 ),
               ],
@@ -917,11 +1007,7 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
   }) {
     return Row(
       children: [
-        Icon(
-          icon,
-          color: iconColor,
-          size: 20,
-        ),
+        Icon(icon, color: iconColor, size: 20),
         SizedBox(width: 12),
         Text(
           label,
@@ -933,12 +1019,13 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
         SizedBox(width: 8),
         Text(
           value,
-          style: valueStyle ?? 
-          GoogleFonts.nunito(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
+          style:
+              valueStyle ??
+              GoogleFonts.nunito(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
         ),
       ],
     );
@@ -961,7 +1048,10 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
     }
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 8,
+      ),
       decoration: BoxDecoration(
         color: badgeColor.withOpacity(0.2),
         borderRadius: BorderRadius.circular(20),
@@ -978,8 +1068,11 @@ class _AuctionDetailScreenState extends State<AuctionDetailScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
-            auction.hasEnded ? Icons.timer_off :
-            (auction.isActive ? Icons.gavel : Icons.update),
+            auction.hasEnded
+                ? Icons.timer_off
+                : (auction.isActive
+                    ? Icons.gavel
+                    : Icons.update),
             color: badgeColor,
             size: 16,
           ),

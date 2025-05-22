@@ -682,7 +682,7 @@ class _AuctionsListScreenState
     }
 
     return Padding(
-      padding: const EdgeInsets.only(left: 33),
+      padding: const EdgeInsets.only(left: 21),
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: 13,

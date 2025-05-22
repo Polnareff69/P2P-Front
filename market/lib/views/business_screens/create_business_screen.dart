@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/controllers/business_controller.dart';
 import 'package:market/models/business_model.dart';
-import 'package:market/views/business_screens/menu_navigation/store_preview_screen.dart';
+//import 'package:market/views/business_screens/menu_navigation/store_preview_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:market/views/business_screens/vendor_screen.dart';
 import 'dart:io';
