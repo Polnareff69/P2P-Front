@@ -13,14 +13,14 @@ class SettingsMenu extends StatelessWidget {
   final VoidCallback? onNotifications;
 
   const SettingsMenu({
-    Key? key,
+    super.key,
     this.scaffoldKey, // ✨ key
     this.onLogoutStart,
     this.onLogoutComplete,
     this.onEditProfile,
     this.onChangeTheme,
     this.onNotifications,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -111,8 +111,9 @@ class SettingsMenu extends StatelessWidget {
                       subtitle: 'Configurar privacidad',
                       color: Colors.purple.shade900,
                       onTap: () {
-                        if (kDebugMode)
+                        if (kDebugMode) {
                           print('Privacidad presionado');
+                        }
                       },
                     ),
                     _buildCustomMenuItem(
@@ -122,8 +123,9 @@ class SettingsMenu extends StatelessWidget {
                       subtitle: 'Centro de ayuda',
                       color: Colors.purple.shade800,
                       onTap: () {
-                        if (kDebugMode)
+                        if (kDebugMode) {
                           print('Ayuda presionado');
+                        }
                       },
                     ),
                     _buildCustomMenuItem(
@@ -132,8 +134,9 @@ class SettingsMenu extends StatelessWidget {
                       subtitle: 'Información de la app',
                       color: Colors.purple.shade900,
                       onTap: () {
-                        if (kDebugMode)
+                        if (kDebugMode) {
                           print('Acerca de presionado');
+                        }
                       },
                     ),
 
@@ -292,10 +295,11 @@ class SettingsMenu extends StatelessWidget {
     final VoidCallback effectiveOnTap =
         onTap ??
         () {
-          if (kDebugMode)
+          if (kDebugMode) {
             print(
               'Botón "$title" presionado (sin acción definida)',
             );
+          }
         };
 
     return Material(
@@ -474,8 +478,9 @@ class SettingsMenu extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () async {
-          if (kDebugMode)
+          if (kDebugMode) {
             print('🚪 Logout iniciado desde SettingsMenu');
+          }
 
           // ✨ USAR EL CONTEXT DEL SCAFFOLD SI ESTÁ DISPONIBLE
           final BuildContext contextToUse =
@@ -654,8 +659,9 @@ class SettingsMenu extends StatelessWidget {
               );
 
               // NAVEGACIÓN CON EL NAVIGATOR OBTENIDO ANTES
-              if (kDebugMode)
+              if (kDebugMode) {
                 print('🔍 Navegando a WelcomeScreen...');
+              }
 
               // Usar el navigator que obtuvimos
               navigator.pushAndRemoveUntil(
@@ -666,8 +672,9 @@ class SettingsMenu extends StatelessWidget {
                 (route) => false,
               );
 
-              if (kDebugMode)
+              if (kDebugMode) {
                 print('✅ Navegación completada');
+              }
 
               // Callback final
               onLogoutComplete?.call();
@@ -675,8 +682,9 @@ class SettingsMenu extends StatelessWidget {
               // Cerrar loading en caso de error
               Navigator.of(contextToUse).pop();
 
-              if (kDebugMode)
+              if (kDebugMode) {
                 print('❌ Error en logout: $e');
+              }
 
               scaffold.showSnackBar(
                 SnackBar(

@@ -104,7 +104,7 @@ class FloatingMenuButton extends StatefulWidget {
   final String? logoAssetPath;
 
   const FloatingMenuButton({
-    Key? key,
+    super.key,
     this.menuOptions,
     this.buttonColor,
     this.menuBackgroundColor,
@@ -112,7 +112,7 @@ class FloatingMenuButton extends StatefulWidget {
     this.textColor,
     this.buttonIcon,
     this.logoAssetPath,
-  }) : super(key: key);
+  });
 
   @override
   State<FloatingMenuButton> createState() =>

@@ -5,7 +5,8 @@ import 'package:market/views/auction_screens/auctions_list_screen.dart';
 import 'package:market/services/auth_service.dart';
 import 'package:market/config/app_config.dart';
 import 'package:flutter/foundation.dart'; //kDebug
-
+import 'package:market/views/university_screen/university_screen.dart'; 
+import 'package:market/views/map_screen/map_screen.dart';
 void main() async {
   // 🚀 CONFIGURACIÓN INICIAL
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,6 +76,8 @@ class MyApp extends StatelessWidget {
        // Añadir rutas nombradas
       routes: {
         '/auctions': (context) => const AuctionsListScreen(),
+        '/university': (context) => const UniversityScreen(),
+        '/university_map': (context) => const MapaScreen(),
         // Agrega más rutas aquí según sea necesario
       },
       

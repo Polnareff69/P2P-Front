@@ -161,12 +161,12 @@ class AuthGuardWrapper extends StatelessWidget {
   final Widget? fallbackWidget;
 
   const AuthGuardWrapper({
-    Key? key,
+    super.key,
     required this.child,
     this.requireAuth = true,
     this.allowedRoles,
     this.fallbackWidget,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -19,17 +19,19 @@ class NavigationHelper {
     BuildContext context,
   ) async {
     try {
-      if (kDebugMode)
+      if (kDebugMode) {
         print(
           '🔍 NavigationHelper - Navegando al perfil...',
         );
+      }
 
       // Verificar autenticación
       if (!AuthService.instance.isInitialized) {
-        if (kDebugMode)
+        if (kDebugMode) {
           print(
             '⚠️ AuthService no inicializado, esperando...',
           );
+        }
         await AuthService.instance.initialize();
       }
 
@@ -61,8 +63,9 @@ class NavigationHelper {
           await _handleUnknownRole(context);
       }
     } catch (e) {
-      if (kDebugMode)
+      if (kDebugMode) {
         print('❌ Error en navegación al perfil: $e');
+      }
       _showNavigationError(
         context,
         'Error al navegar al perfil',
@@ -444,8 +447,9 @@ class NavigationHelper {
     BuildContext context,
   ) async {
     try {
-      if (kDebugMode)
+      if (kDebugMode) {
         print('🚪 Iniciando logout con confirmación...');
+      }
 
       // Mostrar diálogo de confirmación
       bool shouldLogout =
@@ -556,8 +560,9 @@ class NavigationHelper {
         await _performLogout(context);
       }
     } catch (e) {
-      if (kDebugMode)
+      if (kDebugMode) {
         print('❌ Error en logout con confirmación: $e');
+      }
       showErrorMessage(context, 'Error al cerrar sesión');
     }
   }
@@ -625,13 +630,15 @@ class NavigationHelper {
       await Future.delayed(Duration(milliseconds: 500));
 
       // Navegar a WelcomeScreen
-      if (kDebugMode)
+      if (kDebugMode) {
         print('🔍 Navegando a WelcomeScreen...');
+      }
 
       navigateAndClearStack(context, const WelcomeScreen());
 
-      if (kDebugMode)
+      if (kDebugMode) {
         print('✅ Logout completado exitosamente');
+      }
     } catch (e) {
       if (kDebugMode) print('❌ Error durante logout: $e');
 

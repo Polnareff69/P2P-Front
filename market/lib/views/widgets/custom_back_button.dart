@@ -21,14 +21,14 @@ class BackIcon extends StatelessWidget {
   final VoidCallback? onPressed;
 
   const BackIcon({
-    Key? key,
+    super.key,
     this.iconColor = Colors.deepPurpleAccent,
     this.size = 33.0,
     this.showShadow = true,
     this.shadowColor = Colors.black,
     this.shadowOpacity = 0.3,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -76,14 +76,14 @@ class AnimatedSimpleBackIcon extends StatefulWidget {
   final VoidCallback? onPressed;
 
   const AnimatedSimpleBackIcon({
-    Key? key,
+    super.key,
     this.iconColor = Colors.deepPurpleAccent,
     this.size = 30.0,
     this.showShadow = true,
     this.shadowColor = Colors.black,
     this.shadowOpacity = 0.3,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   _AnimatedSimpleBackIconState createState() =>

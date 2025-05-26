@@ -128,10 +128,11 @@ class _CreateBusinessScreenState
 
       // 🚀 ASEGURAR que el rol esté actualizado
       if (!AuthService.instance.isSeller) {
-        if (kDebugMode)
+        if (kDebugMode) {
           print(
             '⚠️ Rol no actualizado, forzando actualización...',
           );
+        }
 
         // Esperar un momento y recargar
         await Future.delayed(Duration(milliseconds: 500));
@@ -139,8 +140,9 @@ class _CreateBusinessScreenState
 
         // Si aún no es seller, forzar la actualización
         if (!AuthService.instance.isSeller) {
-          if (kDebugMode)
+          if (kDebugMode) {
             print('🔧 Forzando rol a seller...');
+          }
           await AuthService.instance.updateUserRole(
             'seller',
           );

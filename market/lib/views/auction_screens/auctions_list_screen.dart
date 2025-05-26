@@ -9,7 +9,7 @@ import 'package:market/views/auction_screens/create_auction_screen.dart';
 import 'package:market/views/auction_screens/auction_detail_screen.dart';
 
 class AuctionsListScreen extends StatefulWidget {
-  const AuctionsListScreen({Key? key}) : super(key: key);
+  const AuctionsListScreen({super.key});
 
   @override
   _AuctionsListScreenState createState() =>
@@ -539,8 +539,9 @@ class _AuctionsListScreenState
                                     loadingProgress,
                                   ) {
                                     if (loadingProgress ==
-                                        null)
+                                        null) {
                                       return child;
+                                    }
                                     return Container(
                                       color:
                                           Colors.grey[800],

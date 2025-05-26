@@ -130,10 +130,8 @@ class AuctionController {
               // Intentamos hacer coincidir por algún criterio (ejemplo: precio)
               if (product.Price == detailedProduct.Price &&
                   detailedProduct.Name != null) {
-                if (productName == null)
-                  productName = detailedProduct.Name;
-                if (productImg == null)
-                  productImg = detailedProduct.productImg;
+                productName ??= detailedProduct.Name;
+                productImg ??= detailedProduct.productImg;
                 break;
               }
             }

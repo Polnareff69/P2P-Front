@@ -8,13 +8,13 @@ class AnimatedPulsingLogo extends StatefulWidget {
   final double pulseScale;
 
   const AnimatedPulsingLogo({
-    Key? key,
+    super.key,
     required this.logoAssetPath,
     this.size = 200,
     this.glowColor = Colors.purple,
     this.pulseDuration = const Duration(seconds: 3),
     this.pulseScale = 1.1,
-  }) : super(key: key);
+  });
 
   @override
   State<AnimatedPulsingLogo> createState() =>

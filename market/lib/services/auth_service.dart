@@ -34,8 +34,9 @@ class AuthService {
   // 🚀 INICIALIZAR AL ABRIR LA APP
   Future<void> initialize() async {
     try {
-      if (kDebugMode)
+      if (kDebugMode) {
         print('🔄 Inicializando AuthService...');
+      }
 
       await _loadUserData();
       _isInitialized = true;
@@ -45,8 +46,9 @@ class AuthService {
         print('   Estado: ${getUserInfo()}');
       }
     } catch (e) {
-      if (kDebugMode)
+      if (kDebugMode) {
         print('❌ Error inicializando AuthService: $e');
+      }
       _isInitialized =
           true; // Marcar como inicializado aunque haya error
     }
@@ -64,8 +66,9 @@ class AuthService {
       // Decodificar y guardar información del usuario
       await _decodeAndSaveUserInfo(token);
 
-      if (kDebugMode)
+      if (kDebugMode) {
         print('✅ Token guardado exitosamente');
+      }
     } catch (e) {
       if (kDebugMode) print('❌ Error guardando token: $e');
       rethrow;
@@ -106,8 +109,9 @@ class AuthService {
         print('   Email: $_currentEmail');
       }
     } catch (e) {
-      if (kDebugMode)
+      if (kDebugMode) {
         print('❌ Error decodificando token: $e');
+      }
       // En caso de error, limpiar datos
       await logout();
       rethrow;
@@ -117,8 +121,9 @@ class AuthService {
   // 📱 CARGAR DATOS GUARDADOS AL INICIAR
   Future<void> _loadUserData() async {
     try {
-      if (kDebugMode)
+      if (kDebugMode) {
         print('📱 Cargando datos guardados...');
+      }
 
       final prefs = await SharedPreferences.getInstance();
 
@@ -137,12 +142,14 @@ class AuthService {
 
       // Verificar si el token existe pero está expirado
       if (_currentToken != null && isTokenExpired()) {
-        if (kDebugMode)
+        if (kDebugMode) {
           print('⚠️ Token expirado, limpiando datos');
+        }
         await logout();
       } else if (_currentToken != null) {
-        if (kDebugMode)
+        if (kDebugMode) {
           print('✅ Usuario logueado encontrado');
+        }
       } else {
         if (kDebugMode) print('ℹ️ No hay usuario logueado');
       }
@@ -160,8 +167,9 @@ class AuthService {
     try {
       return JwtDecoder.isExpired(_currentToken!);
     } catch (e) {
-      if (kDebugMode)
+      if (kDebugMode) {
         print('❌ Error verificando expiración: $e');
+      }
       return true;
     }
   }
@@ -223,8 +231,9 @@ class AuthService {
   // 🔄 REFRESCAR TOKEN (para implementar en el futuro con FastAPI)
   Future<bool> refreshToken() async {
     // TODO: Implementar refresh token con tu backend FastAPI
-    if (kDebugMode)
+    if (kDebugMode) {
       print('🔄 Refresh token - No implementado aún');
+    }
     return false;
   }
 
@@ -237,10 +246,11 @@ class AuthService {
   /// Actualizar rol del usuario (útil cuando se crea una empresa)
   Future<void> updateUserRole(String newRole) async {
     try {
-      if (kDebugMode)
+      if (kDebugMode) {
         print(
           '🔄 Actualizando rol de $_currentRole a $newRole',
         );
+      }
 
       _currentRole = newRole;
 
@@ -266,8 +276,9 @@ class AuthService {
   /// Recargar datos del usuario desde SharedPreferences
   Future<void> reloadUserData() async {
     try {
-      if (kDebugMode)
+      if (kDebugMode) {
         print('🔄 Recargando datos del usuario...');
+      }
       await _loadUserData();
       if (kDebugMode) {
         print('✅ Datos del usuario recargados');

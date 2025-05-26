@@ -13,7 +13,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateAuctionScreen extends StatefulWidget {
-  const CreateAuctionScreen({Key? key}) : super(key: key);
+  const CreateAuctionScreen({super.key});
 
   @override
   _CreateAuctionScreenState createState() =>
@@ -136,7 +136,7 @@ class _CreateAuctionScreenState
       if (kDebugMode) {
         print('❌ Error verificando company_id: $e');
       }
-      throw e;
+      rethrow;
     }
   }
 
@@ -239,8 +239,7 @@ class _CreateAuctionScreenState
               onPrimary: Colors.white,
               surface: Color(0xFF121212),
               onSurface: Colors.white,
-            ),
-            dialogBackgroundColor: Color(0xFF121212),
+            ), dialogTheme: DialogThemeData(backgroundColor: Color(0xFF121212)),
           ),
           child: child!,
         );

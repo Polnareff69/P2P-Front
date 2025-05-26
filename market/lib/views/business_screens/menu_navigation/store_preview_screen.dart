@@ -62,16 +62,18 @@ class _StorePreviewScreenState
 
       // Si está en StorePreviewScreen pero no es seller, intentar corregir
       if (!AuthService.instance.isSeller) {
-        if (kDebugMode)
+        if (kDebugMode) {
           print('⚠️ No es seller en StorePreviewScreen');
+        }
 
         // Intentar recargar datos primero
         await AuthService.instance.reloadUserData();
 
         // Si aún no es seller después de recargar, forzar actualización
         if (!AuthService.instance.isSeller) {
-          if (kDebugMode)
+          if (kDebugMode) {
             print('🔧 Forzando rol a seller...');
+          }
           await AuthService.instance.updateUserRole(
             'seller',
           );
@@ -1397,8 +1399,9 @@ class _StorePreviewScreenState
                             child,
                             loadingProgress,
                           ) {
-                            if (loadingProgress == null)
+                            if (loadingProgress == null) {
                               return child;
+                            }
                             return Container(
                               color: Colors.grey[800],
                               child: Center(

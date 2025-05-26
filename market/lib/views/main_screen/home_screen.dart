@@ -8,7 +8,7 @@ import 'package:market/views/widgets/floating_menu_button.dart';
 import 'package:market/config/app_config.dart'; // aca esta la peticion para ver productos
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -417,8 +417,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           child,
                           loadingProgress,
                         ) {
-                          if (loadingProgress == null)
+                          if (loadingProgress == null) {
                             return child;
+                          }
                           return Container(
                             decoration: BoxDecoration(
                               gradient: LinearGradient(

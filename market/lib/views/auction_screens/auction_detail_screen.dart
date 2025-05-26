@@ -13,9 +13,9 @@ class AuctionDetailScreen extends StatefulWidget {
   final Auction auction;
 
   const AuctionDetailScreen({
-    Key? key,
+    super.key,
     required this.auction,
-  }) : super(key: key);
+  });
 
   @override
   _AuctionDetailScreenState createState() =>
@@ -387,8 +387,9 @@ class _AuctionDetailScreenState
                           child,
                           loadingProgress,
                         ) {
-                          if (loadingProgress == null)
+                          if (loadingProgress == null) {
                             return child;
+                          }
                           return Container(
                             color: Colors.grey[800],
                             child: Center(

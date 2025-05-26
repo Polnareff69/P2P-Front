@@ -12,14 +12,14 @@ class LogoutButton extends StatelessWidget {
   final VoidCallback? onLogoutComplete;
 
   const LogoutButton({
-    Key? key,
+    super.key,
     this.buttonText = 'Cerrar Sesión',
     this.icon = Icons.logout,
     this.color,
     this.showConfirmDialog = true,
     this.onLogoutStart,
     this.onLogoutComplete,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -87,10 +87,11 @@ class LogoutButton extends StatelessWidget {
 
   Future<void> _performLogout(BuildContext context) async {
     try {
-      if (kDebugMode)
+      if (kDebugMode) {
         print(
           '🔍 INICIO _performLogout - Context válido: ${context.mounted}',
         );
+      }
 
       // Callback antes del logout
       onLogoutStart?.call();
@@ -130,17 +131,19 @@ class LogoutButton extends StatelessWidget {
           AuthService.instance.printCurrentState();
         }
       } else {
-        if (kDebugMode)
+        if (kDebugMode) {
           print(
             '⚠️ El usuario ya no está logueado, solo navegando...',
           );
+        }
       }
 
       // Cerrar indicador de carga
       if (context.mounted) {
         Navigator.of(context).pop();
-        if (kDebugMode)
+        if (kDebugMode) {
           print('🔍 Indicador de carga cerrado');
+        }
       }
 
       // Mostrar mensaje de éxito
@@ -158,8 +161,9 @@ class LogoutButton extends StatelessWidget {
       }
 
       // FORZAR NAVEGACIÓN AL WELCOME SCREEN
-      if (kDebugMode)
+      if (kDebugMode) {
         print('🔍 Intentando navegar a WelcomeScreen...');
+      }
 
       if (context.mounted) {
         // Usar Navigator desde el context más alto posible
@@ -172,11 +176,13 @@ class LogoutButton extends StatelessWidget {
           ),
           (Route<dynamic> route) => false,
         );
-        if (kDebugMode)
+        if (kDebugMode) {
           print('✅ Navegación a WelcomeScreen exitosa');
+        }
       } else {
-        if (kDebugMode)
+        if (kDebugMode) {
           print('❌ Context no mounted, no se pudo navegar');
+        }
       }
 
       // Callback después del logout
@@ -225,10 +231,10 @@ class LogoutIconButton extends StatelessWidget {
   final VoidCallback? onLogoutComplete;
 
   const LogoutIconButton({
-    Key? key,
+    super.key,
     this.onLogoutStart,
     this.onLogoutComplete,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

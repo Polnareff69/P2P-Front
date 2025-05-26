@@ -139,7 +139,7 @@ class _ProductDetailScreenState
         ),
 
         // Lista horizontal de productos
-        Container(
+        SizedBox(
           height: 210,
           child:
               loadingProducts
@@ -241,8 +241,9 @@ class _ProductDetailScreenState
                             child,
                             loadingProgress,
                           ) {
-                            if (loadingProgress == null)
+                            if (loadingProgress == null) {
                               return child;
+                            }
                             return Container(
                               color: Colors.grey[800],
                               child: Center(
@@ -643,8 +644,9 @@ class _ProductDetailScreenState
                     child,
                     loadingProgress,
                   ) {
-                    if (loadingProgress == null)
+                    if (loadingProgress == null) {
                       return child;
+                    }
                     return Container(
                       color: Colors.grey[800],
                       child: Center(

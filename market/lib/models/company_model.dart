@@ -35,23 +35,15 @@ class CompanyDetails extends Company {
   final Owner owner;
 
   CompanyDetails({
-    required String companyId,
-    String? name,
-    String? description,
-    String? companyBackground,
-    String? companyImg,
-    String? userId,
-    String? phoneNumber,
+    required super.companyId,
+    super.name,
+    super.description,
+    super.companyBackground,
+    super.companyImg,
+    super.userId,
+    super.phoneNumber,
     required this.owner,
-  }) : super(
-          companyId: companyId,
-          name: name,
-          description: description,
-          companyBackground: companyBackground,
-          companyImg: companyImg,
-          userId: userId,
-          phoneNumber: phoneNumber,
-        );
+  });
 
   factory CompanyDetails.fromJson(Map<String, dynamic> json) {
     return CompanyDetails(

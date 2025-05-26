@@ -70,10 +70,11 @@ class _VendorScreenState extends State<VendorScreen> {
         companyError = null;
       });
 
-      if (kDebugMode)
+      if (kDebugMode) {
         print(
           '🏢 VendorScreen - Cargando datos de empresa...',
         );
+      }
 
       // Primero obtener el company ID del seller actual
       String? companyId =
@@ -125,10 +126,11 @@ class _VendorScreenState extends State<VendorScreen> {
 
     // Si no está logueado, navegar a WelcomeScreen
     if (!AuthService.instance.isLoggedIn) {
-      if (kDebugMode)
+      if (kDebugMode) {
         print(
           '⚠️ VendorScreen - Usuario no logueado, navegando a Welcome...',
         );
+      }
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
@@ -345,22 +347,25 @@ class _VendorScreenState extends State<VendorScreen> {
                   context,
                   scaffoldKey: _scaffoldKey,
                   onLogoutStart: () {
-                    if (kDebugMode)
+                    if (kDebugMode) {
                       print(
                         'Iniciando logout desde Settings Menu en VendorScreen',
                       );
+                    }
                   },
                   onLogoutComplete: () {
-                    if (kDebugMode)
+                    if (kDebugMode) {
                       print(
                         'Logout completado desde Settings Menu en VendorScreen',
                       );
+                    }
                   },
                   onEditProfile: () {
-                    if (kDebugMode)
+                    if (kDebugMode) {
                       print(
                         'Editando perfil desde Settings Menu',
                       );
+                    }
                     // Aquí podrías implementar edición de perfil de empresa
                   },
                 );
