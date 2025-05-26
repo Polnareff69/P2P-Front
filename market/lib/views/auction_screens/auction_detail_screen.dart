@@ -392,13 +392,13 @@ class _AuctionDetailScreenState
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      elevation: 5,
+      elevation: 7,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Imagen del producto con efecto de sombra
           Container(
-            height: 240,
+            height: 250,
             width: double.infinity,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -535,7 +535,7 @@ class _AuctionDetailScreenState
                   style: GoogleFonts.nunito(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.purpleAccent,
+                    color: Colors.purpleAccent.shade700,
                     shadows: [
                       Shadow(
                         color: Colors.deepPurple
@@ -591,7 +591,7 @@ class _AuctionDetailScreenState
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      elevation: 5,
+      elevation: 7,
       child: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -819,7 +819,7 @@ class _AuctionDetailScreenState
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        elevation: 5,
+        elevation: 7,
         child: Padding(
           padding: EdgeInsets.all(16),
           child: Column(
@@ -861,6 +861,21 @@ class _AuctionDetailScreenState
                         Icons.gavel,
                         size: 48,
                         color: Colors.grey,
+                        shadows: [
+                          Shadow(
+                            color: Colors.deepPurple
+                                .withOpacity(0.8),
+                            offset: const Offset(1, 3),
+                            blurRadius: 10,
+                          ),
+                          Shadow(
+                            color: Colors.black.withOpacity(
+                              0.6,
+                            ),
+                            offset: const Offset(2, 4),
+                            blurRadius: 4,
+                          ),
+                        ],
                       ),
                       SizedBox(height: 16),
                       Text(
@@ -868,6 +883,20 @@ class _AuctionDetailScreenState
                         style: GoogleFonts.nunito(
                           fontSize: 16,
                           color: Colors.grey,
+                          shadows: [
+                            Shadow(
+                              color: Colors.deepPurple
+                                  .withOpacity(0.8),
+                              offset: const Offset(1, 2),
+                              blurRadius: 10,
+                            ),
+                            Shadow(
+                              color: Colors.black
+                                  .withOpacity(0.6),
+                              offset: const Offset(2, 3),
+                              blurRadius: 4,
+                            ),
+                          ],
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -886,7 +915,7 @@ class _AuctionDetailScreenState
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      elevation: 5,
+      elevation: 7,
       child: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -932,7 +961,7 @@ class _AuctionDetailScreenState
               height: 24,
             ),
 
-            // ✅ MEJORADO: Lista de pujas con mejor diseño
+            //  Lista de pujas
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
@@ -960,17 +989,24 @@ class _AuctionDetailScreenState
                               : Colors.transparent,
                       width: 1.5,
                     ),
-                    boxShadow:
-                        isWinning
-                            ? [
-                              BoxShadow(
-                                color: Colors.greenAccent
-                                    .withOpacity(0.2),
-                                blurRadius: 8,
-                                spreadRadius: 1,
-                              ),
-                            ]
-                            : null,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(
+                          0.3,
+                        ),
+                        blurRadius: 2,
+                        offset: Offset(0, 3),
+                        spreadRadius: 1,
+                      ),
+                      if (isWinning) // Sombra extra para puja ganadora
+                        BoxShadow(
+                          color: Colors.greenAccent
+                              .withOpacity(0.2),
+                          blurRadius: 12,
+                          offset: Offset(0, 0),
+                          spreadRadius: 2,
+                        ),
+                    ],
                   ),
                   child: Row(
                     children: [
@@ -982,7 +1018,7 @@ class _AuctionDetailScreenState
                           color:
                               isWinning
                                   ? Colors.green
-                                  : Colors.deepPurple,
+                                  : Colors.deepPurpleAccent,
                           borderRadius:
                               BorderRadius.circular(20),
                           boxShadow: [
@@ -1000,6 +1036,20 @@ class _AuctionDetailScreenState
                               : Icons.person,
                           color: Colors.white,
                           size: 20,
+                          shadows: [
+                            Shadow(
+                              color: Colors.deepPurple
+                                  .withOpacity(0.8),
+                              offset: const Offset(1, 2),
+                              blurRadius: 10,
+                            ),
+                            Shadow(
+                              color: Colors.black
+                                  .withOpacity(0.6),
+                              offset: const Offset(2, 2.5),
+                              blurRadius: 4,
+                            ),
+                          ],
                         ),
                       ),
 
@@ -1027,6 +1077,33 @@ class _AuctionDetailScreenState
                                             : FontWeight
                                                 .normal,
                                     color: Colors.white,
+                                    shadows: [
+                                      Shadow(
+                                        color: Colors
+                                            .deepPurple
+                                            .withOpacity(
+                                              0.8,
+                                            ),
+                                        offset:
+                                            const Offset(
+                                              1,
+                                              2,
+                                            ),
+                                        blurRadius: 10,
+                                      ),
+                                      Shadow(
+                                        color: Colors.black
+                                            .withOpacity(
+                                              0.6,
+                                            ),
+                                        offset:
+                                            const Offset(
+                                              2,
+                                              3,
+                                            ),
+                                        blurRadius: 4,
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 Text(
@@ -1041,6 +1118,33 @@ class _AuctionDetailScreenState
                                                 .greenAccent
                                             : Colors
                                                 .white70,
+                                    shadows: [
+                                      Shadow(
+                                        color: Colors
+                                            .deepPurple
+                                            .withOpacity(
+                                              0.8,
+                                            ),
+                                        offset:
+                                            const Offset(
+                                              1,
+                                              2,
+                                            ),
+                                        blurRadius: 10,
+                                      ),
+                                      Shadow(
+                                        color: Colors.black
+                                            .withOpacity(
+                                              0.6,
+                                            ),
+                                        offset:
+                                            const Offset(
+                                              2,
+                                              3,
+                                            ),
+                                        blurRadius: 4,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -1053,6 +1157,27 @@ class _AuctionDetailScreenState
                                   color: Colors.greenAccent,
                                   fontWeight:
                                       FontWeight.w600,
+                                  shadows: [
+                                    Shadow(
+                                      color: Colors
+                                          .deepPurple
+                                          .withOpacity(0.8),
+                                      offset: const Offset(
+                                        1,
+                                        2,
+                                      ),
+                                      blurRadius: 10,
+                                    ),
+                                    Shadow(
+                                      color: Colors.black
+                                          .withOpacity(0.6),
+                                      offset: const Offset(
+                                        2,
+                                        3,
+                                      ),
+                                      blurRadius: 4,
+                                    ),
+                                  ],
                                 ),
                               ),
                           ],
@@ -1078,7 +1203,7 @@ class _AuctionDetailScreenState
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        elevation: 5,
+        elevation: 7,
         child: Padding(
           padding: EdgeInsets.all(16),
           child: Column(
@@ -1119,7 +1244,7 @@ class _AuctionDetailScreenState
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        elevation: 5,
+        elevation: 7,
         child: Padding(
           padding: EdgeInsets.all(16),
           child: Column(
@@ -1160,32 +1285,34 @@ class _AuctionDetailScreenState
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      elevation: 5,
+      elevation: 7,
       child: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Realizar Puja',
-              style: GoogleFonts.nunito(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                shadows: [
-                  Shadow(
-                    color: Colors.deepPurple.withOpacity(
-                      0.8,
+            Center(
+              child: Text(
+                'Realizar Puja',
+                style: GoogleFonts.nunito(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  shadows: [
+                    Shadow(
+                      color: Colors.deepPurple.withOpacity(
+                        0.8,
+                      ),
+                      offset: const Offset(1, 2),
+                      blurRadius: 10,
                     ),
-                    offset: const Offset(1, 2),
-                    blurRadius: 10,
-                  ),
-                  Shadow(
-                    color: Colors.black.withOpacity(0.6),
-                    offset: const Offset(2, 3),
-                    blurRadius: 4,
-                  ),
-                ],
+                    Shadow(
+                      color: Colors.black.withOpacity(0.6),
+                      offset: const Offset(2, 3),
+                      blurRadius: 4,
+                    ),
+                  ],
+                ),
               ),
             ),
             Divider(
@@ -1270,6 +1397,7 @@ class _AuctionDetailScreenState
                         borderSide: BorderSide(
                           color: Colors.deepPurple
                               .withOpacity(0.5),
+                          width: 2.5,
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
@@ -1278,6 +1406,7 @@ class _AuctionDetailScreenState
                         ),
                         borderSide: BorderSide(
                           color: Colors.deepPurple,
+                          width: 3,
                         ),
                       ),
                     ),
@@ -1286,55 +1415,105 @@ class _AuctionDetailScreenState
                 SizedBox(width: 12),
                 SizedBox(
                   height: 56,
-                  child: ElevatedButton(
-                    onPressed:
-                        isBidLoading ? null : _placeBid,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
-                      shape: RoundedRectangleBorder(
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 200),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors:
+                            isBidLoading
+                                ? [
+                                  Colors.grey.shade600,
+                                  Colors.grey.shade700,
+                                  Colors.grey.shade800,
+                                ]
+                                : [
+                                  Colors
+                                      .deepPurple
+                                      .shade400,
+                                  Colors
+                                      .deepPurple
+                                      .shade600,
+                                  Colors.purple.shade800,
+                                ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(
+                        12,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: (isBidLoading
+                                  ? Colors.grey
+                                  : Colors.deepPurple)
+                              .withOpacity(0.4),
+                          blurRadius: 8,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(
+                        12,
+                      ),
+                      child: InkWell(
+                        onTap:
+                            isBidLoading ? null : _placeBid,
                         borderRadius: BorderRadius.circular(
                           12,
                         ),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                          ),
+                          child: Center(
+                            child:
+                                isBidLoading
+                                    ? SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child:
+                                          CircularProgressIndicator(
+                                            color:
+                                                Colors
+                                                    .white,
+                                            strokeWidth: 2,
+                                          ),
+                                    )
+                                    : Text(
+                                      'Pujar',
+                                      style: GoogleFonts.nunito(
+                                        fontSize: 16,
+                                        fontWeight:
+                                            FontWeight.bold,
+                                        color: Colors.white,
+                                        shadows: [
+                                          Shadow(
+                                            color: Colors
+                                                .black
+                                                .withOpacity(
+                                                  0.6,
+                                                ),
+                                            offset:
+                                                const Offset(
+                                                  2,
+                                                  3,
+                                                ),
+                                            blurRadius: 4,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                          ),
+                        ),
                       ),
                     ),
-                    child:
-                        isBidLoading
-                            ? SizedBox(
-                              width: 20,
-                              height: 20,
-                              child:
-                                  CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 2,
-                                  ),
-                            )
-                            : Text(
-                              'Pujar',
-                              style: GoogleFonts.nunito(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.black
-                                        .withOpacity(0.6),
-                                    offset: const Offset(
-                                      2,
-                                      3,
-                                    ),
-                                    blurRadius: 4,
-                                  ),
-                                ],
-                              ),
-                            ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 12),
+            SizedBox(height: 15),
             Text(
               'Al pujar, aceptas los términos y condiciones de la subasta.',
               style: GoogleFonts.nunito(
@@ -1445,7 +1624,7 @@ class _AuctionDetailScreenState
     String status;
 
     if (auction.hasEnded) {
-      badgeColor = Colors.red;
+      badgeColor = const Color.fromARGB(255, 130, 15, 7);
       status = "Finalizada";
     } else if (auction.isActive) {
       badgeColor = Colors.green;

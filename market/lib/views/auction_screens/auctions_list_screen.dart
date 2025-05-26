@@ -281,7 +281,7 @@ class _AuctionsListScreenState
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      elevation: 4,
+      elevation: 7,
       child: InkWell(
         onTap: () {
           // Navegar a la pantalla de detalle al tocar cualquier parte de la tarjeta
@@ -685,7 +685,7 @@ class _AuctionsListScreenState
       padding: const EdgeInsets.only(left: 21),
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: 13,
+          horizontal: 12,
           vertical: 8,
         ),
         decoration: BoxDecoration(
