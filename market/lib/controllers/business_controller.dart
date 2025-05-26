@@ -93,7 +93,7 @@ class BusinessController {
         final companyId = responseData['Company']['CompanyId'];
         await prefs.setString('company_id', companyId);
         
-        // 🚀 NUEVO: Manejar actualización de rol
+        //  Manejar actualización de rol
         await _handleRoleUpdate(responseData, prefs);
         
         if (kDebugMode) {
@@ -110,7 +110,7 @@ class BusinessController {
     }
   }
 
-  // 🚀 NUEVO: Manejar actualización de rol después de crear empresa
+  //  Manejar actualización de rol después de crear empresa
   Future<void> _handleRoleUpdate(Map<String, dynamic> responseData, SharedPreferences prefs) async {
     try {
       if (kDebugMode) print('🔄 Verificando actualización de rol...');

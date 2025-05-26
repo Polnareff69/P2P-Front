@@ -71,7 +71,8 @@ class AppConfig {
       '$_baseUrl/product/$companyId';
   static String getProductImageUrl() =>
       '$_baseUrl/ProductImg';
-  static String get allProductsUrl => '$_baseUrl/product/all';
+  static String get allProductsUrl =>
+      '$_baseUrl/product/all';
 
   // 🛠️ **CONFIGURACIONES**
   static const int timeoutSeconds = 10;

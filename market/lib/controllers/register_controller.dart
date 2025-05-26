@@ -6,7 +6,7 @@ import 'package:market/services/auth_service.dart';
 import 'package:flutter/foundation.dart';
 
 class RegisterController {
-  // 📝 REGISTER INTEGRADO CON AUTHSERVICE
+  //  REGISTER INTEGRADO CON AUTHSERVICE
   Future<bool> registerUser(UserRegisterModel user) async {
     try {
       if (kDebugMode) print('🔄 Intentando registro para: ${user.name}');
@@ -30,7 +30,7 @@ class RegisterController {
         final token = data['access_token'] ?? data['Token'] ?? data['token'];
         
         if (token != null) {
-          // ✨ Usar AuthService para guardar el token automáticamente
+          //  Usar AuthService para guardar el token automáticamente
           await AuthService.instance.saveToken(token);
           if (kDebugMode) print('✅ Registro exitoso con AuthService');
           return true;

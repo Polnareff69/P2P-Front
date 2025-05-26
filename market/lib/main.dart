@@ -100,14 +100,14 @@ class MyApp extends StatelessWidget {
     if (AuthService.instance.isLoggedIn) {
       // Usuario está logueado, redirigir según el rol
       if (AuthService.instance.isSeller) {
-        // Aquí irías a VendorScreen ¡CAMBIAR!
+        // Aquí IR a VendorScreen ¡¡¡¡¡¡¡¡CAMBIAR!!!!!!!!!
         // Mientras tanto, mostramos WelcomeScreen con mensaje de debug
         if (kDebugMode) {
           print('🏪 Usuario es vendedor, debería ir a VendorScreen');
         }
         return const WelcomeScreen();
       } else {
-        // Aquí irías a UserScreen ¡CAMBIAR!
+        // Aquí IR a UserScreen ¡¡¡¡¡¡¡¡CAMBIAR!!!!!!!!!
         // Mientras tanto, mostramos WelcomeScreen con mensaje de debug
         if (kDebugMode) {
           print('👤 Usuario es comprador, debería ir a UserScreen');

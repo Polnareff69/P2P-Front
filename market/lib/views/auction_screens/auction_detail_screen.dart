@@ -75,11 +75,17 @@ class _AuctionDetailScreenState
     });
 
     try {
+      if (kDebugMode) {
+        print(
+          '🔄 Cargando detalles de subasta: ${widget.auction.id}',
+        );
+      }
+
       // Cargar detalles actualizados de la subasta
       final auction = await _auctionController
           .getAuctionById(widget.auction.id);
 
-      // Cargar historial de pujas
+      // ✅ CORREGIDO: Cargar historial de pujas usando método corregido
       final bidHistory = await _auctionController
           .getBidsForAuction(widget.auction.id);
 
@@ -88,65 +94,114 @@ class _AuctionDetailScreenState
         bids = bidHistory;
         isLoading = false;
       });
+
+      if (kDebugMode) {
+        print('✅ Detalles cargados:');
+        print('   Precio actual: ${auction.currentPrice}');
+        print('   Total pujas: ${bidHistory.length}');
+      }
     } catch (e) {
       if (kDebugMode) {
-        print('Error al cargar detalles de subasta: $e');
+        print('❌ Error al cargar detalles de subasta: $e');
       }
 
       setState(() {
         isLoading = false;
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error al cargar detalles: $e'),
-          backgroundColor: Colors.red,
-        ),
+      _showErrorSnackBar(
+        'Error al cargar detalles: ${e.toString().replaceAll('Exception: ', '')}',
       );
     }
   }
 
+  // ✅ NUEVOS MÉTODOS AUXILIARES para mensajes
+  void _showSuccessSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(Icons.check_circle, color: Colors.white),
+            SizedBox(width: 8),
+            Expanded(child: Text(message)),
+          ],
+        ),
+        backgroundColor: Colors.green,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        duration: Duration(seconds: 4),
+      ),
+    );
+  }
+
+  void _showErrorSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(Icons.error, color: Colors.white),
+            SizedBox(width: 8),
+            Expanded(child: Text(message)),
+          ],
+        ),
+        backgroundColor: Colors.red,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        duration: Duration(seconds: 5),
+      ),
+    );
+  }
+
   // Realizar una puja
   Future<void> _placeBid() async {
-    // Validar entrada
+    // Validaciones de entrada
     if (_bidController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Por favor, ingresa un monto para la puja',
-          ),
-          backgroundColor: Colors.orange,
-        ),
+      _showErrorSnackBar(
+        'Por favor, ingresa un monto para la puja',
       );
       return;
     }
 
-    // Convertir y validar el monto
-    final bidAmount = int.tryParse(
-      _bidController.text.replaceAll(RegExp(r'[^0-9]'), ''),
+    // Limpiar y convertir el monto
+    final bidAmountText = _bidController.text.replaceAll(
+      RegExp(r'[^0-9]'),
+      '',
     );
+    final bidAmount = int.tryParse(bidAmountText);
 
-    if (bidAmount == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Por favor, ingresa un monto válido',
-          ),
-          backgroundColor: Colors.orange,
-        ),
+    if (bidAmount == null || bidAmount <= 0) {
+      _showErrorSnackBar(
+        'Por favor, ingresa un monto válido mayor a 0',
       );
       return;
     }
 
-    // Validar que sea mayor que el precio actual
-    if (bidAmount <= (updatedAuction?.currentPrice ?? 0)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Tu puja debe ser mayor que el precio actual (${updatedAuction?.formattedCurrentPrice})',
-          ),
-          backgroundColor: Colors.orange,
-        ),
+    // Verificar que la subasta esté activa
+    if (updatedAuction == null ||
+        !_auctionController.canPlaceBid(updatedAuction!)) {
+      _showErrorSnackBar(
+        'Esta subasta no está disponible para pujas',
+      );
+      return;
+    }
+
+    // Validar monto mínimo
+    final currentPrice =
+        updatedAuction!.currentPrice ??
+        updatedAuction!.initialPrice;
+    if (!_auctionController.validateBid(
+      bidAmount,
+      currentPrice,
+    )) {
+      final minimumBid = _auctionController
+          .getMinimumBidAmount(currentPrice);
+      _showErrorSnackBar(
+        'Tu puja debe ser mayor que ${NumberFormat.currency(locale: 'es_CO', symbol: '\$', decimalDigits: 0).format(currentPrice)}.\n'
+        'Monto mínimo sugerido: ${NumberFormat.currency(locale: 'es_CO', symbol: '\$', decimalDigits: 0).format(minimumBid)}',
       );
       return;
     }
@@ -156,36 +211,53 @@ class _AuctionDetailScreenState
     });
 
     try {
-      // Crear objeto de puja
+      if (kDebugMode) {
+        print('🎯 Realizando puja:');
+        print('   Subasta ID: ${updatedAuction!.id}');
+        print('   Monto: $bidAmount');
+        print('   Precio actual: $currentPrice');
+      }
+
+      // ✅ CORREGIDO: Crear puja según tu backend (sin user_id)
       final bid = AuctionBid(
-        id: '',
+        id: '', // Se genera en el backend
         auctionId: updatedAuction!.id,
-        userId: '', // El backend lo obtendrá del token
+        userId: '', // Se obtiene del token en el backend
         bidAmount: bidAmount,
       );
 
       // Enviar la puja
-      await _auctionController.placeBid(bid);
+      final createdBid = await _auctionController.placeBid(
+        bid,
+      );
 
-      // Limpiar campo
+      if (kDebugMode) {
+        print(
+          '✅ Puja creada exitosamente: ${createdBid.id}',
+        );
+      }
+
+      // Limpiar campo y recargar datos
       _bidController.clear();
-
-      // Recargar información actualizada
       await _loadAuctionDetails();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('¡Puja realizada con éxito!'),
-          backgroundColor: Colors.green,
-        ),
+      _showSuccessSnackBar(
+        '¡Puja realizada con éxito por ${createdBid.formattedBidAmount}!',
       );
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error al realizar la puja: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
+      if (kDebugMode) {
+        print('❌ Error al realizar puja: $e');
+      }
+
+      String errorMessage = 'Error al realizar la puja';
+      if (e.toString().contains('Exception:')) {
+        errorMessage = e.toString().replaceAll(
+          'Exception: ',
+          '',
+        );
+      }
+
+      _showErrorSnackBar(errorMessage);
     } finally {
       setState(() {
         isBidLoading = false;
@@ -789,21 +861,6 @@ class _AuctionDetailScreenState
                         Icons.gavel,
                         size: 48,
                         color: Colors.grey,
-                        shadows: [
-                          Shadow(
-                            color: Colors.deepPurple
-                                .withOpacity(0.8),
-                            offset: const Offset(1, 3),
-                            blurRadius: 10,
-                          ),
-                          Shadow(
-                            color: Colors.black.withOpacity(
-                              0.6,
-                            ),
-                            offset: const Offset(2, 4),
-                            blurRadius: 4,
-                          ),
-                        ],
                       ),
                       SizedBox(height: 16),
                       Text(
@@ -811,20 +868,6 @@ class _AuctionDetailScreenState
                         style: GoogleFonts.nunito(
                           fontSize: 16,
                           color: Colors.grey,
-                          shadows: [
-                            Shadow(
-                              color: Colors.deepPurple
-                                  .withOpacity(0.8),
-                              offset: const Offset(1, 2),
-                              blurRadius: 10,
-                            ),
-                            Shadow(
-                              color: Colors.black
-                                  .withOpacity(0.6),
-                              offset: const Offset(2, 3),
-                              blurRadius: 4,
-                            ),
-                          ],
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -849,91 +892,170 @@ class _AuctionDetailScreenState
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Historial de Pujas',
-              style: GoogleFonts.nunito(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+            Row(
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Historial de Pujas',
+                  style: GoogleFonts.nunito(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurple.withOpacity(
+                      0.2,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    '${bids.length} puja${bids.length != 1 ? 's' : ''}',
+                    style: GoogleFonts.nunito(
+                      fontSize: 12,
+                      color: Colors.deepPurpleAccent,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Divider(
               color: Colors.white24,
               thickness: 1,
               height: 24,
             ),
+
+            // ✅ MEJORADO: Lista de pujas con mejor diseño
             ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemCount: bids.length,
               itemBuilder: (context, index) {
                 final bid = bids[index];
-                final username =
-                    bid.user != null &&
-                            bid.user!.containsKey(
-                              'username',
-                            )
-                        ? bid.user!['username']
-                        : 'Usuario ${bid.userId.substring(0, 4)}';
+                final isWinning =
+                    index ==
+                    0; // La primera es la puja ganadora (están ordenadas)
 
                 return Container(
                   margin: EdgeInsets.only(bottom: 8),
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Colors.grey[850],
-                    borderRadius: BorderRadius.circular(8),
+                    color:
+                        isWinning
+                            ? Colors.green.withOpacity(0.1)
+                            : Colors.grey[850],
+                    borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color:
-                          index == 0
+                          isWinning
                               ? Colors.greenAccent
                                   .withOpacity(0.5)
                               : Colors.transparent,
-                      width: 1,
+                      width: 1.5,
                     ),
+                    boxShadow:
+                        isWinning
+                            ? [
+                              BoxShadow(
+                                color: Colors.greenAccent
+                                    .withOpacity(0.2),
+                                blurRadius: 8,
+                                spreadRadius: 1,
+                              ),
+                            ]
+                            : null,
                   ),
                   child: Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor:
-                                index == 0
-                                    ? Colors.green
-                                    : Colors.deepPurple,
-                            radius: 16,
-                            child: Icon(
-                              index == 0
-                                  ? Icons.emoji_events
-                                  : Icons.person,
-                              color: Colors.white,
-                              size: 16,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            username,
-                            style: GoogleFonts.nunito(
-                              fontSize: 16,
-                              fontWeight:
-                                  index == 0
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        bid.formattedBidAmount,
-                        style: GoogleFonts.nunito(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                      // Avatar del usuario
+                      Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
                           color:
-                              index == 0
-                                  ? Colors.greenAccent
-                                  : Colors.white70,
+                              isWinning
+                                  ? Colors.green
+                                  : Colors.deepPurple,
+                          borderRadius:
+                              BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black
+                                  .withOpacity(0.3),
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          isWinning
+                              ? Icons.emoji_events
+                              : Icons.person,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+
+                      SizedBox(width: 12),
+
+                      // Información del usuario y puja
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment
+                                      .spaceBetween,
+                              children: [
+                                Text(
+                                  bid.userName,
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 16,
+                                    fontWeight:
+                                        isWinning
+                                            ? FontWeight
+                                                .bold
+                                            : FontWeight
+                                                .normal,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                Text(
+                                  bid.formattedBidAmount,
+                                  style: GoogleFonts.nunito(
+                                    fontSize: 16,
+                                    fontWeight:
+                                        FontWeight.bold,
+                                    color:
+                                        isWinning
+                                            ? Colors
+                                                .greenAccent
+                                            : Colors
+                                                .white70,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            if (isWinning)
+                              Text(
+                                '🏆 Puja ganadora actual',
+                                style: GoogleFonts.nunito(
+                                  fontSize: 12,
+                                  color: Colors.greenAccent,
+                                  fontWeight:
+                                      FontWeight.w600,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ],

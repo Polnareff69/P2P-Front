@@ -300,24 +300,54 @@ class AuctionController {
   // Realizar una puja en una subasta
   Future<AuctionBid> placeBid(AuctionBid bid) async {
     try {
+      if (kDebugMode) {
+        print('📤 Enviando puja: ${bid.toJson()}');
+      }
+
       final response = await http.post(
         Uri.parse(AppConfig.createBidUrl),
         headers: await _getHeaders(),
         body: json.encode(bid.toJson()),
       );
 
+      if (kDebugMode) {
+        print(
+          '📥 Respuesta puja - Status: ${response.statusCode}',
+        );
+        print('📥 Respuesta puja - Body: ${response.body}');
+      }
+
       if (response.statusCode == 200) {
-        return AuctionBid.fromJson(
-          json.decode(response.body),
-        );
+        final responseData = json.decode(response.body);
+        return AuctionBid.fromJson(responseData);
       } else {
-        throw Exception(
-          'Error al realizar puja: ${response.body}',
-        );
+        // ✨ MEJORADO: Manejo de errores más específico
+        final errorBody = response.body;
+        String errorMessage = 'Error al realizar puja';
+
+        try {
+          final errorData = json.decode(errorBody);
+          if (errorData['detail'] != null) {
+            if (errorData['detail'] is String) {
+              errorMessage = errorData['detail'];
+            } else if (errorData['detail'] is List) {
+              // Manejar errores de validación
+              final details = errorData['detail'] as List;
+              errorMessage = details
+                  .map((e) => e['msg'] ?? e.toString())
+                  .join(', ');
+            }
+          }
+        } catch (e) {
+          errorMessage =
+              'Error: ${response.statusCode} - $errorBody';
+        }
+
+        throw Exception(errorMessage);
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Error al realizar puja: $e');
+        print('❌ Error al realizar puja: $e');
       }
       rethrow;
     }
@@ -328,20 +358,57 @@ class AuctionController {
     String auctionId,
   ) async {
     try {
+      if (kDebugMode) {
+        print(
+          '🔍 Obteniendo pujas para subasta: $auctionId',
+        );
+      }
+
+      // Según la documentación, /bids devuelve todas las pujas
       final response = await http.get(
-        Uri.parse(
-          '${AppConfig.bidsUrl}?auction_id=$auctionId',
-        ),
+        Uri.parse(AppConfig.bidsUrl),
         headers: await _getHeaders(),
       );
+
+      if (kDebugMode) {
+        print(
+          '📥 Respuesta bids - Status: ${response.statusCode}',
+        );
+        print(
+          '📥 Respuesta bids - Body: ${response.body.substring(0, min(500, response.body.length))}...',
+        );
+      }
 
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(
           response.body,
         );
-        return data
-            .map((json) => AuctionBid.fromJson(json))
-            .toList();
+
+        //  FILTRAR del lado del cliente las pujas de esta subasta específica
+        final allBids =
+            data
+                .map((json) => AuctionBid.fromJson(json))
+                .toList();
+        final auctionBids =
+            allBids
+                .where((bid) => bid.auctionId == auctionId)
+                .toList();
+
+        //  ORDENAR por monto de puja (mayor a menor) para mostrar la puja ganadora primero
+        auctionBids.sort(
+          (a, b) => b.bidAmount.compareTo(a.bidAmount),
+        );
+
+        if (kDebugMode) {
+          print(
+            '📦 Total pujas obtenidas: ${allBids.length}',
+          );
+          print(
+            '📦 Pujas para esta subasta: ${auctionBids.length}',
+          );
+        }
+
+        return auctionBids;
       } else {
         throw Exception(
           'Error al obtener pujas: ${response.body}',
@@ -349,9 +416,61 @@ class AuctionController {
       }
     } catch (e) {
       if (kDebugMode) {
-        print('Error al obtener pujas: $e');
+        print('❌ Error al obtener pujas: $e');
       }
       rethrow;
     }
+  }
+
+  // Método para obtener una puja específica por ID
+  Future<AuctionBid> getBidById(String bidId) async {
+    try {
+      if (kDebugMode) {
+        print('🔍 Obteniendo puja por ID: $bidId');
+      }
+
+      final response = await http.get(
+        Uri.parse(AppConfig.getBidUrl(bidId)),
+        headers: await _getHeaders(),
+      );
+
+      if (kDebugMode) {
+        print(
+          '📥 Respuesta bid por ID - Status: ${response.statusCode}',
+        );
+      }
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.body);
+        return AuctionBid.fromJson(responseData);
+      } else {
+        throw Exception(
+          'Error al obtener puja: ${response.body}',
+        );
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('❌ Error al obtener puja por ID: $e');
+      }
+      rethrow;
+    }
+  }
+
+  //  Método para validar una puja antes de enviarla
+  bool validateBid(int bidAmount, int currentPrice) {
+    return bidAmount > currentPrice;
+  }
+
+  //  Método para obtener el precio mínimo de puja (precio actual + incremento mínimo)
+  int getMinimumBidAmount(
+    int currentPrice, {
+    int minimumIncrement = 1000,
+  }) {
+    return currentPrice + minimumIncrement;
+  }
+
+  // Verificar si una subasta puede recibir pujas
+  bool canPlaceBid(Auction auction) {
+    return auction.isActive && !auction.hasEnded;
   }
 }

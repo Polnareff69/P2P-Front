@@ -6,7 +6,7 @@ import 'package:market/services/auth_service.dart';
 import 'package:flutter/foundation.dart';
 
 class LoginController {
-  // 🔐 LOGIN INTEGRADO CON AUTHSERVICE
+  // LOGIN INTEGRADO CON AUTHSERVICE
   Future<bool> loginUser(User user) async {
     try {
       if (kDebugMode) print('🔄 Intentando login para: ${user.name}');
@@ -27,7 +27,7 @@ class LoginController {
         final token = data['access_token'];
         
         if (token != null) {
-          // ✨ Usar AuthService para guardar el token
+          //  Usar AuthService para guardar el token
           await AuthService.instance.saveToken(token);
           if (kDebugMode) print('✅ Login exitoso con AuthService');
           return true;
