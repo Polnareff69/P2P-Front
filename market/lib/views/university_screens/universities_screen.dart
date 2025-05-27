@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
+import 'package:market/views/widgets/floating_menu_button.dart';
 import 'package:market/models/university_model.dart';
 
 class UniversitiesScreen extends StatefulWidget {
@@ -91,7 +92,7 @@ class _UniversitiesScreenState
       description:
           'Universidad acreditada con 72 años de experiencia formando líderes. Campus vivo y transformador.',
       type: 'Privada',
-      ranking: 'Acreditación Alta Calidad',
+      ranking: 'Alta Calidad',
       founded: '1950',
       students: '8,500+',
       imageUrl: '',
@@ -214,6 +215,10 @@ class _UniversitiesScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _darkBg,
+      floatingActionButton: const FloatingMenuButton(
+        logoAssetPath:
+            'assets/images/UMarketLogoNoBackground.png',
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -223,7 +228,7 @@ class _UniversitiesScreenState
             // Filtros
             _buildElegantFilters(),
 
-            // Estadísticas 
+            // Estadísticas
             _buildStylishStats(),
 
             // Lista de universidades
@@ -268,13 +273,20 @@ class _UniversitiesScreenState
                           color: _accentPurple.withOpacity(
                             0.2,
                           ),
-                          width: 1,
+                          width: 2,
                         ),
                       ),
                       child: const Icon(
                         Icons.arrow_back_ios_new_rounded,
                         color: _textPrimary,
                         size: 20,
+                        shadows: [
+                          Shadow(
+                            color: _accentPurple,
+                            offset: Offset(1, 1),
+                            blurRadius: 10,
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -289,6 +301,24 @@ class _UniversitiesScreenState
                           fontWeight: FontWeight.w800,
                           color: _textPrimary,
                           letterSpacing: -0.5,
+                          shadows: [
+                            Shadow(
+                              color: Color.fromARGB(
+                                255,
+                                98,
+                                17,
+                                184,
+                              ),
+                              offset: const Offset(1, 3),
+                              blurRadius: 6,
+                            ),
+                            Shadow(
+                              color: Colors.black
+                                  .withOpacity(0.6),
+                              offset: const Offset(2, 4),
+                              blurRadius: 4,
+                            ),
+                          ],
                         ),
                       ),
                       Text(
@@ -298,6 +328,24 @@ class _UniversitiesScreenState
                           fontWeight: FontWeight.w600,
                           color: _accentPurple,
                           letterSpacing: 0.5,
+                          shadows: [
+                            Shadow(
+                              color: Color.fromARGB(
+                                255,
+                                98,
+                                17,
+                                184,
+                              ),
+                              offset: const Offset(1, 2),
+                              blurRadius: 6,
+                            ),
+                            Shadow(
+                              color: Colors.black
+                                  .withOpacity(0.6),
+                              offset: const Offset(2, 3),
+                              blurRadius: 4,
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -312,12 +360,29 @@ class _UniversitiesScreenState
 
               // Descripción elegante
               Text(
-                'Descubre las mejores instituciones de educación superior de la región',
+                'Descubre el mercado de las mejores instituciones de educación',
                 style: GoogleFonts.nunito(
                   fontSize: 15,
                   color: _textSecondary,
                   fontWeight: FontWeight.w500,
                   height: 1.4,
+                  shadows: [
+                    Shadow(
+                      color: Color.fromARGB(
+                        255,
+                        98,
+                        17,
+                        184,
+                      ),
+                      offset: const Offset(1, 3),
+                      blurRadius: 6,
+                    ),
+                    Shadow(
+                      color: Colors.black.withOpacity(0.6),
+                      offset: const Offset(2, 4),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -356,10 +421,21 @@ class _UniversitiesScreenState
                         horizontal: 4,
                       ),
                       decoration: BoxDecoration(
-                        color:
+                        gradient:
                             isSelected
-                                ? _accentPurple
-                                : _cardBg,
+                                ? LinearGradient(
+                                  colors: [
+                                    Colors.purple.shade600,
+                                    Colors.purple.shade900,
+                                  ],
+                                  begin:
+                                      Alignment.topCenter,
+                                  end:
+                                      Alignment
+                                          .bottomCenter,
+                                )
+                                : null,
+                        color: isSelected ? null : _cardBg,
                         borderRadius: BorderRadius.circular(
                           16,
                         ),
@@ -369,7 +445,7 @@ class _UniversitiesScreenState
                                   ? _accentPurple
                                   : _accentPurple
                                       .withOpacity(0.1),
-                          width: 1,
+                          width: 4,
                         ),
                         boxShadow:
                             isSelected
@@ -377,7 +453,7 @@ class _UniversitiesScreenState
                                   BoxShadow(
                                     color: _accentPurple
                                         .withOpacity(0.3),
-                                    blurRadius: 12,
+                                    blurRadius: 10,
                                     offset: const Offset(
                                       0,
                                       4,
@@ -396,6 +472,27 @@ class _UniversitiesScreenState
                                 isSelected
                                     ? Colors.white
                                     : _textSecondary,
+                            shadows: [
+                              Shadow(
+                                color: Color.fromARGB(
+                                  255,
+                                  98,
+                                  17,
+                                  184,
+                                ),
+                                offset: const Offset(1, 2),
+                                blurRadius: 6,
+                              ),
+                              Shadow(
+                                color: Colors.black
+                                    .withOpacity(0.8),
+                                offset: const Offset(
+                                  2,
+                                  2.5,
+                                ),
+                                blurRadius: 4,
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -418,8 +515,8 @@ class _UniversitiesScreenState
           color: _cardBg,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: _accentPurple.withOpacity(0.1),
-            width: 1,
+            color: _accentPurple.withOpacity(0.15),
+            width: 6,
           ),
         ),
         child: Row(
@@ -428,27 +525,27 @@ class _UniversitiesScreenState
             _buildStatItem(
               '${filteredUniversities.length}',
               'Universidades',
-              Icons.school_outlined,
+              Icons.school_sharp,
             ),
             Container(
               width: 1,
-              height: 40,
-              color: _accentPurple.withOpacity(0.2),
+              height: 55,
+              color: _accentPurple.withOpacity(0.3),
             ),
             _buildStatItem(
               '135K+',
               'Estudiantes',
-              Icons.people_outline_rounded,
+              Icons.people_alt_rounded,
             ),
             Container(
               width: 1,
-              height: 40,
-              color: _accentPurple.withOpacity(0.2),
+              height: 55,
+              color: _accentPurple.withOpacity(0.3),
             ),
             _buildStatItem(
               '220+',
               'Años Historia',
-              Icons.history_rounded,
+              Icons.access_time_filled_rounded,
             ),
           ],
         ),
@@ -469,7 +566,18 @@ class _UniversitiesScreenState
             color: _accentPurple.withOpacity(0.1),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(icon, color: _accentPurple, size: 20),
+          child: Icon(
+            icon,
+            color: _accentPurple,
+            size: 21,
+            shadows: [
+              Shadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: const Offset(2, 3),
+                blurRadius: 4,
+              ),
+            ],
+          ),
         ),
         const SizedBox(height: 8),
         Text(
@@ -478,14 +586,39 @@ class _UniversitiesScreenState
             fontSize: 18,
             fontWeight: FontWeight.w800,
             color: _textPrimary,
+            shadows: [
+              Shadow(
+                color: Color.fromARGB(255, 98, 17, 184),
+                offset: const Offset(1, 2),
+                blurRadius: 6,
+              ),
+              Shadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: const Offset(2, 2.5),
+                blurRadius: 4,
+              ),
+            ],
           ),
         ),
+        SizedBox(height: 1),
         Text(
           label,
           style: GoogleFonts.nunito(
-            fontSize: 11,
+            fontSize: 12.5,
             color: _textSecondary,
             fontWeight: FontWeight.w600,
+            shadows: [
+              Shadow(
+                color: Color.fromARGB(255, 98, 17, 184),
+                offset: const Offset(1, 2),
+                blurRadius: 6,
+              ),
+              Shadow(
+                color: Colors.black.withOpacity(0.6),
+                offset: const Offset(2, 2.5),
+                blurRadius: 4,
+              ),
+            ],
           ),
           textAlign: TextAlign.center,
         ),
@@ -539,12 +672,13 @@ class _UniversitiesScreenState
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: _accentPurple.withOpacity(0.1),
-            width: 1,
+            width: 3.5,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 10,
+              color: Colors.purpleAccent.shade700
+                  .withOpacity(0.3),
+              blurRadius: 9,
               offset: const Offset(0, 4),
             ),
           ],
@@ -563,16 +697,18 @@ class _UniversitiesScreenState
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [_accentPurple, _lightPurple],
+                      colors: [
+                        Colors.purple.shade600,
+                        Colors.purple.shade900,
+                      ],
                     ),
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: _accentPurple.withOpacity(
-                          0.3,
-                        ),
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
+                        color: Colors.black,
+                        blurRadius: 2,
+                        spreadRadius: 0,
+                        offset: Offset(2, 3),
                       ),
                     ],
                   ),
@@ -582,6 +718,15 @@ class _UniversitiesScreenState
                     ),
                     size: 28,
                     color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(
+                          0.6,
+                        ),
+                        offset: const Offset(2, 3),
+                        blurRadius: 4,
+                      ),
+                    ],
                   ),
                 ),
 
@@ -600,6 +745,24 @@ class _UniversitiesScreenState
                           fontWeight: FontWeight.w800,
                           color: _textPrimary,
                           letterSpacing: -0.3,
+                          shadows: [
+                            Shadow(
+                              color: Color.fromARGB(
+                                255,
+                                98,
+                                17,
+                                184,
+                              ),
+                              offset: const Offset(1, 2),
+                              blurRadius: 6,
+                            ),
+                            Shadow(
+                              color: Colors.black
+                                  .withOpacity(0.6),
+                              offset: const Offset(2, 3),
+                              blurRadius: 4,
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -609,6 +772,13 @@ class _UniversitiesScreenState
                           fontSize: 13,
                           color: _accentPurple,
                           fontWeight: FontWeight.w600,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black,
+                              offset: const Offset(1, 2),
+                              blurRadius: 1,
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -646,6 +816,18 @@ class _UniversitiesScreenState
                 fontWeight: FontWeight.w700,
                 color: _textPrimary,
                 height: 1.3,
+                shadows: [
+                  Shadow(
+                    color: Color.fromARGB(255, 98, 17, 184),
+                    offset: const Offset(1, 2),
+                    blurRadius: 6,
+                  ),
+                  Shadow(
+                    color: Colors.black.withOpacity(0.6),
+                    offset: const Offset(2, 3),
+                    blurRadius: 4,
+                  ),
+                ],
               ),
             ),
 
@@ -659,6 +841,13 @@ class _UniversitiesScreenState
                 color: _textSecondary,
                 fontWeight: FontWeight.w500,
                 height: 1.4,
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.7),
+                    offset: const Offset(1, 2),
+                    blurRadius: 4,
+                  ),
+                ],
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -689,6 +878,15 @@ class _UniversitiesScreenState
                     Icons.arrow_forward_ios_rounded,
                     size: 16,
                     color: _accentPurple,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(
+                          0.9,
+                        ),
+                        offset: const Offset(1, 2),
+                        blurRadius: 5,
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -710,13 +908,24 @@ class _UniversitiesScreenState
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: _accentPurple.withOpacity(0.2),
-          width: 1,
+          width: 2,
         ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 12, color: _accentPurple),
+          Icon(
+            icon,
+            size: 12,
+            color: _accentPurple,
+            shadows: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.8),
+                blurRadius: 2,
+                offset: const Offset(1, 2),
+              ),
+            ],
+          ),
           const SizedBox(width: 4),
           Text(
             text,
@@ -724,6 +933,13 @@ class _UniversitiesScreenState
               fontSize: 10,
               color: _accentPurple,
               fontWeight: FontWeight.w700,
+              shadows: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.8),
+                  blurRadius: 2,
+                  offset: const Offset(1, 2),
+                ),
+              ],
             ),
           ),
         ],
@@ -742,13 +958,24 @@ class _UniversitiesScreenState
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: _accentPurple.withOpacity(0.2),
-          width: 1,
+          width: 2.2,
         ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 12, color: _textTertiary),
+          Icon(
+            icon,
+            size: 12,
+            color: _textTertiary,
+            shadows: [
+              Shadow(
+                color: Colors.black.withOpacity(0.9),
+                offset: const Offset(1, 2),
+                blurRadius: 5,
+              ),
+            ],
+          ),
           const SizedBox(width: 6),
           Text(
             text,
@@ -756,6 +983,13 @@ class _UniversitiesScreenState
               fontSize: 11,
               color: _textTertiary,
               fontWeight: FontWeight.w600,
+              shadows: [
+                Shadow(
+                  color: Colors.black.withOpacity(0.9),
+                  offset: const Offset(1, 2),
+                  blurRadius: 5,
+                ),
+              ],
             ),
           ),
         ],
@@ -815,16 +1049,20 @@ class _UniversitiesScreenState
                   height: 64,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [_accentPurple, _lightPurple],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Colors.purple.shade600,
+                        Colors.purple.shade900,
+                      ],
                     ),
                     borderRadius: BorderRadius.circular(18),
                     boxShadow: [
                       BoxShadow(
-                        color: _accentPurple.withOpacity(
-                          0.3,
-                        ),
-                        blurRadius: 12,
-                        offset: const Offset(0, 6),
+                        color: Colors.black,
+                        blurRadius: 2,
+                        spreadRadius: 0,
+                        offset: Offset(2, 3),
                       ),
                     ],
                   ),
@@ -834,6 +1072,15 @@ class _UniversitiesScreenState
                     ),
                     size: 32,
                     color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(
+                          0.9,
+                        ),
+                        offset: const Offset(2, 3),
+                        blurRadius: 4,
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(width: 20),
@@ -849,6 +1096,24 @@ class _UniversitiesScreenState
                           fontWeight: FontWeight.w800,
                           color: _textPrimary,
                           letterSpacing: -0.5,
+                          shadows: [
+                            Shadow(
+                              color: Color.fromARGB(
+                                255,
+                                98,
+                                17,
+                                184,
+                              ),
+                              offset: const Offset(1, 2),
+                              blurRadius: 6,
+                            ),
+                            Shadow(
+                              color: Colors.black
+                                  .withOpacity(0.6),
+                              offset: const Offset(2, 3),
+                              blurRadius: 4,
+                            ),
+                          ],
                         ),
                       ),
                       Text(
@@ -857,6 +1122,14 @@ class _UniversitiesScreenState
                           fontSize: 14,
                           color: _accentPurple,
                           fontWeight: FontWeight.w600,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black
+                                  .withOpacity(0.9),
+                              offset: const Offset(1, 2),
+                              blurRadius: 4,
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -901,6 +1174,25 @@ class _UniversitiesScreenState
                       fontWeight: FontWeight.w700,
                       color: _textPrimary,
                       height: 1.3,
+                      shadows: [
+                        Shadow(
+                          color: Color.fromARGB(
+                            255,
+                            98,
+                            17,
+                            184,
+                          ),
+                          offset: const Offset(1, 2),
+                          blurRadius: 6,
+                        ),
+                        Shadow(
+                          color: Colors.black.withOpacity(
+                            0.6,
+                          ),
+                          offset: const Offset(2, 3),
+                          blurRadius: 4,
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -911,6 +1203,15 @@ class _UniversitiesScreenState
                       color: _textSecondary,
                       fontWeight: FontWeight.w500,
                       height: 1.5,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black.withOpacity(
+                            0.7,
+                          ),
+                          offset: const Offset(1, 2),
+                          blurRadius: 4,
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -939,41 +1240,80 @@ class _UniversitiesScreenState
                     ),
                   ]),
 
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 30),
 
                   // Botón de acción
-                  SizedBox(
-                    width: double.infinity,
-                    height: 52,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        // Aquí iría la navegación al sitio web
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: _accentPurple,
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(16),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      // Aquí iría la navegación al mapa donde está la universidad
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 65,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          25,
                         ),
-                        elevation: 0,
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.purple.shade600,
+                            Colors.purple.shade900,
+                          ],
+                        ),
                       ),
-                      child: Row(
-                        mainAxisAlignment:
-                            MainAxisAlignment.center,
+                      child: Stack(
                         children: [
-                          const Icon(
-                            Icons.open_in_new_rounded,
-                            color: Colors.white,
-                            size: 18,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            'Visitar Sitio Web',
-                            style: GoogleFonts.nunito(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
+                          // Contenido del botón
+                          Center(
+                            child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.map_rounded,
+                                  color: Colors.white,
+                                  size: 25,
+                                  shadows: [
+                                    Shadow(
+                                      color: Colors.black
+                                          .withOpacity(0.7),
+                                      offset: const Offset(
+                                        1,
+                                        2,
+                                      ),
+                                      blurRadius: 4,
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(width: 12),
+                                Text(
+                                  'Ver Mapa',
+                                  style: GoogleFonts.getFont(
+                                    'Nunito Sans',
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontWeight:
+                                        FontWeight.w700,
+                                    shadows: [
+                                      Shadow(
+                                        color: Colors.black
+                                            .withOpacity(
+                                              0.7,
+                                            ),
+                                        offset:
+                                            const Offset(
+                                              1,
+                                              2,
+                                            ),
+                                        blurRadius: 4,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
@@ -981,7 +1321,7 @@ class _UniversitiesScreenState
                     ),
                   ),
 
-                  const SizedBox(height: 24),
+                  //const SizedBox(height: 24),
                 ],
               ),
             ),
@@ -1014,8 +1354,8 @@ class _UniversitiesScreenState
         color: _cardBg,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: _accentPurple.withOpacity(0.1),
-          width: 1,
+          color: _accentPurple.withOpacity(0.6),
+          width: 3,
         ),
       ),
       child: Column(
@@ -1023,7 +1363,18 @@ class _UniversitiesScreenState
         children: [
           Row(
             children: [
-              Icon(icon, size: 16, color: _accentPurple),
+              Icon(
+                icon,
+                size: 16,
+                color: _accentPurple,
+                shadows: [
+                  Shadow(
+                    color: Colors.black.withOpacity(0.6),
+                    offset: const Offset(2, 3),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
               const SizedBox(width: 8),
               Text(
                 label,
@@ -1031,6 +1382,13 @@ class _UniversitiesScreenState
                   fontSize: 12,
                   color: _textTertiary,
                   fontWeight: FontWeight.w600,
+                  shadows: [
+                    Shadow(
+                      color: Colors.black.withOpacity(0.6),
+                      offset: const Offset(2, 3),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -1042,6 +1400,18 @@ class _UniversitiesScreenState
               fontSize: 14,
               color: _textPrimary,
               fontWeight: FontWeight.w700,
+              shadows: [
+                Shadow(
+                  color: Color.fromARGB(255, 98, 17, 184),
+                  offset: const Offset(1, 2),
+                  blurRadius: 6,
+                ),
+                Shadow(
+                  color: Colors.black.withOpacity(0.6),
+                  offset: const Offset(2, 3),
+                  blurRadius: 4,
+                ),
+              ],
             ),
           ),
         ],
