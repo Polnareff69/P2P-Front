@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:market/controllers/auction_controller.dart';
 import 'package:market/controllers/upload_product_controller.dart';
-import 'package:market/controllers/company_controller.dart'; // ✨ AGREGADO
+import 'package:market/controllers/company_controller.dart';
 import 'package:market/models/auction_model.dart';
 import 'package:market/models/product_model.dart';
 import 'package:intl/intl.dart';
@@ -27,7 +27,7 @@ class _CreateAuctionScreenState
   final UploadProductController _productController =
       UploadProductController();
   final CompanyController _companyController =
-      CompanyController(); // ✨ AGREGADO
+      CompanyController(); 
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>();
 
@@ -47,14 +47,14 @@ class _CreateAuctionScreenState
     const Duration(days: 7),
   );
 
-  // ✨ NUEVAS VARIABLES PARA MANEJO DE EMPRESA
+  // VARIABLES PARA MANEJO DE EMPRESA
   String? currentCompanyId;
   String? companyError;
 
   @override
   void initState() {
     super.initState();
-    _initializeScreen(); // ✨ MÉTODO PRINCIPAL DE INICIALIZACIÓN
+    _initializeScreen(); // MÉTODO PRINCIPAL DE INICIALIZACIÓN
     _startDateController.text = DateFormat(
       'yyyy-MM-dd',
     ).format(startDate);
@@ -63,7 +63,7 @@ class _CreateAuctionScreenState
     ).format(endDate);
   }
 
-  // ✨ NUEVO: Método principal de inicialización
+  // Método principal de inicialización
   Future<void> _initializeScreen() async {
     setState(() {
       isLoading = true;
@@ -90,7 +90,7 @@ class _CreateAuctionScreenState
     }
   }
 
-  // ✨ NUEVO: Método para asegurar el company_id correcto (igual que VendorScreen)
+  // Método para asegurar el company_id correcto (igual que VendorScreen)
   Future<void> _ensureCorrectCompanyId() async {
     try {
       if (kDebugMode) {
@@ -140,7 +140,7 @@ class _CreateAuctionScreenState
     }
   }
 
-  // ✨ MÉTODO ACTUALIZADO: Usar company_id verificado
+  // Usar company_id verificado
   Future<void> _loadProducts() async {
     try {
       if (currentCompanyId == null) {
@@ -174,7 +174,7 @@ class _CreateAuctionScreenState
     }
   }
 
-  // ✨ MÉTODO ACTUALIZADO: Mejor manejo de errores
+  // Mejor manejo de errores
   Future<void> _loadProductIdMap() async {
     try {
       if (kDebugMode) {
@@ -210,7 +210,7 @@ class _CreateAuctionScreenState
     }
   }
 
-  // ✨ NUEVO: Método para recargar datos
+  // Método para recargar datos
   Future<void> _refreshData() async {
     await _initializeScreen();
   }
@@ -287,7 +287,7 @@ class _CreateAuctionScreenState
         return;
       }
 
-      // ✨ VERIFICACIÓN ADICIONAL: Asegurar que tenemos el company_id correcto
+      // VERIFICACIÓN ADICIONAL: Asegurar que tenemos el company_id correcto
       if (currentCompanyId == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -466,7 +466,7 @@ class _CreateAuctionScreenState
             Navigator.pop(context);
           },
         ),
-        // ✨ NUEVO: Botón de refresh
+        // Botón de refresh
         actions: [
           IconButton(
             icon: Icon(
@@ -517,7 +517,7 @@ class _CreateAuctionScreenState
               padding: const EdgeInsets.all(15.0),
               child: Center(
                 child:
-                    // ✨ MANEJO MEJORADO DE ESTADOS DE CARGA Y ERROR
+                    // MANEJO DE ESTADOS DE CARGA Y ERROR
                     isLoading
                         ? Column(
                           mainAxisAlignment:
@@ -685,7 +685,7 @@ class _CreateAuctionScreenState
                                     ),
                                   ),
 
-                                  // ✨ NUEVO: Mostrar empresa actual
+                                  // Mostrar empresa actual
                                   if (currentCompanyId !=
                                       null) ...[
                                     SizedBox(height: 15),

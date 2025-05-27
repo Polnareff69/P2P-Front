@@ -539,8 +539,9 @@ class _AuctionsListScreenState
                                     loadingProgress,
                                   ) {
                                     if (loadingProgress ==
-                                        null)
+                                        null) {
                                       return child;
+                                    }
                                     return Container(
                                       color:
                                           Colors.grey[800],

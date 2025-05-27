@@ -1683,4 +1683,5 @@ class _AuctionDetailScreenState
       ),
     );
   }
+  
 }
