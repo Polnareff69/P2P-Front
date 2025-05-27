@@ -390,7 +390,7 @@ class CompanyController {
         );
       }
 
-      // 🚀 CAMBIO PRINCIPAL: Leer rol desde SharedPreferences en lugar del token
+      // Leer rol desde SharedPreferences en lugar del token
       final prefs = await SharedPreferences.getInstance();
       final currentRole = prefs.getString('user_role');
 

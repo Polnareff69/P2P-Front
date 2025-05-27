@@ -5,6 +5,7 @@ import 'package:market/views/auction_screens/auctions_list_screen.dart';
 import 'package:market/services/auth_service.dart';
 import 'package:market/config/app_config.dart';
 import 'package:flutter/foundation.dart'; //kDebug
+import 'package:market/views/university_screens/universities_screen.dart';
 
 void main() async {
   // 🚀 CONFIGURACIÓN INICIAL
@@ -74,8 +75,9 @@ class MyApp extends StatelessWidget {
 
        // Añadir rutas nombradas
       routes: {
+        '/university': (context) => UniversitiesScreen(),
         '/auctions': (context) => const AuctionsListScreen(),
-        // Agrega más rutas aquí según sea necesario
+        
       },
       
       // 🏠 PANTALLA INICIAL INTELIGENTE
